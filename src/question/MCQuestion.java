@@ -9,7 +9,7 @@ public class MCQuestion extends Question {
 	public MCQuestion(String question, ArrayList<String> answer, ArrayList<String> choices) throws InvalidMCException {
 
 		super(question, answer);
-		if(checkValidChoice(answer, choices)) throw new InvalidMCException("Answer does not appear in choices.");
+		if(!isValidChoice(answer, choices)) throw new InvalidMCException("Answer does not appear in choices.");
 		this.choices = choices;
 	}
 	
@@ -22,14 +22,16 @@ public class MCQuestion extends Question {
 		return choices.get(choiceIndex);
 	}
 	
+	@Override
 	public boolean isCorrectAnswer(String input){
-		if (input.equals(choices.get(0))) return true;
+		System.out.println("Comparing " + input + " against " + answers.get(0).get(0) + " resulting in " + input.equals(answers.get(0).get(0)));
+		if (input.equals(answers.get(0).get(0))) return true;
 		else return false;
 	}
 	
 	
-	private boolean checkValidChoice(ArrayList<String> answer, ArrayList<String> options){
-		if(answer.size() > 1) return false;								//mult choice only has one solution
+	private boolean isValidChoice(ArrayList<String> answer, ArrayList<String> options){
+		if(answer.size() > 1) return false;					//mult choice only has one solution
 		for(int i = 0; i < options.size(); i++){
 			if(options.get(i).equals(answer.get(0))) return true;		//if no options appear in answer, then not a valid MC question
 		}
