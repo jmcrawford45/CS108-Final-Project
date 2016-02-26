@@ -7,13 +7,13 @@ public class FiBQuestion extends Question {
 	boolean caseSensitive;
 	String questionAfterBlank;
 
-	public FiBQuestion(String question, String questionAfterBlank, ArrayList<String> answers, boolean caseSensitive) {
-		super(question, answers);
+	public FiBQuestion(String question, String questionAfterBlank, ArrayList<String> answer, boolean caseSensitive) {
+		super(question, answer);
 		this.caseSensitive = caseSensitive;
 		if(!caseSensitive){
 			ArrayList<String> newAnswers = new ArrayList<String>();
-			for(int i = 0; i < answers.size(); i++){
-				String curr = answers.get(i).toUpperCase();
+			for(int i = 0; i < answer.size(); i++){
+				String curr = answer.get(i).toUpperCase();
 				newAnswers.add(curr);
 			}
 			overrideAnswers(newAnswers);

@@ -6,10 +6,10 @@ public class MCQuestion extends Question {
 	
 	ArrayList<String> choices;
 
-	public MCQuestion(String question, ArrayList<String> answers, ArrayList<String> choices) throws InvalidMCException {
+	public MCQuestion(String question, ArrayList<String> answer, ArrayList<String> choices) throws InvalidMCException {
 
-		super(question, answers);
-		if(checkValidChoice(answers, choices)) throw new InvalidMCException("Answer does not appear in choices.");
+		super(question, answer);
+		if(checkValidChoice(answer, choices)) throw new InvalidMCException("Answer does not appear in choices.");
 		this.choices = choices;
 	}
 	
