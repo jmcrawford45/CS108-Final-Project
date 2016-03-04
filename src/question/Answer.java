@@ -32,6 +32,16 @@ public class Answer {
 		this.ordered = ordered;
 	}
 	
+	public Answer(){
+		this.answers = new ArrayList<String>();
+		this.ordered = true;
+	}
+	
+	public Answer(boolean ordered){
+		this.answers = new ArrayList<String>();
+		this.ordered = ordered;
+	}
+	
 	public boolean hasMultipleAnswers(){
 		return (answers.size() > 1);
 	}
@@ -60,6 +70,7 @@ public class Answer {
 		return this.ordered;
 	}
 	
+	
 	public void replaceAnswer(String switchedAnswer, int index){
 		this.answers.set(index, switchedAnswer);
 	}
@@ -76,10 +87,13 @@ public class Answer {
 	public boolean isCorrect(Answer userInput){
 		if(userInput.numAnswers() != numAnswers()) return false;
 		if(ordered){
-			return isCorrect(userInput);
+			for(int i = 0; i < userInput.numAnswers(); i++){
+				if(!isCorrectSingleAnswer(answers.get(i).split("\\|"), userInput.getAnswerAt(i))) return false;
+			}
+			return true;
 		} else {
 			iter: for (int a = 0; a < numAnswers(); a++){
-				String[] answer = answers.get(a).split("|");
+				String[] answer = answers.get(a).split("\\|");
 				for (int i = 0; i < userInput.numAnswers(); i++){
 					if (isCorrectSingleAnswer(answer, userInput.getAnswerAt(i))) continue iter;
 				}
