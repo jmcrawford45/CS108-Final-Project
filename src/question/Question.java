@@ -7,11 +7,13 @@ public class Question {
 	
 	protected Answer answers;
 	protected String question;
+	protected String type;
 	
 	
 	public Question(String question, Answer answers){
 		this.question = question;
 		this.answers = answers;
+		this.type = "question";
 	}
 	
 	public Question(String question, String answer){

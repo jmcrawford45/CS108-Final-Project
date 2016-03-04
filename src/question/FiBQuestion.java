@@ -4,44 +4,29 @@ import java.util.ArrayList;
 
 public class FiBQuestion extends Question {
 	
-	boolean caseSensitive;
 	String questionAfterBlank;
+	String[] questionParts;
 
-	public FiBQuestion(String questionBeforeBlank, String questionAfterBlank, ArrayList<String> answer, boolean caseSensitive) {
-		super(questionBeforeBlank, answer);
-		this.caseSensitive = caseSensitive;
-		if(!caseSensitive){
-			ArrayList<String> newAnswers = new ArrayList<String>();
-			for(int i = 0; i < answer.size(); i++){
-				String curr = answer.get(i).toUpperCase();
-				newAnswers.add(curr);
-			}
-			overrideAnswers(newAnswers);
-		}
-		this.questionAfterBlank = questionAfterBlank;
+	public FiBQuestion(String question, Answer answer) throws InvalidFiBException{
+		super(question, answer);
+		questionParts = question.split("\\|");
+		if(questionParts.length != 2) throw new InvalidFiBException("Fill-in-Blank question must have two parts, separated by '|'");
+		this.type = "fib-question";
 	}
 	
 	public String getPreText(){
-		return getQuestion();
+		return questionParts[0];
 	}
 	
 	public String getPostText(){
-		return questionAfterBlank;
+		return questionParts[1];
 	}
-	
-	public boolean isCaseSensitive(){
-		return caseSensitive;
-	}
-	
-	@Override
-	public boolean isCorrectAnswer(String answer){
-		String inputAnswer = answer;
-		if(!caseSensitive){
-			inputAnswer = inputAnswer.toUpperCase();
-		}
-		return super.isCorrectAnswer(inputAnswer);
-	}
-	
-	
 
+	private class InvalidFiBException extends Exception {
+		  public InvalidFiBException() { super(); }
+		  public InvalidFiBException(String message) { super(message); }
+		  public InvalidFiBException(String message, Throwable cause) { super(message, cause); }
+		  public InvalidFiBException(Throwable cause) { super(cause); }
+	}
+	
 }

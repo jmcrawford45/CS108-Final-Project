@@ -3,34 +3,16 @@ package question;
 import java.util.ArrayList;
 
 public class ResponseQuestion extends Question {
-	
-	private boolean caseSensitive;
 
-	public ResponseQuestion(String question, ArrayList<String> answer, boolean caseSensitive) {
+	public ResponseQuestion(String question, Answer answer) {
 		super(question, answer);
-		this.caseSensitive = caseSensitive;
-		if(!caseSensitive){
-			ArrayList<String> newAnswer = new ArrayList<String>();
-			for(int i = 0; i < answer.size(); i++){
-				String curr = answer.get(i).toUpperCase();
-				System.out.println("Added: " + curr);
-				newAnswer.add(curr);
-			}
-			overrideAnswers(newAnswer);
-		}
+		this.type = "response-question";
 	}
 	
-	public boolean isCaseSensitive(){
-		return caseSensitive;
+	public ResponseQuestion(String question, String answer) {
+		super(question, answer);
+		this.type = "response-question";
 	}
 	
-	@Override
-	public boolean isCorrectAnswer(String answer){
-		String inputAnswer = answer;
-		if(!caseSensitive){
-			inputAnswer = answer.toUpperCase();
-		}
-		return super.isCorrectAnswer(inputAnswer);
-	}
-
+	
 }

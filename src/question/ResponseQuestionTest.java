@@ -10,45 +10,33 @@ import org.junit.Test;
 
 public class ResponseQuestionTest {
 	
-	Question workInsensitive;
-	
-	Question nameSensitive;
-	
-	
+	Question work;
+
 	@Before
 	public void setUp() throws Exception {
-		
-		ArrayList<String> answerWorkInsensitive = new ArrayList<String>();
-		answerWorkInsensitive.add("yes");
-		answerWorkInsensitive.add("y");
-		answerWorkInsensitive.add("yes!");
-		
-		workInsensitive = new ResponseQuestion("Does this work?", answerWorkInsensitive, false);
-		
-		
-		ArrayList<String> answerNameSensitive = new ArrayList<String>();
-		answerNameSensitive.add("Jack");
-		nameSensitive = new ResponseQuestion("The correct answer is \"Jack\"", answerNameSensitive, true);
-		
-		
+		work = new ResponseQuestion("Does this work?", "yes|y");
 	}
 
 	@Test
-	public void caseInsensitiveTest() {
-		assertEquals(false, workInsensitive.isCorrectAnswer("no"));
-		assertEquals(true, workInsensitive.isCorrectAnswer("y"));
-		assertEquals(true, workInsensitive.isCorrectAnswer("yES"));
-		assertEquals(true, workInsensitive.isCorrectAnswer("yEs!"));
-		assertEquals(false, workInsensitive.isCorrectAnswer("nYes"));
-		assertTrue("Does this work?".equals(workInsensitive.getQuestion()));
+	public void test() {
+		assertTrue("Does this work?".equals(work.getQuestion()));
+		assertTrue(work.isCorrectSingleAnswer("y"));
+		assertTrue(work.isCorrectSingleAnswer("Y"));
+		assertTrue(work.isCorrectSingleAnswer("yEs"));
+		assertTrue(work.isCorrectSingleAnswer("yes"));
+		
+		assertFalse(work.isCorrectSingleAnswer("YYes"));
+		
 	}
 	
 	@Test
-	public void caseSensitiveTest(){
-		assertEquals(false, nameSensitive.isCorrectAnswer("jack"));
-		assertEquals(true, nameSensitive.isCorrectAnswer("Jack"));
-		assertEquals(false, nameSensitive.isCorrectAnswer("JAck"));
-		assertTrue("The correct answer is \"Jack\"".equals(nameSensitive.getQuestion()));
+	public void invalidAnswerTest(){
+		Answer wrongNumber = new Answer("yes");
+		wrongNumber.addAnswer("y");
+		
+		assertFalse(work.isCorrectAnswer(wrongNumber));
+		
 	}
+	
 
 }
