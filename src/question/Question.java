@@ -33,6 +33,10 @@ public class Question {
 		return this.answers.isCorrect(input);
 	}
 	
+	public String getType(){
+		return type;
+	}
+	
 	public String getQuestion(){
 		return question;
 	}
