@@ -6,15 +6,30 @@ public class Answer {
 
 	private ArrayList<String> answers;
 	int answerID;
+	boolean ordered;
 	
 	public Answer(String answer){
 		ArrayList<String> array = new ArrayList<String>();
 		array.add(answer);
 		this.answers = array;
+		this.ordered = true;
+	}
+	
+	public Answer(String answer, boolean ordered){
+		ArrayList<String> array = new ArrayList<String>();
+		array.add(answer);
+		this.answers = array;
+		this.ordered = ordered;
 	}
 	
 	public Answer(ArrayList<String> answers){
 		this.answers = answers;
+		this.ordered = true;
+	}
+	
+	public Answer(ArrayList<String> answers, boolean ordered){
+		this.answers = answers;
+		this.ordered = ordered;
 	}
 	
 	public boolean hasMultipleAnswers(){
@@ -37,6 +52,10 @@ public class Answer {
 		this.answers.add(newAnswer);
 	}
 	
+	public boolean isOrdered(){
+		return this.ordered;
+	}
+	
 	public void replaceAnswer(String switchedAnswer, int index){
 		this.answers.set(index, switchedAnswer);
 	}
@@ -51,17 +70,6 @@ public class Answer {
 	}
 	
 	public boolean isCorrect(Answer userInput){
-		if(userInput.numAnswers() != numAnswers()) return false;
-		else {
-			for (int a = 0; a < numAnswers(); a++){
-				String[] answer = answers.get(a).split("|");
-				if (!isCorrectSingleAnswer(answer,userInput.getAnswerAt(a))) return false;
-			}
-			return true;
-		}
-	}
-	
-	public boolean isCorrect(Answer userInput, boolean ordered){
 		if(userInput.numAnswers() != numAnswers()) return false;
 		if(ordered){
 			return isCorrect(userInput);

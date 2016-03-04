@@ -5,63 +5,52 @@ import java.util.List;
 
 public class Question {
 	
-	protected ArrayList <ArrayList<String>> answers;
+	protected Answer answers;
 	protected String question;
-	protected boolean ordered;
 	
 	
-	public Question(String question, ArrayList<String> answer){
+	public Question(String question, Answer answers){
 		this.question = question;
-		this.answers = new ArrayList<ArrayList<String>>();
-		this.answers.add(answer);
+		this.answers = answers;
 	}
 	
-	public Question(String question, List<ArrayList<String>> answers){
+	public Question(String question, String answer){
 		this.question = question;
-		this.answers = (ArrayList<ArrayList<String>>) answers;
-		
+		this.answers = new Answer(answer);
 	}
 	
-	
-	public boolean isCorrectAnswer(String input){
-		ArrayList<String> answerPossibles = answers.get(0);
-		for(int i = 0; i < answerPossibles.size(); i++){
-			if(input.equals(answerPossibles.get(i))) return true;
-		}
-		return false;
-		
+	public void overrideAnswers(Answer newAnswer){
+		this.answers = newAnswer;
 	}
 	
-	public void overrideAnswers(ArrayList<String> newAnswer){
-		ArrayList<ArrayList<String>> newAnswers = new ArrayList<ArrayList<String>>();
-		newAnswers.add(newAnswer);
-		answers = newAnswers;
+	public boolean isCorrectSingleAnswer(String input){
+		return this.answers.isCorrectSingle(input);
 	}
 	
-	public void overrideAnswers(List<ArrayList<String>> newAnswers){
-		answers = (ArrayList<ArrayList<String>>) newAnswers;
+	public boolean isCorrectAnswer(Answer input){
+		return this.answers.isCorrect(input);
 	}
 	
 	public String getQuestion(){
 		return question;
 	}
 	
-	public int numAnswers(){
-		return answers.size();
+	public boolean isOrdered(){
+		return this.answers.isOrdered();
 	}
 	
-	public String getAllAnswers(){
+	public int numAnswers(){
+		return answers.numAnswers();
+	}
+	
+	public String answersToString(){
 		String result = "";
-		for(int i = 0; i < answers.size(); i++){
-			result+= answers.get(i);
-			result+=" ";
+		for(int i = 0; i < numAnswers(); i++){
+			result += this.answers.getAnswerAt(i);
+			result += "\r";
 		}
 		return result;
-	}
-	
-	public String getPossibleAnswer(int index){
-		ArrayList<String> answerOptions = answers.get(0);
-		return answerOptions.get(index);
+		
 	}
 	
 }

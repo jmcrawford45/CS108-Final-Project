@@ -47,20 +47,20 @@ public class AnswerTest {
 		multi.addAnswer("3");
 		multi.addAnswer("2");
 		
-		assertTrue(multiAnswer1.isCorrect(multi, false));
+		assertTrue(multiAnswer1.isCorrect(multi));
 		assertTrue(!multiAnswer1.isCorrect(multi));
-		assertTrue(!multiAnswer1.isCorrect(multi, true));
+		assertTrue(!multiAnswer1.isCorrect(multi));
 		
 		multi.replaceAnswer("4", 0);
 		
-		assertTrue(multiAnswer1.isCorrect(multi, false));
+		assertTrue(multiAnswer1.isCorrect(multi));
 		assertTrue(!multiAnswer1.isCorrect(multi));
-		assertTrue(!multiAnswer1.isCorrect(multi, true));
+		assertTrue(!multiAnswer1.isCorrect(multi));
 		
 		multi.addAnswer("1");
-		assertTrue(!multiAnswer1.isCorrect(multi, false));
 		assertTrue(!multiAnswer1.isCorrect(multi));
-		assertTrue(!multiAnswer1.isCorrect(multi, true));
+		assertTrue(!multiAnswer1.isCorrect(multi));
+		assertTrue(!multiAnswer1.isCorrect(multi));
 		
 
 	}
