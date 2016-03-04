@@ -4,41 +4,47 @@ import java.util.ArrayList;
 
 public class MCQuestion extends Question {
 	
-	ArrayList<String> choices;
+	String choices;
+	String[] choiceArray;
 
-	public MCQuestion(String question, ArrayList<String> answer, ArrayList<String> choices) throws InvalidMCException {
+	public MCQuestion(String question, Answer answer, String choices) throws InvalidMCException {
 
 		super(question, answer);
-		if(!isValidChoice(answer, choices)) throw new InvalidMCException("Answer does not appear in choices.");
 		this.choices = choices;
+		this.type = "multiplechoice-question";
+		this.choiceArray = choices.split("\\|");
+		if(!isValidChoice()) throw new InvalidMCException("Answer does not appear in choices.");
+		}
+	
+	public MCQuestion(String question, String answer, String choices) throws InvalidMCException {
+
+		super(question, answer);
+		this.choices = choices;
+		this.type = "multiplechoice-question";
+		this.choiceArray = choices.split("\\|");
+		if(!isValidChoice()) throw new InvalidMCException("Answer does not appear in choices.");
+
 	}
 	
 	
 	public int getNumChoices(){
-		return choices.size();
+		return choiceArray.length;
 	}
 	
 	public String getChoice(int choiceIndex){
-		return choices.get(choiceIndex);
-	}
-	
-	@Override
-	public boolean isCorrectAnswer(String input){
-		System.out.println("Comparing " + input + " against " + answers.get(0).get(0) + " resulting in " + input.equals(answers.get(0).get(0)));
-		if (input.equals(answers.get(0).get(0))) return true;
-		else return false;
+		return choiceArray[choiceIndex];
 	}
 	
 	
-	private boolean isValidChoice(ArrayList<String> answer, ArrayList<String> options){
-		if(answer.size() > 1) return false;					//mult choice only has one solution
-		for(int i = 0; i < options.size(); i++){
-			if(options.get(i).equals(answer.get(0))) return true;		//if no options appear in answer, then not a valid MC question
+	private boolean isValidChoice(){
+		if(this.answers.hasMultipleAnswers()) return false;					//mult choice only has one solution
+		for(int i = 0; i < choiceArray.length; i++){
+			if(choiceArray[i].equals(answers.firstAnswer())) return true;		//if no options appear in answer, then not a valid MC question
 		}
 		return false;
 	}
 	
-	private class InvalidMCException extends Exception {
+	public class InvalidMCException extends Exception {
 		  public InvalidMCException() { super(); }
 		  public InvalidMCException(String message) { super(message); }
 		  public InvalidMCException(String message, Throwable cause) { super(message, cause); }

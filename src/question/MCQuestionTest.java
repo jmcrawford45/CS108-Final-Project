@@ -7,21 +7,15 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import question.MCQuestion.InvalidMCException;
+
 public class MCQuestionTest {
 
 	MCQuestion mcquestion;
 	
 	@Before
 	public void setUp() throws Exception {
-		ArrayList<String> answer = new ArrayList<String>();
-		answer.add("correct");
-		ArrayList<String> possibles = new ArrayList<String>();
-		possibles.add("incorrect");
-		possibles.add("nope");
-		possibles.add("correct");
-		possibles.add("not this one either");
-		
-		mcquestion = new MCQuestion("Which one is correct?", answer, possibles);
+		mcquestion = new MCQuestion("Which one is correct?", "this one", "no|not this one|not this one either|this one");
 		printQuestion(mcquestion);
 		
 		
@@ -38,11 +32,32 @@ public class MCQuestionTest {
 	@Test
 	public void mcQuestionTest(){
 		assertEquals(4, mcquestion.getNumChoices());
-		assertEquals(false, mcquestion.isCorrectAnswer("this doesn't even appear bro"));
-		assertEquals(false, mcquestion.isCorrectAnswer("incorrect"));
-		assertEquals(true, mcquestion.isCorrectAnswer("correct"));
-		assertEquals(false, mcquestion.isCorrectAnswer("nope"));
-		assertEquals(false, mcquestion.isCorrectAnswer("not this one either"));
+		assertEquals(false, mcquestion.isCorrectSingleAnswer("this doesn't even appear bro"));
+		assertEquals(false, mcquestion.isCorrectSingleAnswer("incorrect"));
+		assertEquals(false, mcquestion.isCorrectSingleAnswer("correct"));
+		assertEquals(false, mcquestion.isCorrectSingleAnswer("nope"));
+		assertEquals(false, mcquestion.isCorrectSingleAnswer("not this one either"));
+		assertEquals(true, mcquestion.isCorrectSingleAnswer("this one"));
+	}
+	
+	@Test
+	public void failureTest(){
+		try {
+			MCQuestion fail = new MCQuestion("This is a question.", "this is an answer that does not appear", "these are answers|answer|ans");
+			fail();
+		} catch (InvalidMCException e) {
+			// this is a success
+		}
+	}
+	
+	@Test
+	public void failureTest2(){
+		try {
+			MCQuestion fail2 = new MCQuestion("This is another question", "this answer|has two answers", "this answer|has two answers|but is invalid");
+			fail();
+		} catch (InvalidMCException e) {
+			// this is a success
+		}
 	}
 
 }

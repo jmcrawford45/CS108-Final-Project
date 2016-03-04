@@ -14,6 +14,13 @@ public class FiBQuestion extends Question {
 		this.type = "fib-question";
 	}
 	
+	public FiBQuestion(String question, String answer) throws InvalidFiBException{
+		super(question, answer);
+		questionParts = question.split("\\|");
+		if(questionParts.length != 2) throw new InvalidFiBException("Fill-in-Blank question must have two parts, separated by '|'");
+		this.type = "fib-question";
+	}
+	
 	public String getPreText(){
 		return questionParts[0];
 	}

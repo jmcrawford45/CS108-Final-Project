@@ -36,6 +36,10 @@ public class Answer {
 		return (answers.size() > 1);
 	}
 	
+	public String firstAnswer(){
+		return answers.get(0);
+	}
+	
 	public int numAnswers(){
 		return answers.size();
 	}
