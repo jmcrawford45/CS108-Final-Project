@@ -11,7 +11,7 @@ public class MCQuestion extends Question {
 
 		super(question, answer);
 		this.choices = choices;
-		this.type = "multiplechoice-question";
+		this.type = "mc-question";
 		this.choiceArray = choices.split("\\|");
 		if(!isValidChoice()) throw new InvalidMCException("Answer does not appear in choices.");
 		}
@@ -20,7 +20,7 @@ public class MCQuestion extends Question {
 
 		super(question, answer);
 		this.choices = choices;
-		this.type = "multiplechoice-question";
+		this.type = "mc-question";
 		this.choiceArray = choices.split("\\|");
 		if(!isValidChoice()) throw new InvalidMCException("Answer does not appear in choices.");
 

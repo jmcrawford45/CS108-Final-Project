@@ -42,6 +42,10 @@ public class Answer {
 		this.ordered = ordered;
 	}
 	
+	public void setIfOrdered(boolean ordered){
+		this.ordered = ordered;
+	}
+	
 	public boolean hasMultipleAnswers(){
 		return (answers.size() > 1);
 	}
