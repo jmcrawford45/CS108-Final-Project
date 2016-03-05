@@ -11,16 +11,16 @@ public class MathQuestionGeneratorTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		gen = new MathQuestionGenerator(5, 5);
+		gen = new MathQuestionGenerator(7, 5);
 		
 	}
 
 	@Test
 	public void test() {
-		for (int i = 0; i < 5; i++){
+		for (int i = 0; i < 1000000; i++){
 			ResponseQuestion curr = gen.generateQuestion();
-			System.out.println(curr.getQuestion());
-			System.out.println(curr.answersToString());
+			//System.out.println(curr.getQuestion());
+			//System.out.println(curr.answersToString());
 		}
 	}
 

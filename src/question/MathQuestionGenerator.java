@@ -9,7 +9,7 @@ public class MathQuestionGenerator {
 
 	public MathQuestionGenerator(int difficulty, int type) {
 		this.difficulty = difficulty;
-		if(difficulty > 10) this.difficulty = 10;
+		if(difficulty > 7) this.difficulty = 7;
 		if(difficulty < 1) this.difficulty = 1;
 		this.type = type;
 		if(type > 5) this.type = 5;
