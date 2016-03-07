@@ -1,6 +1,7 @@
 package listeners;
 
 import java.sql.*;
+import java.util.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -45,6 +46,7 @@ public class ContextListener implements ServletContextListener {
             }
         ServletContext context = arg0.getServletContext();
         context.setAttribute("connection", con);
+        context.setAttribute("rand", new Random());
     }
 
 	/**
