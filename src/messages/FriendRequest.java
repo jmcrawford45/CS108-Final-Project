@@ -4,7 +4,7 @@ public class FriendRequest extends Message {
 	private boolean accepted;
 	private String body;
 	public FriendRequest(String from, String to){
-		super(from, to);
+		super(from, to,"FriendRequest");
 		this.accepted = false;
 		this.body = from + " would like to be your friend!";
 	}
@@ -16,6 +16,9 @@ public class FriendRequest extends Message {
 	}
 	public boolean isAccepted(){
 		return this.accepted;
+	}
+	public String getType(){
+		return "FriendRequest";
 	}
 	@Override
 	public String toString(){

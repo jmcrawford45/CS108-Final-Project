@@ -3,7 +3,7 @@ package messages;
 public class ChallengeMessage extends Message {
 	private final String body, link;
 	public ChallengeMessage(String to, String from, String link, double score){
-		super(to,from);
+		super(to,from,"ChallengeMessage");
 		this.body = from + " sent you a challenge!"
 				+ "Visit the link below to try to beat"
 				+ "their high score of" + score;
@@ -14,6 +14,9 @@ public class ChallengeMessage extends Message {
 	}
 	public String getLink() {
 		return link;
+	}
+	public String getType(){
+		return "ChallengeMessage";
 	}
 	@Override
 	public String toString(){
