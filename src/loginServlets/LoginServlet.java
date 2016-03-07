@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import listeners.Security;
 import main.User;
 import table.TableAbstraction;
 
@@ -41,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		String password = (String)request.getParameter("password");
 		Connection con = (Connection)request.getSession().getServletContext().getAttribute("connection");
 		User user = TableAbstraction.getUser(name,con);
-		if(user != null && user.getPassword().equals(password)){
+		if(user != null && user.getPassword().equals(Security.getHashed(password, user.getSalt()))){
 			request.getSession().setAttribute("user", user);
             request.getRequestDispatcher("Welcome.jsp").forward(request, response);
         } else request.getRequestDispatcher("TryAgain.html").forward(request, response);
