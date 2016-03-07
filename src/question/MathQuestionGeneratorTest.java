@@ -11,7 +11,7 @@ public class MathQuestionGeneratorTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		gen = new MathQuestionGenerator(7, 5);
+		gen = new MathQuestionGenerator(2, 5);
 		
 	}
 
@@ -19,8 +19,8 @@ public class MathQuestionGeneratorTest {
 	public void test() {
 		for (int i = 0; i < 1000000; i++){
 			ResponseQuestion curr = gen.generateQuestion();
-			//System.out.println(curr.getQuestion());
-			//System.out.println(curr.answersToString());
+			System.out.println(curr.getQuestion());
+			System.out.println(curr.answersToString());
 		}
 	}
 

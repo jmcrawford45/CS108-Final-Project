@@ -8,6 +8,7 @@ public class Question {
 	protected Answer answers;
 	protected String question;
 	protected String type;
+	protected int questionid;
 	
 	
 	public Question(String question, Answer answers){
@@ -57,6 +58,14 @@ public class Question {
 		}
 		return result;
 		
+	}
+	
+	public int getID(){
+		return this.questionid;
+	}
+	
+	public void setID(int id){
+		this.questionid = id;
 	}
 	
 }

@@ -8,6 +8,7 @@ public class Answer {
 	int answerID;
 	boolean ordered;
 	
+	
 	public Answer(String answer){
 		ArrayList<String> array = new ArrayList<String>();
 		array.add(answer);
@@ -50,6 +51,14 @@ public class Answer {
 		return (answers.size() > 1);
 	}
 	
+	public int getID(){
+		return this.answerID;
+	}
+	
+	public void setID(int id){
+		this.answerID = id;
+	}
+	
 	public String firstAnswer(){
 		return answers.get(0);
 	}
@@ -63,7 +72,7 @@ public class Answer {
 	}
 	
 	public String[] getAnswerArrayAt(int index){
-		return answers.get(index).split("|");
+		return answers.get(index).split("\\|");
 	}
 	
 	public void addAnswer(String newAnswer){
@@ -112,6 +121,36 @@ public class Answer {
 			if (options[i].toUpperCase().equals(input.toUpperCase())) return true;
 		}
 		return false;
+	}
+	
+	public String convertAnswerToString(){
+		String result = "";
+		for (int answer = 0; answer < numAnswers(); answer++){
+			if(answer != 0) result += "\\";
+			result += getAnswerAt(answer);
+		}
+		return result;
+	}
+	
+	public Answer convertStringToAnswer(String answerString){
+		String[] answersArray =  answerString.split("\\");
+		ArrayList<String> answerList = new ArrayList<String>();
+		for(int i = 0; i < answersArray.length; i++){
+			answerList.add(answersArray[i]);
+		}
+		Answer result = new Answer(answerList);
+		return result;
+	}
+	
+	public Answer convertStringToAnswer(String answerString, boolean ordered){
+		String[] answersArray =  answerString.split("\\");
+		ArrayList<String> answerList = new ArrayList<String>();
+		for(int i = 0; i < answersArray.length; i++){
+			answerList.add(answersArray[i]);
+		}
+		Answer result = new Answer(answerList);
+		result.setIfOrdered(ordered);
+		return result;
 	}
 	
 	

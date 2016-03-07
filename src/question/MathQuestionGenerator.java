@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class MathQuestionGenerator {
 	
-	int difficulty;		//max number of digits in question + 1 (enter val between 1 - 10)
+	int difficulty;		//max number of digits in question + 3 (enter val between 1 - 7)
 	int type;			//1 if addition, 2 if subtraction, 3 if multiplication, 4 if division, random is any other number
 
 	public MathQuestionGenerator(int difficulty, int type) {
