@@ -5,10 +5,11 @@ import java.sql.*;
 
 public class TableAbstraction {
 
-	public static User getUser(String id, Connection con){
+public static User getUser(String id, Connection con){
+		System.out.println("Getting: " + id);
 		try{
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+		ResultSet rs = stmt.executeQuery("SELECT user FROM users WHERE id = '" + id +"';");
 	    while (rs.next()) {
 	      byte[] st = (byte[]) rs.getObject(1);
 	      ByteArrayInputStream baip = new ByteArrayInputStream(st);
@@ -18,10 +19,8 @@ public class TableAbstraction {
 			User user = (User) ois.readObject();
 			return user;
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    }
@@ -40,13 +39,14 @@ public class TableAbstraction {
 				oos = new ObjectOutputStream(baos);
 				oos.writeObject(user);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			byte[] userAsBytes = baos.toByteArray();
+			System.out.println("inserting: " + id);
+
 		    PreparedStatement pstmt = con.prepareStatement("INSERT INTO users VALUES(?,?)");
 		    ByteArrayInputStream bais = new ByteArrayInputStream(userAsBytes);
-		    pstmt.setString(0, id);
+		    pstmt.setString(1, id);
 		    pstmt.setBinaryStream(2, bais, userAsBytes.length);
 		    pstmt.executeUpdate();
 		    pstmt.close();
@@ -57,10 +57,11 @@ public class TableAbstraction {
 	public static void deleteUser(String id, Connection con){
 		Statement stmt;
 		try {
-			stmt = con.createStatement();
-			stmt.executeUpdate("DELETE * from users where id = '" + id + "';");
+			stmt = con.createStatement();    
+			System.out.println("deleting: " + id);
+
+			stmt.executeUpdate("DELETE FROM users WHERE id = \"" + id + "\"");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
