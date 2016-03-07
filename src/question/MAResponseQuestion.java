@@ -10,5 +10,10 @@ public class MAResponseQuestion extends Question {
 		this.type = "maresponse-question";
 	}
 	
+	@Override
+	public String getAdditional(){
+		return Boolean.toString(this.answers.isOrdered());
+	}
+	
 
 }

@@ -48,6 +48,7 @@ public class QuestionManager {
 					result = new FiBQuestion(question, answer);
 				} else if (type.equals("maresponse-question")){
 					result = new MAResponseQuestion(question, answer);
+					result.getAnswer().setIfOrdered(Boolean.parseBoolean(additional));
 				} /*else if (type.equals("matching-question")){
 					result = new MatchingQuestion
 				} */
