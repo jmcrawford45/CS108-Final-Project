@@ -29,7 +29,7 @@ public class FiBQuestion extends Question {
 		return questionParts[1];
 	}
 
-	private class InvalidFiBException extends Exception {
+	public class InvalidFiBException extends Exception {
 		  public InvalidFiBException() { super(); }
 		  public InvalidFiBException(String message) { super(message); }
 		  public InvalidFiBException(String message, Throwable cause) { super(message, cause); }

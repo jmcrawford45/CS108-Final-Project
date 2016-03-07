@@ -9,6 +9,7 @@ public class Question {
 	protected String question;
 	protected String type;
 	protected int questionid;
+	protected int quizid;
 	
 	
 	public Question(String question, Answer answers){
@@ -66,6 +67,23 @@ public class Question {
 	
 	public void setID(int id){
 		this.questionid = id;
+	}
+	
+	public int getQuizID(){
+		return this.quizid;
+	}
+	
+	public void setQuizID(int quizid){
+		this.quizid = quizid;
+	}
+	
+	public Answer getAnswer(){
+		return this.answers;
+	}
+	
+	public String getAdditional(){
+		String result = "";
+		return result;
 	}
 	
 }

@@ -51,4 +51,9 @@ public class MCQuestion extends Question {
 		  public InvalidMCException(Throwable cause) { super(cause); }
 	}
 	
+	@Override
+	public String getAdditional(){
+		return this.choices;
+	}
+	
 }

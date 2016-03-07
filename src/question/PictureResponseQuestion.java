@@ -9,11 +9,13 @@ public class PictureResponseQuestion extends ResponseQuestion {
 	public PictureResponseQuestion(String question, Answer answer, String url) {
 		super(question, answer);
 		picURL = url;
+		this.type = "pic-reponse-question";
 	}
 	
 	public PictureResponseQuestion(String question, String answer, String url) {
 		super(question, answer);
 		picURL = url;
+		this.type = "pic-reponse-question";
 	}
 	
 	public String getPicURL(){
@@ -22,6 +24,11 @@ public class PictureResponseQuestion extends ResponseQuestion {
 	
 	public void changePicURLTo(String url){
 		this.picURL = url;
+	}
+	
+	@Override
+	public String getAdditional(){
+		return this.picURL;
 	}
 
 }

@@ -53,4 +53,9 @@ public class MCMAQuestion extends Question {
 		  public InvalidMCMAException(String message, Throwable cause) { super(message, cause); }
 		  public InvalidMCMAException(Throwable cause) { super(cause); }
 	}
+	
+	@Override
+	public String getAdditional(){
+		return this.choices;
+	}
 }

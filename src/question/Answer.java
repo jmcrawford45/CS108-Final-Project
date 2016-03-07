@@ -132,7 +132,7 @@ public class Answer {
 		return result;
 	}
 	
-	public Answer convertStringToAnswer(String answerString){
+	public static Answer convertStringToAnswer(String answerString){
 		String[] answersArray =  answerString.split("\\");
 		ArrayList<String> answerList = new ArrayList<String>();
 		for(int i = 0; i < answersArray.length; i++){
@@ -142,7 +142,7 @@ public class Answer {
 		return result;
 	}
 	
-	public Answer convertStringToAnswer(String answerString, boolean ordered){
+	public static Answer convertStringToAnswer(String answerString, boolean ordered){
 		String[] answersArray =  answerString.split("\\");
 		ArrayList<String> answerList = new ArrayList<String>();
 		for(int i = 0; i < answersArray.length; i++){
