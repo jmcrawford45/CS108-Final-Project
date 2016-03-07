@@ -36,6 +36,7 @@ public class ContextListener implements ServletContextListener {
             con = DriverManager.getConnection("jdbc:mysql://" + 
             MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME , MyDBInfo.MYSQL_PASSWORD);
             Statement stmt = con.createStatement();
+            stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
             stmt.executeUpdate("DROP TABLE users;");
             stmt.executeUpdate("CREATE TABLE users(id String, user BLOB);");
     		} catch (SQLException e) {
