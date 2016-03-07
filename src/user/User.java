@@ -8,7 +8,8 @@ public class User implements java.io.Serializable{
 
 	private static final long serialVersionUID = 1L;    
 	static int BIO_CHAR_LIMIT = 150;
-	static int FRIEND_LIM = 5;            
+	static int FRIEND_LIM = 5;   
+	static int SALT_LENGTH = 4;
 	//testing 
 	private String salt;
 	private String uniqueUserID;      
