@@ -16,9 +16,12 @@ public class MCMAQuestionTest {
 	public void setUp() throws Exception {
 		singleAnswerQuestion = new MCMAQuestion("Only option c is correct.", "c", "a|b|c|d");
 		
-		Answer multiAnswer = new Answer();
-		multiAnswer.addAnswer("c");
-		multiAnswer.addAnswer("a");
+		//Answer multiAnswer = new Answer();
+		//multiAnswer.addAnswer("c");
+		//multiAnswer.addAnswer("a");
+		
+		Answer multiAnswer = Answer.convertStringToAnswer("c||a");
+		
 		multiAnswerQuestion = new MCMAQuestion("Options a and c are correct.", multiAnswer, "a|b|c|d");
 	}
 
@@ -88,6 +91,15 @@ public class MCMAQuestionTest {
 		} catch (InvalidMCMAException e) {
 			//succeeded
 		}
+	}
+	
+	@Test
+	public void toStringMethods(){
+		System.out.println(singleAnswerQuestion.getAnswer().convertAnswerToString());
+		System.out.println(singleAnswerQuestion.getAdditional());
+		System.out.println();
+		System.out.println(multiAnswerQuestion.getAnswer().convertAnswerToString());
+		System.out.println(multiAnswerQuestion.getAdditional());
 	}
 
 }

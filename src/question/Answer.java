@@ -126,14 +126,14 @@ public class Answer {
 	public String convertAnswerToString(){
 		String result = "";
 		for (int answer = 0; answer < numAnswers(); answer++){
-			if(answer != 0) result += "\\";
+			if(answer != 0) result += "||";
 			result += getAnswerAt(answer);
 		}
 		return result;
 	}
 	
 	public static Answer convertStringToAnswer(String answerString){
-		String[] answersArray =  answerString.split("\\");
+		String[] answersArray =  answerString.split("\\|\\|");
 		ArrayList<String> answerList = new ArrayList<String>();
 		for(int i = 0; i < answersArray.length; i++){
 			answerList.add(answersArray[i]);
@@ -143,7 +143,7 @@ public class Answer {
 	}
 	
 	public static Answer convertStringToAnswer(String answerString, boolean ordered){
-		String[] answersArray =  answerString.split("\\");
+		String[] answersArray =  answerString.split("\\|\\|");
 		ArrayList<String> answerList = new ArrayList<String>();
 		for(int i = 0; i < answersArray.length; i++){
 			answerList.add(answersArray[i]);
