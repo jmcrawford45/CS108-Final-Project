@@ -10,7 +10,7 @@ public class User implements java.io.Serializable{
 	static int BIO_CHAR_LIMIT = 150;
 	static int FRIEND_LIM = 5;            
 	//testing 
-
+	private String salt;
 	private String uniqueUserID;      
 	private String hashPassword;
 	private String displayName;
@@ -30,7 +30,7 @@ public class User implements java.io.Serializable{
 	private ArrayList<Message> messages;
 	private ArrayList<String> activityLog;  
 
-	public User(String uniqueUserId,String hashPassword) {
+	public User(String uniqueUserId,String hashPassword, String salt) {
 		this.uniqueUserID = uniqueUserId;    
 		this.displayName = uniqueUserId;
 		this.friendCount = 0;
@@ -45,7 +45,14 @@ public class User implements java.io.Serializable{
 		messages = new ArrayList<Message>();
 		activityLog = new ArrayList<String>();
 		this.hashPassword = hashPassword;
+		this.salt = salt;
 
+	}
+	public String getPassword(){
+		return this.hashPassword;
+	}
+	public String getSalt(){
+		return this.salt;
 	}
 	
 	public void setDisplayName(String newDisplayName){
