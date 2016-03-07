@@ -34,7 +34,10 @@ public class ContextListener implements ServletContextListener {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + 
             MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME , MyDBInfo.MYSQL_PASSWORD);
-            } catch (SQLException e) {
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("DROP TABLE users;");
+            stmt.executeUpdate("CREATE TABLE users(id String, user BLOB);");
+    		} catch (SQLException e) {
             e.printStackTrace();
             }
             catch (ClassNotFoundException e) {
