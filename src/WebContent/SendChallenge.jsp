@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Send Challenge </title>
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
 <%
@@ -21,7 +22,7 @@ String from = defUser.getDisplayName();
 <input type = "hidden" name="toUser" value = "<%= to%>">  
 <input type="submit" value = "Challenge!" />
 </form>
-
-
+<form action = "HomePage.jsp" method="post">
+		<input type = "submit" value = "Home" class="button"/> 
 </body>
 </html>
