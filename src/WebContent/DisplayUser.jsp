@@ -8,44 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Display User</title>
-<style type="text/css">
-body{
-	background-color: rgb(51, 51, 153)
-}
-.name{
-/*	text-align: center;
-*/	text-indent: 65px;
-	color: white;
-}
-.bio{
-	color: white;
-}
-.quizH{
-	color: white;
-}
-.friends{
-	color: white;
-}
-/*.addFriend{
-	color: white;
-}*/
-.Button{
-
-	background: #00FFFF;   
-	font-size: 20px;
-	border-radius: 12px;  
-	transition: all 2s;
-	cursor: pointer;
-	margin: 7px;
-	text-align: center;
-}
-.Button:hover {
-	background-color: #FF0000;
-	padding-right: = 25px;
-	
-}
-
-</style>
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
 
@@ -103,9 +66,8 @@ for(int i = 0; i < friends.size(); i++){
 }
 %>
 </p>
-
-
-
+<form action = "HomePage.jsp" method="post">
+		<input type = "submit" value = "Home" class="button"/> 
 </body>
 </html>
 
