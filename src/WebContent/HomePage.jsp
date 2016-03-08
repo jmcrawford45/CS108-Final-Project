@@ -7,27 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Home Page</title>
-<style type="text/css"> 
-body{
-	background-color: rgb(140,120,250);
-
-}  
- .button {  
-
-	background: #00FFFF;   
-	font-size: 20px;
-	border-radius: 12px;  
-	transition: all 2s;
-	cursor: pointer;  
-	margin: 7px;
-	text-align: center;
-}
-.button:hover {
-	background-color: #FF0000;
-	padding-right: = 25px;
-	
-} 
-</style>
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
 
