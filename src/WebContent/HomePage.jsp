@@ -1,3 +1,4 @@
+<%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,42 +9,63 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Home Page</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+
 </head>
-<body>
+<body>  
 
 
 <%
-User defUser = (User)request.getServletContext().getAttribute("defaultUser");
-System.out.print(defUser.getDisplayName());  
+User defUser = (User)request.getSession().getAttribute("user");//correct//
+java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 
+defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
 %>
-<%-- <img src= "<%=imageStr%>"/> --%>
+<%=defUser.getDisplayName() %>
 <h1> Announcements</h1>  
 <h1> Popular Quizzes</h1>
 <h1> Recent Quizzes</h1>
-<h1> Quiz History</h1>
+<h1> Quiz History</h1>  
 <%
 ArrayList<String> quizHistory = defUser.getQuizzes();
 for(int i = 0; i < quizHistory.size(); i++){
 	String quiz = quizHistory.get(i);%>
 	<%=quiz %><br> <%
-}
+} 
 
 %>
 <h1> Authored Quizzes</h1>    
 
 <h1> Friend Activity</h1>
 
-<form action = "EditProfile.jsp" method="post">
-		<%-- <input type = "hidden" name="toAdd" value = "<%=name %>">  --%> 
+<%-- <% 
+for(int i = 0; i < defUser.getFriends().size(); i++){
+	User friend = manager.getAccount(defUser.getFriends().get(i));%>
+	<%=friend.getActivityLog().get(0) %>
+<% 	 
+} --%>
+
+
+
+<form action = "DisplaySelf.jsp?user=<%=defUser.getDisplayName() %>" method="post">
 		<input type = "submit" value = "My Profile" class="button"/>    
 </form> 
+
+<form action = "EditProfile.jsp" method="post">
+		<input type = "submit" value = "Edit Profile" class="button"/>    
+</form> 
 <form action = "DisplayInbox.jsp" method="post">
-		<%-- <input type = "hidden" name="toAdd" value = "<%=name %>">  --%> 
+
 		<input type = "submit" value = "Inbox" class="button"/>      
 </form>   
 <form action = "ViewFriends.jsp" method="post">
 		<input type = "submit" value = "Friends" class="button"/>      
+</form>  
+
+<form action = "AddFriends.jsp" method="post">
+		<input type = "submit" value = "Add Friends" class="button"/>      
+</form>  
+<form action = "ViewQuizzes.jsp" method="post">
+		<input type = "submit" value = "Quizzes!" class="button"/>      
 </form>  
 
 

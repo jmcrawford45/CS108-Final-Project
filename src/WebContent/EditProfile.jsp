@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Edit Profile</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+
 </head>
 <body>
 
@@ -26,7 +27,12 @@
 <input type="hidden" value = "bio" name = "type"/>
 <input type="submit" value = "Set Bio" /></p>  
 </form>
+
+
+<br>
 <form action = "HomePage.jsp" method="post">
-		<input type = "submit" value = "Home" class="button"/> 
+<input type = "submit" value = "Home" class="button"/>
+</form>
+
 </body>
 </html>

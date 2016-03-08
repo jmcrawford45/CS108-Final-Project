@@ -7,12 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Send Challenge </title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+
 </head>
 <body>
 <%
 String to = request.getParameter("toChallenge");
 System.out.print("Challenge: " + to);
-User defUser = (User)request.getServletContext().getAttribute("defaultUser");
+User defUser = (User)request.getSession().getAttribute("user");//correct//
+
 String from = defUser.getDisplayName();
 %>
 
@@ -22,7 +24,12 @@ String from = defUser.getDisplayName();
 <input type = "hidden" name="toUser" value = "<%= to%>">  
 <input type="submit" value = "Challenge!" />
 </form>
+
+<br>
 <form action = "HomePage.jsp" method="post">
-		<input type = "submit" value = "Home" class="button"/> 
+<input type = "submit" value = "Home" class="button"/>
+</form>
+
+
 </body>
 </html>

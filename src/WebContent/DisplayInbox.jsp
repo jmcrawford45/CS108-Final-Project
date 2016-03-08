@@ -1,3 +1,4 @@
+<%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="messages.ChallengeMessage"%>
 <%@page import="messages.Message"%>
 <%@page import="user.User"%>
@@ -10,16 +11,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Display Inbox</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+       
 </head>
 <body>
 
 My Inbox     
 
 <% 
-AccountManager accounts = (AccountManager)request.getServletContext().getAttribute("manager");
-		User defUser = (User)request.getServletContext().getAttribute("defaultUser");
+        User defUser = (User)request.getSession().getAttribute("user");//correct//
+		java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
+
+		defUser = TableAbstraction.getUser(defUser.getDisplayName(),con );
+		request.getSession().setAttribute("user", defUser);
 		java.util.ArrayList<messages.Message> inbox = defUser.getMessages();
 		for(int i = 0; i < inbox.size(); i++){
+			
 			Message msg = inbox.get(i);    
 			String type = msg.getType();
 			String link = "";
@@ -27,9 +33,9 @@ AccountManager accounts = (AccountManager)request.getServletContext().getAttribu
 				ChallengeMessage msgCh = (ChallengeMessage)msg;
 				link = msgCh.getLink();    
 			}
-			System.out.print(type);
 			%>
 			<form action = "DistinguishMessages" method="post">
+				<input type = "hidden" name= "index" value = "<%=i %>"/>
 				<input type = "hidden" name="type" value = "<%=type%>">
 				<input type = "hidden" name="link" value = "<%=link%>">
 				<input type = "hidden" name = "from" value = "<%=msg.getFrom() %>"/>
@@ -42,8 +48,14 @@ AccountManager accounts = (AccountManager)request.getServletContext().getAttribu
 		<% 
 		
 %>
-<a href= "ComposeTextMessage.jsp"> Compose New Message</a>
+<a href= "ComposeTextMessage.jsp"> Compose New Message</a>    
+
+<br>
 <form action = "HomePage.jsp" method="post">
-		<input type = "submit" value = "Home" class="button"/> 
+<input type = "submit" value = "Home" class="button"/>
+</form>
+
+
+
 </body>
 </html>

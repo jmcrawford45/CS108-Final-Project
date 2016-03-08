@@ -5,38 +5,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Compose Text Message</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
-
+<title>Add Friends</title>
 </head>
-<body>  
+<body>
 
 <%
+String to = request.getParameter("to");
+if(to == null) to = "";
 User defUser = (User)request.getSession().getAttribute("user");//correct//
-
 String from = defUser.getDisplayName();
-String to;
-if(request.getParameter("to") == null){
-	to = "";
-} else {
-	to = request.getParameter("to");
-}
 
 %>
 
-<form action="SendMessage" method="post">  
-<p>To: <input type="text" name="toUser" value = "<%=to%>"/></p>    
-<input type = "hidden" name="fromUser" value = "<%= from%>">  
-<p>Body:<br> <input type="text" name="message"/>
-<input type="submit" value = "Send Message" /></p>
+<form action="SendFriendRequest" method="post">  
+<p>Add: <input type="text" name="toAdd" value = "<%=to%>"/></p>    
+<%-- <input type = "hidden" name="fromUser" value = "<%= from%>">  
+<p>Body:<br> <input type="text" name="message"/> --%>
+<input type="submit" value = "Add Friend" />
 </form>
 
-<br>
+
 <form action = "HomePage.jsp" method="post">
 <input type = "submit" value = "Home" class="button"/>
 </form>
-
-
 
 </body>
 </html>

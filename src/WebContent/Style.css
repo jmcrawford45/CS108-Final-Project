@@ -1,5 +1,7 @@
-@CHARSET "ISO-8859-1";
-body{
+@CHARSET "UTF-8";
+/* @CHARSET "ISO-8859-1";
+ */
+ body{
 	background-color: rgb(140,120,250);
 }  
  .button {  

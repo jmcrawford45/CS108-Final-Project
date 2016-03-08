@@ -4,8 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Testing</title> 
+<title>Testing</title>   
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+                 
 </head>              
 <body>
 
@@ -15,7 +16,6 @@
 		<input type = "text" name="user">
 		<input type = "submit" value = "View Profile"/>         
 </form>  
-<form action = "HomePage.jsp" method="post">
-		<input type = "submit" value = "Home" class="button"/> 
+
 </body>
 </html> 

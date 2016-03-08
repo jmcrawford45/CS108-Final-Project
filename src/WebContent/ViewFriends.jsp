@@ -1,3 +1,4 @@
+<%@page import="tableabstraction.TableAbstraction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
@@ -7,13 +8,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <title>View Friends</title>
+
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+
 </head>
 <body>
 
-<% AccountManager accounts = (AccountManager)request.getServletContext().getAttribute("manager");
-User defUser = (User)request.getServletContext().getAttribute("defaultUser");
+<%  
+User defUser = (User)request.getSession().getAttribute("user");//correct//
+java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
+defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
 System.out.print(defUser.getDisplayName());
 ArrayList<String> friends = defUser.getFriends(); 
 %>
@@ -28,7 +34,11 @@ for(int i = 0; i < friends.size(); i++){
 }
 %>
 </p>  
+
+<br>
 <form action = "HomePage.jsp" method="post">
-		<input type = "submit" value = "Home" class="button"/> 
+<input type = "submit" value = "Home" class="button"/>
+</form>
+
 </body>
 </html>

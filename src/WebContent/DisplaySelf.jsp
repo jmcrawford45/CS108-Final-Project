@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Display User</title>
+<title>Display Self</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 
 </head>
@@ -19,13 +19,6 @@
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 User user = (User)TableAbstraction.getUser(request.getParameter("user"), con);
 
-User defUser = (User)request.getSession().getAttribute("user");//correct//
-
-if(user.getDisplayName().equals(defUser.getDisplayName())){
-	RequestDispatcher dispatch = request.getRequestDispatcher("DisplaySelf.jsp?user="+user.getDisplayName());  
-	dispatch.forward(request, response); 
-	return;
-}
 String name = user.getDisplayName();  
 String bio = user.getBio();
 String imageStr = user.getImage();
@@ -35,25 +28,12 @@ ArrayList<String> friends = user.getFriends();
 <img src= "<%=imageStr%>"/>
 <p class = "name"> <%=name %> <br></p>
 
-<form action = "SendFriendRequest" method="post">
-		<input type = "hidden" name="toAdd" value = "<%=name %>">  
-		<input type = "submit" value = "Add Friend" class="Button"/>  
-</form>  
-<form action = "SendChallenge.jsp" method="post">
-		<input type = "hidden" name="toChallenge" value = "<%=name %>">  
-		<input type = "submit" value = "Challenge" class="Button"/>  
-</form>  
-
-<form action = "ComposeTextMessage.jsp" method="post">
-		<input type = "hidden" name="to" value = "<%=name %>">  
-		<input type = "submit" value = "Send Message" class="Button"/>  
-</form>  
 
 <p class = "bio"> About me  <br> <%=bio %> <br></p>
 <p class = "quizH"> Top Quizzes <br>  
 <% 
 for(int i = 0; i < quizzes.size(); i++){   
-	String quiz = quizzes.get(i);
+	String quiz = quizzes.get(i);  
 	%>
 	<%= quiz %><br>  
 <%	
@@ -77,12 +57,6 @@ for(int i = 0; i < friends.size(); i++){
 </form>
 
 
+
 </body>
 </html>
-
-
-
-
-
-
-

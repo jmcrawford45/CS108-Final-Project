@@ -15,7 +15,8 @@
 <h1><%= title %></h1>
 <p><%= message %></p>
 <form action = "HomePage.jsp" method="post">
-		<input type = "submit" value = "Home" class="button"/> 
+<input type = "submit" value = "Home" class="button"/>
+</form>
 
 </body>
 </html>

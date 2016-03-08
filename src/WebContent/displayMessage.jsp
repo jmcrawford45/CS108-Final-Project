@@ -6,17 +6,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Display Message</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+
 </head>
 <body>
 <%
 String body = request.getParameter("body");
 String from = request.getParameter("from");
+String index = request.getParameter("index");
 %>
 <%= body %><br><br>
-<a href="ComposeTextMessage.jsp?to=<%=from%>"> Reply</a>
-<form action = "HomePage.jsp" method="post">
-		<input type = "submit" value = "Home" class="button"/> 
 
+
+<form action="DeleteMessage" method="post"> 
+<input type="hidden" name = "index" value = "<%=index %>">    
+<input type="submit" value = "Delete Message" />
+</form>
+<a href="ComposeTextMessage.jsp?to=<%=from%>"> Reply</a>
+
+<br>
+<form action = "HomePage.jsp" method="post">
+<input type = "submit" value = "Home" class="button"/>
+</form>
 
 </body>
 </html>
