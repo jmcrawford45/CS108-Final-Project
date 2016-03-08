@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Display Message</title>
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
 <%
