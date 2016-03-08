@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Compose Text Message</title>
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
 
@@ -28,6 +29,7 @@ System.out.print(to);
 <p>Body:<br> <input type="text" name="message"/>
 <input type="submit" value = "Send Message" /></p>
 </form>
-
+<form action = "HomePage.jsp" method="post">
+		<input type = "submit" value = "Home" class="button"/> 
 </body>
 </html>
