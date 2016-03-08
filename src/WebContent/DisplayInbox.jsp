@@ -9,19 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Display Inbox</title>
-<style>
-ul{
-    list-style-type: none;
-}
-.linkB{
-     background: none;
-     border: none;
-     color: #0065ff;
-     text-decoration: underline;
-     cursor: pointer;     
-}
-
-</style>          
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
 
@@ -54,6 +42,8 @@ AccountManager accounts = (AccountManager)request.getServletContext().getAttribu
 		<% 
 		
 %>
-<a href= "ComposeTextMessage.jsp"> Compose New Message</a>    
+<a href= "ComposeTextMessage.jsp"> Compose New Message</a>
+<form action = "HomePage.jsp" method="post">
+		<input type = "submit" value = "Home" class="button"/> 
 </body>
 </html>
