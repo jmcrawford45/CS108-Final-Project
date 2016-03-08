@@ -16,3 +16,13 @@ body{
 	padding-right: = 25px;
 	
 }
+ul{
+    list-style-type: none;
+}
+.linkB{
+     background: none;
+     border: none;
+     color: #0065ff;
+     text-decoration: underline;
+     cursor: pointer;     
+}
