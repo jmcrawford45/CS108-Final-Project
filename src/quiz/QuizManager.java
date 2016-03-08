@@ -19,7 +19,9 @@ public class QuizManager {
 	public void addQuiz(int quiz_id, int creator_id, int category_id, String description, boolean random, boolean one_page, boolean immediate, String name, boolean practice) {
 		try {
 			long time = System.currentTimeMillis();
-			PreparedStatement ps = con.prepareStatement("INSERT into quizzes(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps = con.prepareStatement("INSERT into "
+					+ "quizzes(quiz_id, creator_id, category_id, description, random, onepage, immediate, date_created, name, practice) "
+					+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setInt(1, quiz_id);
 			ps.setInt(2, creator_id);
 			ps.setInt(3, category_id);
@@ -36,6 +38,46 @@ public class QuizManager {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void deleteQuiz(int quiz_id) {
+		try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes WHERE quiz_id = ?");
+			ps.setInt(1, quiz_id);
+		    ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void addPerformance(int performance_id, int quiz_id, int user_id, int score, long start, long time) {
+		try {
+			PreparedStatement ps = con.prepareStatement("INSERT into "
+					+ "performances(performance_id, quiz_id, user_id, score, start, time) "
+					+ "values(?, ?, ?, ?, ?, ?)");
+			ps.setInt(1, performance_id);
+			ps.setInt(2, quiz_id);
+			ps.setInt(3, user_id);
+			ps.setInt(4, score);
+			ps.setLong(5, start);
+			ps.setLong(6, time);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void deletePerformance(int performance_id) {
+		try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM performances WHERE performance_id = ?");
+			ps.setInt(1, performance_id);
+		    ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Quiz getQuizByID(int quiz_id) {
@@ -62,6 +104,28 @@ public class QuizManager {
 		}
 		
 		return q;
+	}
+	
+	public Performance getPerformanceByID(int performance_id) {
+		Performance p = null;
+		try {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM performances WHERE performance_id = ?");
+			ps.setInt(1, performance_id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				int quiz_id = rs.getInt("quiz_id");
+				int user_id = rs.getInt("user_id");
+				int score = rs.getInt("score");
+				long start = rs.getLong("start");
+				long time = rs.getLong("time");
+				p = new Performance(performance_id, user_id, quiz_id, score, start, time);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return p;
 	}
 	
 	
@@ -91,6 +155,28 @@ public class QuizManager {
 		return quizzes;
 	}
 	
+	public ArrayList<Performance> getUserPerformances(int user_id) {
+		ArrayList<Performance> performances = new ArrayList<Performance>();
+		try {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM performances WHERE user_id = ?");
+			ps.setInt(1, user_id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int quiz_id = rs.getInt("quiz_id");
+				int performance_id = rs.getInt("performance_id");
+				int score = rs.getInt("score");
+				long start = rs.getLong("start");
+				long time = rs.getLong("time");
+				performances.add(new Performance(performance_id, user_id, quiz_id, score, start, time));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return performances;
+	}
+	
 	
 	//gets quizzes from the last 24 hours
 	public ArrayList<Quiz> getRecentQuizzes() {
@@ -99,7 +185,7 @@ public class QuizManager {
 			Calendar c  = Calendar.getInstance();
 			c.add(Calendar.DATE, -1);
 			long recent = c.getTimeInMillis();
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes WHERE time_created > ?");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes WHERE date_created > ?");
 			ps.setLong(1, recent);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -122,11 +208,46 @@ public class QuizManager {
 		
 		Collections.sort(quizzes, new Comparator<Quiz>(){
 		     public int compare(Quiz q1, Quiz q2){
-		         return (int)(q1.time_created - q2.time_created);
+		         return (int)(q2.time_created - q1.time_created);
 		     }
 		});
 		
 		return quizzes;
 	}
+	
+	public ArrayList<Performance> getRecentPerformances() {
+		ArrayList<Performance> performances = new ArrayList<Performance>();
+		try {
+			Calendar c  = Calendar.getInstance();
+			c.add(Calendar.DATE, -1);
+			long recent = c.getTimeInMillis();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM performances WHERE start > ?");
+			ps.setLong(1, recent);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int quiz_id = rs.getInt("quiz_id");
+				int user_id = rs.getInt("user_id");
+				int performance_id = rs.getInt("performance_id");
+				int score = rs.getInt("score");
+				long start = rs.getLong("start");
+				long time = rs.getLong("time");
+				performances.add(new Performance(performance_id, user_id, quiz_id, score, start, time));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Collections.sort(performances, new Comparator<Performance>(){
+		     public int compare(Performance p1, Performance p2){
+		         return (int)(p2.start - p1.start);
+		     }
+		});
+		
+		return performances;
+	}
+	
+	
+	
 	
 }
