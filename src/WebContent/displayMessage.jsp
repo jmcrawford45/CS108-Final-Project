@@ -13,6 +13,8 @@ String from = request.getParameter("from");
 %>
 <%= body %><br><br>
 <a href="ComposeTextMessage.jsp?to=<%=from%>"> Reply</a>
+<form action = "HomePage.jsp" method="post">
+		<input type = "submit" value = "Home" class="button"/> 
 
 
 </body>
