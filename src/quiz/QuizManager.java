@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class QuizManager {
 	public Connection con;
+	public static final int NUMSCORES = 2;
 	
 	public QuizManager(Connection con) {
 		this.con = con;
@@ -243,11 +245,123 @@ public class QuizManager {
 		         return (int)(p2.start - p1.start);
 		     }
 		});
+
+		return performances;
+	}
+	
+	public ArrayList<Performance> getQuizBestPerformances(int quiz_id) {
+		List<Performance> performances = new ArrayList<Performance>();
+		try {
+			
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM performances "
+					+ "WHERE quiz_id = ? ORDER BY score DESC");
+			ps.setInt(1, quiz_id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int user_id = rs.getInt("user_id");
+				int performance_id = rs.getInt("performance_id");
+				int score = rs.getInt("score");
+				long start = rs.getLong("start");
+				long time = rs.getLong("time");
+				performances.add(new Performance(performance_id, user_id, quiz_id, score, start, time));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Collections.sort(performances);
+		
+		return (new ArrayList<Performance>(performances.subList(0, NUMSCORES)));
+	}
+	
+	
+	public ArrayList<Performance> getQuizBestRecentPerformances(int quiz_id) {
+		List<Performance> performances = new ArrayList<Performance>();
+		try {
+			Calendar c  = Calendar.getInstance();
+			c.add(Calendar.DATE, -1);
+			long recent = c.getTimeInMillis();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM performances "
+					+ "WHERE quiz_id = ? AND start > ? ORDER BY score DESC");
+			ps.setInt(1, quiz_id);
+			ps.setLong(2, recent);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int user_id = rs.getInt("user_id");
+				int performance_id = rs.getInt("performance_id");
+				int score = rs.getInt("score");
+				long start = rs.getLong("start");
+				long time = rs.getLong("time");
+				performances.add(new Performance(performance_id, user_id, quiz_id, score, start, time));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Collections.sort(performances);
+		
+		return (new ArrayList<Performance>(performances.subList(0, NUMSCORES)));
+	}
+	
+	
+	public ArrayList<Performance> getQuizRecentPerformances(int quiz_id) {
+		ArrayList<Performance> performances = new ArrayList<Performance>();
+		try {
+			Calendar c  = Calendar.getInstance();
+			c.add(Calendar.DATE, -1);
+			long recent = c.getTimeInMillis();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM performances "
+					+ "WHERE quiz_id = ? AND start > ?");
+			ps.setInt(1, quiz_id);
+			ps.setLong(2, recent);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int user_id = rs.getInt("user_id");
+				int performance_id = rs.getInt("performance_id");
+				int score = rs.getInt("score");
+				long start = rs.getLong("start");
+				long time = rs.getLong("time");
+				performances.add(new Performance(performance_id, user_id, quiz_id, score, start, time));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Collections.sort(performances, new Comparator<Performance>(){
+		     public int compare(Performance p1, Performance p2){
+		         return (int)(p2.start - p1.start);
+		     }
+		});
 		
 		return performances;
 	}
 	
-	
-	
+	public ArrayList<Performance> getUserQuizPerformances(int quiz_id, int user_id) {
+		ArrayList<Performance> performances = new ArrayList<Performance>();
+		try {
+			
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM performances "
+					+ "WHERE quiz_id = ? AND user_id = ?");
+			ps.setInt(1, quiz_id);
+			ps.setInt(2, user_id);
+			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int performance_id = rs.getInt("performance_id");
+				int score = rs.getInt("score");
+				long start = rs.getLong("start");
+				long time = rs.getLong("time");
+				performances.add(new Performance(performance_id, user_id, quiz_id, score, start, time));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return performances;
+	}
 	
 }
