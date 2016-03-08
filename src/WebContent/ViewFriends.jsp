@@ -7,12 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
 <title>View Friends</title>
-.friends{
-	color: white;
-}
-</style>
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
 
@@ -32,6 +28,7 @@ for(int i = 0; i < friends.size(); i++){
 }
 %>
 </p>  
-
+<form action = "HomePage.jsp" method="post">
+		<input type = "submit" value = "Home" class="button"/> 
 </body>
 </html>
