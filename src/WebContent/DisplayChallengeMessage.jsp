@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Display Challenge message</title>
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
 
@@ -19,6 +20,7 @@ String link = request.getParameter("link");
 <%= body %><br><br>
 
 <a href="GoToQuiz.jsp?to=<%=link%>"> Accept Challenge!</a>
-
+<form action = "HomePage.jsp" method="post">
+		<input type = "submit" value = "Home" class="button"/> 
 </body>
 </html>
