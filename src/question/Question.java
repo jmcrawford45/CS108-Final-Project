@@ -3,7 +3,7 @@ package question;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Question {
+public class Question {
 	
 	protected Answer answers;
 	protected String question;

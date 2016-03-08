@@ -1,20 +1,22 @@
 package question;
 
+
 import java.util.ArrayList;
 
-public class MatchingQuestion {
+import com.mysql.jdbc.Connection;
+
+public class MatchingQuestion extends Question {
 	
 	ArrayList<ResponseQuestion> pairs;
-	String instructions;
-	String type;
+
 
 	public MatchingQuestion(String instructions) {
-		this.instructions = instructions;
+		super(instructions, "");
 		this.type = "matching-question";
 	}
 	
 	public MatchingQuestion(String instructions, ArrayList<ResponseQuestion> pairs){
-		this.instructions = instructions;
+		super(instructions, "");
 		this.pairs = pairs;
 		this.type = "matching-question";
 	}
@@ -28,10 +30,6 @@ public class MatchingQuestion {
 		pairs.add(pair);
 	}
 	
-	public String getType(){
-		return this.type;
-	}
-	
 	public ResponseQuestion getPairAt(int index){
 		return pairs.get(index);
 	}
@@ -42,6 +40,10 @@ public class MatchingQuestion {
 			if(curr.getQuestion().equals(question)) return i;
 		}
 		return -1;
+	}
+	
+	public String getInstructions(){
+		return getQuestion();
 	}
 	
 	public boolean questionExists(String question){
@@ -59,8 +61,27 @@ public class MatchingQuestion {
 		return pairs.size();
 	}
 	
-	public String getInstructions(){
-		return instructions;
+	
+	@Override
+	public String getAdditional(){
+		String result = "";
+		for(int i = 0; i < pairs.size(); i++){
+			result += getPairAt(i).getID();
+			result += "|";
+		}
+		return result;
+	}
+	
+	public static ArrayList<ResponseQuestion> getPairsFromString(String input, Connection con){
+		QuestionManager man = new QuestionManager(con);
+		ArrayList<ResponseQuestion> result = new ArrayList<ResponseQuestion>();
+		String[] inputArray = input.split("\\|");
+		for (int i = 0; i < inputArray.length; i++){
+			int id = Integer.parseInt(inputArray[i]);
+			result.add((ResponseQuestion)man.getQuestion(id));
+		}
+		return result;
+		
 	}
 
 }
