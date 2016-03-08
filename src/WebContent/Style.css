@@ -26,10 +26,6 @@ ul{
      text-decoration: underline;
      cursor: pointer;     
 }
-<style type="text/css">
-body{
-	background-color: rgb(51, 51, 153)
-}
 .name{
 /*	text-align: center;
 */	text-indent: 65px;
