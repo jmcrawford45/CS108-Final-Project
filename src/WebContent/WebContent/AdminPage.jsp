@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Home Page</title>
+<title>Admin Page</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 
 </head>
@@ -82,6 +82,7 @@ for(int i = 0; i < defUser.getFriends().size(); i++){
 <form action = "Logout" method="post">
 		<input type = "submit" value = "Logout" class="button"/>      
 </form> 
+
 
 
 </body>
