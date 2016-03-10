@@ -56,4 +56,15 @@ public class FiBQuestion extends Question {
 		return result;
 	}
 	
+	public static String returnHTMLBlankTemplate() {
+		String result = "";
+		result += "<form action=\"addFiBQuestion\" method=\"post\"> \r";
+		result += "Enter pre-blank text: <br> \r <input name=\"question\" type=\"text\"/> <br><br>\r";
+		result += "Enter post-blank text: <br> \r <input name=\"question\" type=\"text\"/> <br><br>\r";
+		result += "Enter answer (variants on same answer separated by '|'): <br> \r <input name=\"answer\" type=\"text\"/><br><br> \r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		return result;
+	}
+	
 }

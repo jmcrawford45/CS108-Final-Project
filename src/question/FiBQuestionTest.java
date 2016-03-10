@@ -16,6 +16,7 @@ public class FiBQuestionTest {
 		System.out.println();
 		System.out.println(test.returnHTMLQuestion(1));
 		System.out.println();
+		System.out.println(FiBQuestion.returnHTMLBlankTemplate());
 	}
 
 	@Test

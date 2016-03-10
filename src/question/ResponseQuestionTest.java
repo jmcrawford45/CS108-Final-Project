@@ -19,6 +19,8 @@ public class ResponseQuestionTest {
 		System.out.println();
 		System.out.println(work.returnHTMLQuestion(1));
 		System.out.println();
+		
+		System.out.println(ResponseQuestion.returnHTMLBlankTemplate());
 	}
 
 	@Test
