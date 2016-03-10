@@ -59,8 +59,8 @@ public class ResponseQuestion extends Question {
 	@Override
 	public String returnHTMLDisplayStatic() {
 		String result = "";
-		result += "Question: " + getQuestion() + "<br>";
-		result += "Answer: " + getAnswer().getAnswerAt(0) + "<br>";
+		result += "Question: " + getQuestion() + "<br> \r";
+		result += "Answer: " + getAnswer().getAnswerAt(0) + "<br> \r";
 		return result;
 	}
 	
