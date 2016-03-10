@@ -2,32 +2,64 @@ package question;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.mysql.jdbc.Connection;
 
 public class MatchingQuestion extends Question {
 	
 	ArrayList<ResponseQuestion> pairs;
+	ArrayList<Answer> answerArray;
 
 
 	public MatchingQuestion(String instructions) {
 		super(instructions, "");
+		this.pairs = new ArrayList<ResponseQuestion>();
 		this.type = "matching-question";
+		this.answerArray = getRandomizedAnswerArray();
 	}
 	
 	public MatchingQuestion(String instructions, ArrayList<ResponseQuestion> pairs){
 		super(instructions, "");
 		this.pairs = pairs;
 		this.type = "matching-question";
+		this.answerArray = getRandomizedAnswerArray();
 	}
 	
 	public void addPair(ResponseQuestion pair){
 		pairs.add(pair);
+		this.answerArray = getRandomizedAnswerArray();
 	}
 	
 	public void addPair(String question, String answer){
 		ResponseQuestion pair = new ResponseQuestion(question, answer);
 		pairs.add(pair);
+		this.answerArray = getRandomizedAnswerArray();
+	}
+	
+	public String getAnswerAt(int index){
+		return this.answerArray.get(index).firstAnswer();
+	}
+	
+	private ArrayList<Answer> getRandomizedAnswerArray(){
+		ArrayList<Answer> result = new ArrayList<Answer>();
+		ArrayList<Boolean> isUsed = new ArrayList<Boolean>();
+		for(int i = 0; i < numPairs(); i++) isUsed.add(false);
+		Random rand = new Random();
+		
+		while(isUsed.contains(false)){
+			int index = rand.nextInt(numPairs());
+			if(isUsed.get(index).equals(false)){
+				isUsed.set(index, true);
+				result.add(getPairAt(index).getAnswer());
+			}
+		}
+		
+		return result;
+	}
+	
+	public void randomizeAnswerArray(){
+		this.answerArray = getRandomizedAnswerArray();
 	}
 	
 	public ResponseQuestion getPairAt(int index){
@@ -61,6 +93,11 @@ public class MatchingQuestion extends Question {
 		return pairs.size();
 	}
 	
+	@Override
+	public int numAnswers(){
+		return this.answerArray.size();
+	}
+	
 	
 	@Override
 	public String getAdditional(){
@@ -82,6 +119,46 @@ public class MatchingQuestion extends Question {
 		}
 		return result;
 		
+	}
+	
+	@Override
+	public String returnHTMLSingleQuestion() {
+		String result = "";
+		result += "<form action=\"submitAnswer\" method=\"post\"> \r";
+		result += getInstructions();
+		result += "<br><br> \r";
+		for(int i = 0; i < numPairs(); i++){
+			result += getPairAt(i).getQuestion() + "\t\t";
+			result += "<select name=\"input_" + i +"\"> \r";
+			for(int j = 0; j < numPairs(); j++){
+				result += "<option value=\"" + getAnswerAt(j) + "\">" + getAnswerAt(j) + "</option>\r";
+			}
+			result += "</select> <br> \r";
+		}
+		result += "<br> \r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		
+		return result;
+	}
+
+	@Override
+	public String returnHTMLQuestion(int index) {
+		String result = "";
+		
+		result += getInstructions();
+		result += "<br><br> \r";
+		for(int i = 0; i < numPairs(); i++){
+			result += getPairAt(i).getQuestion() + "\t\t";
+			result += "<select name=\"input" + index + "_" + i +"\"> \r";
+			for(int j = 0; j < numPairs(); j++){
+				result += "<option value=\"" + getAnswerAt(j) + "\">" + getAnswerAt(j) + "</option>\r";
+			}
+			result += "</select> <br>\r";
+		}
+		result += "<br> \r";
+
+		return result;
 	}
 
 }
