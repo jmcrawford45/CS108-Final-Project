@@ -18,6 +18,11 @@ public class MCQuestionTest {
 		mcquestion = new MCQuestion("Which one is correct?", "this one", "no|not this one|not this one either|this one");
 		printQuestion(mcquestion);
 		
+		System.out.println();
+		System.out.println(mcquestion.returnHTMLSingleQuestion());
+		System.out.println();
+		System.out.println(mcquestion.returnHTMLQuestion(2));
+		
 		
 		
 	}
