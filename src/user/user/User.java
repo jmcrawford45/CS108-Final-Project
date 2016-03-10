@@ -5,10 +5,26 @@ import java.util.ArrayList;
 import com.sun.xml.internal.bind.CycleRecoverable.Context;
 
 import messages.Message;
-import achievements.Achievements;
 
 public class User implements java.io.Serializable{
+	public static final int AMATEUR = 1;
+	public static final int PROLIFIC = 2;
+	public static final int PRODIGIOUS = 4;
+	public static final int MACHINE = 8;
+	public static final int GREATEST = 16;
+	public static final int PRACTICE = 32;
+	public static final int[] ACHIEVEMENTS = 
+	{AMATEUR,PROLIFIC,PRODIGIOUS,MACHINE,GREATEST,PRACTICE};
+		
+	private int achieved;
 
+		public boolean hasAchieved(int a){
+			return (this.achieved & a) != 0;
+		}
+		public void achieved(int a){
+			this.achieved |= a;
+		}
+		
 	private static final long serialVersionUID = 1L;    
 	static int BIO_CHAR_LIMIT = 150;
 	static int FRIEND_LIM = 5;              
@@ -33,8 +49,9 @@ public class User implements java.io.Serializable{
 	private ArrayList<String> activityLog;  
 	private ArrayList<Achievements> achievements;
 	private boolean isPrivate;
+	private String salt;
 
-	public User(String uniqueUserId,String hashPassword) {
+	public User(String uniqueUserId,String hashPassword, String salt) {
 		this.uniqueUserID = uniqueUserId;    
 		this.displayName = uniqueUserId;
 		this.friendCount = 0;
@@ -49,6 +66,8 @@ public class User implements java.io.Serializable{
 		messages = new ArrayList<Message>();
 		activityLog = new ArrayList<String>();
 		this.hashPassword = hashPassword;
+		this.salt = salt;
+		this.achieved = 0;
 
 	}
 	
@@ -62,7 +81,9 @@ public class User implements java.io.Serializable{
 	public String getPassword(){
 		return hashPassword;
 	}
-
+	public String getSalt(){
+		return salt;
+	}
 	public void setImage(String newImageString){
 		this.profileImageString = newImageString;
 	}
@@ -185,11 +206,8 @@ public class User implements java.io.Serializable{
 		return false;
 	}
 
-	public void promoteToAdmin(int uniqueId){
-		if(this.adminStatus){
-			
-		
-		}
+	public void promoteToAdmin(){
+		adminStatus = true;
 	}
 
 	public boolean getAdminStatus(){
