@@ -19,6 +19,7 @@ User defUser = (User)request.getSession().getAttribute("user");//correct//
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 
 defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
+String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
 
 
 %>
@@ -73,7 +74,9 @@ for(int i = 0; i < defUser.getFriends().size(); i++){
 		<input type = "submit" value = "Quizzes!" class="button"/>      
 </form>  
 
-
+<form action = "AdminPage.jsp" method="post">
+		<input type = "submit" <%= admin%> value = "Admin" class="button"/>      
+</form> 
 
 </body>
 </html>

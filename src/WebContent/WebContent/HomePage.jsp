@@ -23,10 +23,17 @@ if(defUser.getMessageCount() != 0){
 	RequestDispatcher dispatch = request.getRequestDispatcher("HomePageHasMessage.jsp");  
 	dispatch.forward(request, response); 
 }
-
+tableabstraction.Stats stats = TableAbstraction.getStats(con);
 %>
 <%=defUser.getDisplayName() %>
 <h1> Announcements</h1>  
+<%
+ArrayList<String> announcements = stats.getMsgs();
+for(int i = 0; i < announcements.size(); i++){
+	String msg = announcements.get(i);%>
+	<%=msg %><br> <%
+} 
+%>
 <h1> Popular Quizzes</h1>
 <h1> Recent Quizzes</h1>
 <h1> Quiz History</h1>  
@@ -36,7 +43,6 @@ for(int i = 0; i < quizHistory.size(); i++){
 	String quiz = quizHistory.get(i);%>
 	<%=quiz %><br> <%
 } 
-
 %>
 <h1> Authored Quizzes</h1>    
 

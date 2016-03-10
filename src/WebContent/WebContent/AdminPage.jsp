@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Admin Page</title>
+<title>Admin Home</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 
 </head>
@@ -17,73 +17,38 @@
 <%
 User defUser = (User)request.getSession().getAttribute("user");//correct//
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
-String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
 defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
-if(defUser.getMessageCount() != 0){
-	RequestDispatcher dispatch = request.getRequestDispatcher("HomePageHasMessage.jsp");  
-	dispatch.forward(request, response); 
+if(!defUser.getAdminStatus()){
+	request.setAttribute("title", "Permission Error");
+	request.setAttribute("message", "Only admins can view this page!!!");
+    request.getRequestDispatcher("Error.jsp").forward(request, response);
 }
-
+tableabstraction.Stats stats = TableAbstraction.getStats(con);
+int quizzes = stats.getQuizzes();
+int users = stats.getUsers();
 %>
-<%=defUser.getDisplayName() %>
-<h1> Announcements</h1>  
-<h1> Popular Quizzes</h1>
-<h1> Recent Quizzes</h1>
-<h1> Quiz History</h1>  
-<%
-ArrayList<String> quizHistory = defUser.getQuizzes();
-for(int i = 0; i < quizHistory.size(); i++){
-	String quiz = quizHistory.get(i);%>
-	<%=quiz %><br> <%
-} 
-
-%>
-<h1> Authored Quizzes</h1>    
-
-<h1> Friend Activity</h1>
-
-<%-- <% 
-for(int i = 0; i < defUser.getFriends().size(); i++){
-	User friend = manager.getAccount(defUser.getFriends().get(i));%>
-	<%=friend.getActivityLog().get(0) %>
-<% 	 
-} --%>
-
-
-
-<form action = "DisplaySelf.jsp?user=<%=defUser.getDisplayName() %>" method="post">
-		<input type = "submit" value = "My Profile" class="button"/>    
+<h1>Quizzes taken: <%=quizzes %></h1>
+<h1>Site users: <%=users %></h1>
+<form action = "Announce.jsp" method="post">
+		<input type = "submit" value = "Create Announcement" class="button"/>    
 </form> 
-
-<form action = "EditProfile.jsp" method="post">
-		<input type = "submit" value = "Edit Profile" class="button"/>    
-</form> 
-<form action = "DisplayInbox.jsp" method="post">
-
-		<input type = "submit" value = "Inbox" class="button"/>      
-</form>   
-<form action = "ViewFriends.jsp" method="post">
-		<input type = "submit" value = "Friends" class="button"/>      
-</form>  
-
-<form action = "AddFriends.jsp" method="post">
-		<input type = "submit" value = "Add Friends" class="button"/>      
-</form>  
 
 <form action = "SearchProfiles.jsp" method="post">
-		<input type = "submit" value = "Search" class="button"/>      
-</form>  
-<form action = "ViewQuizzes.jsp" method="post">
+		<input type = "submit" value = "Promote / Remove Users" class="button"/>    
+</form> 
+<form action = "EditQuizzes.jsp" method="post">
+
+		<input type = "submit" value = "Edit Quizzes" class="button"/>      
+</form>   
+<form action = "SearchQuizzes.jsp" method="post">
 		<input type = "submit" value = "Quizzes!" class="button"/>      
 </form>  
-<form action = "AdminPage.jsp" method="post">
-		<input type = "submit" <%= admin%> value = "Admin" class="button"/>      
-</form> 
 <form action = "Logout" method="post">
 		<input type = "submit" value = "Logout" class="button"/>      
 </form> 
-
-
+<form action = "HomePage.jsp" method="post">
+<input type = "submit" value = "Home" class="button"/>
+</form>
 
 </body>
 </html>

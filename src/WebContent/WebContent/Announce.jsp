@@ -4,19 +4,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<%
-	String title = (String)request.getAttribute("title");
-	String message = (String)request.getAttribute("message");
-%>
-<title><%=title %></title>
-<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+<title>Add Announcements Here</title>
 </head>
 <body>
-<h1><%= title %></h1>
-<p><%= message %></p>
+<form action="Announce" method="post">  
+<p>Body:<br> <input type="text" name="message"/>
+<input type="submit" value = "Announce" /></p>
+</form>
+
+<br>
+<form action = "AdminPage.jsp" method="post">
+<input type = "submit" value = "Admin" class="button"/>
+</form>
 <form action = "HomePage.jsp" method="post">
 <input type = "submit" value = "Home" class="button"/>
 </form>
-
 </body>
 </html>

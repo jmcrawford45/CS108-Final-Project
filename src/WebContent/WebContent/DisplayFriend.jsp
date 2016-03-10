@@ -1,7 +1,6 @@
 <%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.User"%>
-<%@page import="setUp.AccountManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,6 +26,7 @@ String bio = user.getBio();
 String imageStr = user.getImage();
 ArrayList<String> quizzes = user.getQuizzes();
 ArrayList<String> friends = user.getFriends(); 
+String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
 %>
 <img src= "<%=imageStr%>"/>
 <p class = "name"> <%=name %> <br></p>
@@ -71,7 +71,16 @@ for(int i = 0; i < friends.size(); i++){
 <form action = "HomePage.jsp" method="post">
 <input type = "submit" value = "Home" class="button"/>
 </form>
-
+<form action = "EditUser" method="post">
+		<input type = "submit" <%= admin%> value = "Promote to Admin" class="button"/>  
+		<input type = "hidden" name = "user" value = <%=name %> />
+		<input type = "hidden" name = "type" value = "promote"/>    
+</form> 
+<form action = "EditUser" method="post">
+		<input type = "submit" <%= admin%> value = "Remove User" class="button"/>      
+		<input type = "hidden" name = "user" value = <%=name %> />
+		<input type = "hidden" name = "type" value = "remove"/> 
+</form> 
 
 </body>
 </html>
