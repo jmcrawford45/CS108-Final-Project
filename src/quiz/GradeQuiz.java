@@ -1,6 +1,7 @@
 package quiz;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,17 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import question.Answer;
+
 /**
- * Servlet implementation class TakeQuiz
+ * Servlet implementation class GradeQuiz
  */
-@WebServlet("/TakeQuiz")
-public class TakeQuiz extends HttpServlet {
+@WebServlet("/GradeQuiz")
+public class GradeQuiz extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TakeQuiz() {
+    public GradeQuiz() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,25 +39,23 @@ public class TakeQuiz extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
-		
 		QuizManager qm = new QuizManager(DBConnection.connect());
-		int quiz_id = Integer.parseInt(request.getParameter("quizid"));
-		Quiz q = qm.getQuizByID(quiz_id);
-		request.getSession().setAttribute(Integer.toString(quiz_id), q);
-		RequestDispatcher dispatch = null;
-		if (q.one_page) {
-			dispatch = request.getRequestDispatcher("TakeQuizOnePage.jsp?quiz="+q.name);  
-			 
-		} else {
-			
+		String qid = request.getParameter("quizid");
+		Quiz q = (Quiz)request.getSession().getAttribute(qid);
+		//Quiz q = qm.getQuizByID(quiz_id);
+		ArrayList<Answer> input = new ArrayList<Answer>();
+		for (int i = 0; i < Test.questions.size(); i++) {
+			Answer a = new Answer(request.getParameter("answer"+i));
+			input.add(a);
 		}
-		long start = System.currentTimeMillis();
-		request.setAttribute("start", start);
-		request.setAttribute("userid", request.getParameter("userid"));
-		request.setAttribute("quiz", q);
-		dispatch.forward(request, response);
+		long start = Long.parseLong(request.getParameter("start"));
 		
+		Performance p = q.gradeQuiz(2323, 1212, start, Test.questions, input);
+		request.setAttribute("performance", p);
+		
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher("QuizResults.jsp?quiz="+q.name); 
+		dispatch.forward(request, response);
 	}
 
 }

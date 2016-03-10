@@ -1,3 +1,4 @@
+<%@page import="listeners.ContextListener"%>
 <%@page import="quiz.*"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -62,15 +63,27 @@ for(int i = 0; i < recentscores.size(); i++){
 	%>
 	<%=p.user_id%> scored <%=p.score %>% with time <%=p.time %>ms on <%=d%><br>  
 <%	
-}
+	}
 %>
 
 <form action = "TakeQuiz" method="post">
 <input type = "hidden" name="quizid" value = "<%=q.id%>">    
 <input type = "hidden" name="userid" value = "<%=2222%>"> 
+<input type = "hidden" name="mode" value = "count"> 
 <input type = "submit" value = "Take Quiz" class="button"/>
 </form>
-
+<%
+	if(q.practice) {
+%>
+	<form action = "TakePracticeQuiz" method="post">
+<input type = "hidden" name="quizid" value = "<%=q.id%>">    
+<input type = "hidden" name="userid" value = "<%=2222%>">
+<input type = "hidden" name="mode" value = "practice">  
+<input type = "submit" value = "Take Quiz in Practice Mode" class="button"/>
+</form>
+<%
+	}
+%>
 
 </body>
 </html>
