@@ -12,6 +12,10 @@ public class FiBQuestionTest {
 	@Before
 	public void setUp() throws Exception {
 		test = new FiBQuestion("If you enter 'true' into this blank,|, the answer will be correct.", "true");
+		System.out.println(test.returnHTMLSingleQuestion());
+		System.out.println();
+		System.out.println(test.returnHTMLQuestion(1));
+		System.out.println();
 	}
 
 	@Test

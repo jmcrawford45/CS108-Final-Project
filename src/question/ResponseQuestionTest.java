@@ -15,6 +15,10 @@ public class ResponseQuestionTest {
 	@Before
 	public void setUp() throws Exception {
 		work = new ResponseQuestion("Does this work?", "yes|y");
+		System.out.println(work.returnHTMLSingleQuestion());
+		System.out.println();
+		System.out.println(work.returnHTMLQuestion(1));
+		System.out.println();
 	}
 
 	@Test

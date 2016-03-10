@@ -36,4 +36,24 @@ public class FiBQuestion extends Question {
 		  public InvalidFiBException(Throwable cause) { super(cause); }
 	}
 	
+	@Override
+	public String returnHTMLSingleQuestion() {
+		String result = "";
+		result += "<form action=\"submitAnswer\" method=\"post\"> \r";
+		result += getPreText() + " ";
+		result += "<input name=\"input\" type=\"text\"/> " + getPostText() + "\r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		
+		return result;
+	}
+
+	@Override
+	public String returnHTMLQuestion(int index) {
+		String result = "";
+		result += getPreText() + " ";
+		result += "<input name=\"input" + index + "\" type=\"text\"/> " + getPostText() + "\r";
+		return result;
+	}
+	
 }

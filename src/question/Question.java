@@ -86,4 +86,9 @@ public abstract class Question {
 		return result;
 	}
 	
+	public abstract String returnHTMLQuestion(int index);
+	
+	public abstract String returnHTMLSingleQuestion();
+	
+	
 }
