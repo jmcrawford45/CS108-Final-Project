@@ -16,6 +16,12 @@ public class MCMAQuestionTest {
 	public void setUp() throws Exception {
 		singleAnswerQuestion = new MCMAQuestion("Only option c is correct.", "c", "a|b|c|d");
 		
+		System.out.println(singleAnswerQuestion.returnHTMLQuestion(2));
+		System.out.println();
+		
+		System.out.println(singleAnswerQuestion.returnHTMLSingleQuestion());
+		System.out.println();
+		
 		//Answer multiAnswer = new Answer();
 		//multiAnswer.addAnswer("c");
 		//multiAnswer.addAnswer("a");

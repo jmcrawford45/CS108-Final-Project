@@ -58,4 +58,34 @@ public class MCMAQuestion extends Question {
 	public String getAdditional(){
 		return this.choices;
 	}
+	
+	@Override
+	public String returnHTMLSingleQuestion() {
+		String result = "";
+		result += "<form action=\"submitAnswer\" method=\"post\"> \r";
+		result += getQuestion();
+		result += "<br><br> \r";
+		for(int i = 0; i < getNumChoices(); i++){
+			result += "<input type=\"checkbox\" name=\"input\" value=\"" + getChoice(i) +"\"> " + getChoice(i) + "<br>\r";
+		}
+		result += "<br> \r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		
+		return result;
+	}
+
+	@Override
+	public String returnHTMLQuestion(int index) {
+		String result = "";
+		
+		result += getQuestion();
+		result += "<br><br> \r";
+		for(int i = 0; i < getNumChoices(); i++){
+			result += "<input type=\"checkbox\" name=\"input" + index + "\" value=\"" + getChoice(i) +"\"> " + getChoice(i) + "<br>\r";
+		}
+
+		return result;
+	}
+	
 }
