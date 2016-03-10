@@ -23,6 +23,9 @@ public class MCQuestionTest {
 		System.out.println();
 		System.out.println(mcquestion.returnHTMLQuestion(2));
 		
+		System.out.println();
+		System.out.println(MCQuestion.returnHTMLBlankTemplate());
+		
 		
 		
 	}
