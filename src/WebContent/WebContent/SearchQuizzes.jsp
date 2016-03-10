@@ -5,16 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
-<title>Search Profiles</title>
+<title>Search Quizzes</title>
 </head>
 <body>
-<h1>Find users here</h1>
+<h1>Find quiz by id or view all</h1>
 
-<form action="DisplayUser.jsp" method="post">  
+<form action="QuizSummary.jsp" method="post">  
 <p>Search: <input type="text" name="user"/></p>    
-<input type="submit" value = "Find User" />
+<input type="submit" value = "Find Quiz" />
 </form>
-
+<form action = "ViewQuizzes.jsp" method="post">
+		<input type = "submit" value = "View All" class="button"/>      
+</form>  
 
 <form action = "HomePage.jsp" method="post">
 <input type = "submit" value = "Home" class="button"/>

@@ -36,13 +36,10 @@ int users = stats.getUsers();
 <form action = "SearchProfiles.jsp" method="post">
 		<input type = "submit" value = "Promote / Remove Users" class="button"/>    
 </form> 
-<form action = "EditQuizzes.jsp" method="post">
+<form action = "SearchQuizzes.jsp" method="post">
 
 		<input type = "submit" value = "Edit Quizzes" class="button"/>      
 </form>   
-<form action = "SearchQuizzes.jsp" method="post">
-		<input type = "submit" value = "Quizzes!" class="button"/>      
-</form>  
 <form action = "Logout" method="post">
 		<input type = "submit" value = "Logout" class="button"/>      
 </form> 

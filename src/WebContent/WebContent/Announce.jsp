@@ -5,8 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add Announcements Here</title>
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 </head>
 <body>
+<h1>Share important news with users here!</h1>
 <form action="Announce" method="post">  
 <p>Body:<br> <input type="text" name="message"/>
 <input type="submit" value = "Announce" /></p>
