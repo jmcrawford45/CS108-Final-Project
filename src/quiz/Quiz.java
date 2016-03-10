@@ -36,6 +36,8 @@ public class Quiz {
 		this.immediate = immediate;
 		this.time_created = time_created;
 		this.practice = practice;
+		questions = new ArrayList<Question>();
+		scoreboard = new ArrayList<Performance>();
 		
 	}
 	
@@ -52,6 +54,18 @@ public class Quiz {
 		this.scoreboard = ps;
 	}
 	
+	public void addQuestion(Question q) {
+		this.questions.add(q);
+	}
+	
+	public Question getQuestionbyIndex(int i) {
+		if (questions.size() <= i) return null;
+		return questions.get(i);
+	}
+	
+	public int getNumQuestions(){
+		return questions.size();
+	}
 	
 	public void addScore(Performance p) {
 		this.scoreboard.add(p);
