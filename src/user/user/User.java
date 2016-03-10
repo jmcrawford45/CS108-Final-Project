@@ -47,7 +47,6 @@ public class User implements java.io.Serializable{
 	private String currentStatus;
 	private ArrayList<String> previousStatuses;
 	private ArrayList<String> friends;//display top five//
-	private ArrayList<String> topQuizzes;//top 3
 	private ArrayList<String> quizHistory;//all quizzes
 	private ArrayList<String> authoredQuizzes;
 	//authored quizzes// 
@@ -59,8 +58,50 @@ public class User implements java.io.Serializable{
 	private ArrayList<Achievements> achievements;
 	private boolean isPrivate;
 	private String salt;
-
+	
+	private int quizzesTaken, quizzesAuthored;
+	private ArrayList<String> friendActivity, createLog;
+	public void takeQuiz(){
+		quizzesTaken++;
+		switch(quizzesTaken){
+		case 10: achieved(MACHINE);break;
+		}
+	}
+	public void makeQuiz(){
+		quizzesAuthored++;
+		switch(quizzesAuthored){
+		case 1: achieved(AMATEUR);break;
+		case 5: achieved(PROLIFIC);break;
+		case 10: achieved(PRODIGIOUS);break;
+	}
+	public void practiced(){
+		achieved(PRACTICE);
+	}
+	public int getTaken(){
+		return quizzesTaken;
+	}
+	public int getAuthored(){
+		return quizzesAuthored;
+	}
+	public void friendLog(String s){
+		if(friendActivity.size() == 3) friendActivity.remove(2);
+		friendActivity.insert(0,s);
+	}
+	public ArrayList<String> getFriendLog(){
+		return friendActivity;
+	}
+	public void createLog(String s){
+		if(createLog.size() == 3) createLog.remove(2);
+		createLog.insert(0,s);
+	}
+	public ArrayList<String> getCreateLog(){
+		return createLog;
+	}
 	public User(String uniqueUserId,String hashPassword, String salt) {
+		this.quizzesTaken = 0;
+		this.quizzesAuthored = 0;
+		friendActivity = new ArrayList<String>();
+		createLog = new ArrayList<String>();
 		this.uniqueUserID = uniqueUserId;    
 		this.displayName = uniqueUserId;
 		this.friendCount = 0;
