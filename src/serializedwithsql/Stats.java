@@ -8,7 +8,7 @@ public class Stats implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-		private int users, quizzes;
+		private int users, quizzes, prevID;
 		private ArrayList<String> msgs;
 		public int getUsers() {
 			return users;
@@ -26,6 +26,11 @@ public class Stats implements Serializable{
 			this.users=users;
 			this.quizzes=quizzes;
 			this.msgs = msgs;
+			this.prevID = 0;
+		}
+		public void issueID(){
+			prevID++;
+			return prevID;
 		}
 		public void addMsg(String msg){
 			msgs.add(msg);
