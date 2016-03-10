@@ -1,15 +1,36 @@
-package serializedwithsql;
+package user;
 
 import java.util.ArrayList;
 
-public class User implements java.io.Serializable{
+import com.sun.xml.internal.bind.CycleRecoverable.Context;
 
+import messages.Message;
+
+public class User implements java.io.Serializable{
+	public static final int AMATEUR = 1;
+	public static final int PROLIFIC = 2;
+	public static final int PRODIGIOUS = 4;
+	public static final int MACHINE = 8;
+	public static final int GREATEST = 16;
+	public static final int PRACTICE = 32;
+	public static final int[] ACHIEVEMENTS = 
+	{AMATEUR,PROLIFIC,PRODIGIOUS,MACHINE,GREATEST,PRACTICE};
+		
+	private int achieved;
+
+		public boolean hasAchieved(int a){
+			return (this.achieved & a) != 0;
+		}
+		public void achieved(int a){
+			this.achieved |= a;
+		}
+		
 	private static final long serialVersionUID = 1L;    
 	static int BIO_CHAR_LIMIT = 150;
-	static int FRIEND_LIM = 5;            
+	static int FRIEND_LIM = 5;              
 	//testing 
 
-	private String uniqueUserID;      
+	private String uniqueUserID;       
 	private String hashPassword;
 	private String displayName;
 	private String profileImageString;    
@@ -20,14 +41,17 @@ public class User implements java.io.Serializable{
 	private ArrayList<String> topQuizzes;//top 3
 	private ArrayList<String> quizHistory;//all quizzes
 	private ArrayList<String> authoredQuizzes;
-	private ArrayList<String> achievements;
 	//authored quizzes// 
    	private int careerScore;    
 	private int friendCount;
 	private boolean adminStatus = false;
+	private ArrayList<Message> messages;
 	private ArrayList<String> activityLog;  
+	private ArrayList<Achievements> achievements;
+	private boolean isPrivate;
+	private String salt;
 
-	public User(String uniqueUserId,String hashPassword) {
+	public User(String uniqueUserId,String hashPassword, String salt) {
 		this.uniqueUserID = uniqueUserId;    
 		this.displayName = uniqueUserId;
 		this.friendCount = 0;
@@ -37,10 +61,13 @@ public class User implements java.io.Serializable{
 		topQuizzes = new ArrayList<String>();
 		quizHistory = new ArrayList<String>();
 		authoredQuizzes = new ArrayList<String>();
-		achievements = new ArrayList<String>();
+		achievements = new ArrayList<Achievements>();
 		profileImageString = "defaultImg.png";
+		messages = new ArrayList<Message>();
 		activityLog = new ArrayList<String>();
 		this.hashPassword = hashPassword;
+		this.salt = salt;
+		this.achieved = 0;
 
 	}
 	
@@ -51,7 +78,12 @@ public class User implements java.io.Serializable{
 	public String getDisplayName(){
 		return this.displayName;
 	}
-
+	public String getPassword(){
+		return hashPassword;
+	}
+	public String getSalt(){
+		return salt;
+	}
 	public void setImage(String newImageString){
 		this.profileImageString = newImageString;
 	}
@@ -113,9 +145,10 @@ public class User implements java.io.Serializable{
 		return friends;
 	}
 	
+	
+	
 	public void addTakenQuiz(String quizname){
 		quizHistory.add(quizname);
-		//activityLog.add("Took quiz: " + quizname);
 		activityLog.add(this.uniqueUserID + " Took Quiz: " + quizname);
 
 	}
@@ -123,21 +156,29 @@ public class User implements java.io.Serializable{
 	public ArrayList<String> getQuizzes(){
 		return quizHistory;
 	}
+	
+	public ArrayList<String> getActivityLog(){
+		return activityLog;
+	}
 	public void addAuthoredQuiz(String quizname){
-		authoredQuizzes.add(quizname);
-		activityLog.add(this.uniqueUserID + "Created Quiz: " + quizname);
+		if(!authoredQuizzes.contains(quizname)){
+			authoredQuizzes.add(quizname);
+			activityLog.add(this.uniqueUserID + "Created Quiz: " + quizname);
+		}
 	}
 	
 	public ArrayList<String> getAuthoredQuizzes(){
 		return authoredQuizzes;
 	}
 	
-	public void addAchievement(String achievement){
-		achievements.add(achievement);
-		activityLog.add(this.uniqueUserID + "Got a New Achievement!: " + achievement);
+	public void addAchievement(Achievements achievement){
+		if(!achievements.contains(achievement)){
+			achievements.add(achievement);
+			activityLog.add(this.uniqueUserID + "Got a New Achievement!: " + achievement);
+		}
 	}
 	
-	public ArrayList<String> getAchievements(){
+	public ArrayList<Achievements> getAchievements(){
 		return achievements;
 	}
 
@@ -157,12 +198,16 @@ public class User implements java.io.Serializable{
 	public int getFriendCount(){
 		return this.friendCount;   
 	}
-
-	public void promoteToAdmin(int uniqueId){
-		if(this.adminStatus){
-			//check that uniqueId exists, get profile from
-			//db and set admin status.
+	
+	public boolean containsFriend(String friendUniqueId){
+		for(int i = 0; i < friends.size(); i++){
+			if(friends.get(i).equals(friendUniqueId)) return true;
 		}
+		return false;
+	}
+
+	public void promoteToAdmin(){
+		adminStatus = true;
 	}
 
 	public boolean getAdminStatus(){
@@ -171,7 +216,23 @@ public class User implements java.io.Serializable{
 	
 	
 	
+	public void addMessageToInbox(Message msg){
+		messages.add(msg);
+	}
 	
+	public void deleteMessage(int index){
+		if(index >= messages.size()) return;
+		messages.remove(index);
+	}
+	
+	public ArrayList<Message> getMessages(){
+		return messages;
+	}
+	
+	public int getMessageCount(){
+		return messages.size();
+	}
+
 	public void viewProfile(){
 		print("DisplayName: " + this.getDisplayName());
 		print("Friends: ");
@@ -179,6 +240,14 @@ public class User implements java.io.Serializable{
 		print("Friend Count: " + this.getFriendCount());
 		print("Status: " + this.getStatus());
 		print("Bio: " + this.getBio());
+	}
+	
+	public void setPrivate(boolean status){
+		this.isPrivate = status;
+	}
+	
+	public boolean isPrivate(){
+		return isPrivate;
 	}
 
 
