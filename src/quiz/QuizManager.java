@@ -12,7 +12,7 @@ import java.util.List;
 
 public class QuizManager {
 	public Connection con;
-	public static final int NUMSCORES = 2;
+	public static final int NUMSCORES = 5;
 	
 	public QuizManager(Connection con) {
 		this.con = con;
@@ -52,6 +52,10 @@ public class QuizManager {
 		}
 	}
 	
+	
+	public void addPerformance(Performance p){
+		addPerformance(p.id, p.quiz_id, p.user_id, p.score, p.start, p.time);
+	}
 	
 	public void addPerformance(int performance_id, int quiz_id, int user_id, int score, long start, long time) {
 		try {
@@ -181,7 +185,7 @@ public class QuizManager {
 	
 	
 	//gets quizzes from the last 24 hours
-	public ArrayList<Quiz> getRecentQuizzes() {
+	public ArrayList<Quiz> getRecentCreatedQuizzes() {
 		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
 		try {
 			Calendar c  = Calendar.getInstance();
@@ -272,7 +276,8 @@ public class QuizManager {
 		
 		Collections.sort(performances);
 		
-		return (new ArrayList<Performance>(performances.subList(0, NUMSCORES)));
+		int n = Math.min(NUMSCORES, performances.size());
+		return (new ArrayList<Performance>(performances.subList(0, n)));
 	}
 	
 	

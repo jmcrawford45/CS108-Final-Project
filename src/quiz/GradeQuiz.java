@@ -1,6 +1,7 @@
 package quiz;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -39,7 +40,8 @@ public class GradeQuiz extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		QuizManager qm = new QuizManager(DBConnection.connect());
+		Connection con  = DBConnection.connect();
+		QuizManager qm = new QuizManager(con);
 		String qid = request.getParameter("quizid");
 		Quiz q = (Quiz)request.getSession().getAttribute(qid);
 		//Quiz q = qm.getQuizByID(quiz_id);
@@ -49,10 +51,14 @@ public class GradeQuiz extends HttpServlet {
 			input.add(a);
 		}
 		long start = Long.parseLong(request.getParameter("start"));
-		
-		Performance p = q.gradeQuiz(2323, 1212, start, Test.questions, input);
+		//id.IdManager im = new id.IdManager(DBConnection.connect());
+		//Stats stats = TableAbstraction.getStats(con);
+		int pid = (int) (start/10);
+		Performance p = q.gradeQuiz(pid, 1212, start, Test.questions, input);
 		request.setAttribute("performance", p);
-		
+		if (request.getParameter("mode").equals("np")) {
+			qm.addPerformance(p);
+		}
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher("QuizResults.jsp?quiz="+q.name); 
 		dispatch.forward(request, response);

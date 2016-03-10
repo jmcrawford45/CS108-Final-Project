@@ -1,4 +1,3 @@
-<%@page import="listeners.ContextListener"%>
 <%@page import="quiz.*"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -19,10 +18,11 @@
 <title><%=q.name%> Summary</title>
 </head>
 <body>
-<p class = "name"> <%=q.name%> <br></p>
-<p class = "description"> Description  <br> <%=q.description%> <br></p>
-<p class = "creator"> Creator  <br> <a href="DisplayUser.jsp?user=<%=q.creator_id%>" class = "creator"> <%=q.creator_id%></a> <br></p>
-<p class = "userquizscores"> Your Past Performance on This Quiz <br>  
+<h1> <%=q.name%> </h1>  
+<h1>Description</h1><p><%=q.description%> <br></p>
+<h1>Quiz Creator</h1><br><a href="<%=q.creator_id%>"></a> <br>
+<h1>Your Past Performances on this Quiz</h1>
+<p class = "userquizscores"> 
 <% 
 for(int i = 0; i < userscores.size(); i++){   
 	Performance p = userscores.get(i);
@@ -33,7 +33,8 @@ for(int i = 0; i < userscores.size(); i++){
 }
 %>
 </p>
-<p class = "bestscores"> Highest Performers of All Time<br>  
+<h1>Highest Performers of All Time</h1>
+<p class = "bestscores">
 <% 
 for(int i = 0; i < bestscores.size(); i++){   
 	Performance p = bestscores.get(i);
@@ -44,7 +45,8 @@ for(int i = 0; i < bestscores.size(); i++){
 }
 %>
 </p>
-<p class = "bestrecentscores"> Top Performers in the Last Day<br>  
+<h1>Top Performers in the Last Day</h1>
+<p class = "bestrecentscores">  
 <% 
 for(int i = 0; i < bestrecentscores.size(); i++){   
 	Performance p = bestrecentscores.get(i);
@@ -55,7 +57,8 @@ for(int i = 0; i < bestrecentscores.size(); i++){
 }
 %>
 </p>
-<p class = "recentquizscores"> Recent Performances <br>  
+<h1>Recent Performances</h1>
+<p class = "recentquizscores"> 
 <% 
 for(int i = 0; i < recentscores.size(); i++){   
 	Performance p = recentscores.get(i);
@@ -75,7 +78,7 @@ for(int i = 0; i < recentscores.size(); i++){
 <%
 	if(q.practice) {
 %>
-	<form action = "TakePracticeQuiz" method="post">
+<form action = "TakePracticeQuiz" method="post">
 <input type = "hidden" name="quizid" value = "<%=q.id%>">    
 <input type = "hidden" name="userid" value = "<%=2222%>">
 <input type = "hidden" name="mode" value = "practice">  

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 public class DBConnection {
 
 	public static final String MYSQL_USERNAME = "ccs108jared13";
@@ -29,5 +30,7 @@ public class DBConnection {
             }
 		return con;
 	}
+	
+	
 	
 }

@@ -15,13 +15,13 @@ public class Quiz {
 	public int category_id;
 	public String name;
 	public String description;
-	public boolean random;
-	public boolean one_page;
-	public boolean immediate;
+	public boolean random = false;
+	public boolean one_page = false;
+	public boolean immediate = false;
 	public ArrayList<Question> questions;
 	public ArrayList<Performance> scoreboard;
 	public long time_created;
-	public boolean practice;
+	public boolean practice = false;
 
 	
 	public Quiz(int id, int creator_id, int category_id, String description, boolean random, boolean one_page, boolean immediate, long time_created, String name, boolean practice) {
@@ -57,8 +57,21 @@ public class Quiz {
 		this.scoreboard.add(p);
 	}
 	
-
+	public void setOnePage() {
+		this.one_page = true;
+	}
 	
+	public void setImmediate() {
+		this.immediate = true;
+	}
+	
+	public void setRandom() {
+		this.random = true;
+	}
+	
+	public void setPractice() {
+		this.practice = true;
+	}
 	public Performance gradeQuiz(int performance_id, int user_id, long start, ArrayList<Question> questions, ArrayList<Answer> userAnswers) {
 		Performance p;
 		long end = System.currentTimeMillis();

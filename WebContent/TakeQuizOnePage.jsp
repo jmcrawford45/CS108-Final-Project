@@ -13,29 +13,28 @@
 	QuizManager qm = new QuizManager(DBConnection.connect());
 	Quiz quiz = (Quiz)request.getAttribute("quiz");
 	ArrayList<Question> qs = Test.questions;
-	//ArrayList<Answer> as = new ArrayList<Answer>();
 	String s = request.getAttribute("start").toString();
 %>
 <title><%=quiz.name%></title>
 </head>
 <body>
-<p class = "name"> <%=quiz.name%> <br></p>
-
+<h1> <%=quiz.name%> </h1>
 <form action = "GradeQuiz" method="post">
-<ul>
+
     <%  	
             for (int i = 0; i < qs.size(); i ++) {
             	Question q = qs.get(i);
             	String answer = "";
-                String item = "<li>" + q.getQuestion() + "<input type ='text' value='" + answer 
-                		+ "' name='answer" + i + "'> <br></li>";
+                String item = "<h3>"+(i+1) + ".</h3>" +q.getQuestion() + "<input type ='text' value='" + answer 
+                		+ "' name='answer" + i + "'> <br>";
                 out.print(item);
             }
         %>
-        </ul>
+        <br><br>
 <input type = "hidden" name="quizid" value = "<%=quiz.id%>"> 
 <input type = "hidden" name="start" value = "<%=s%>">   
 <input type = "hidden" name="userid" value = "<%=2222%>"> 
+<input type = "hidden" name="mode" value = "np">
 <input type = "submit" value = "Grade Quiz" class="button"/>
 </form>
 </body>
