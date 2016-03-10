@@ -44,12 +44,12 @@ public class AccountServlet extends HttpServlet {
 		Random rand = (Random)request.getSession().getServletContext().getAttribute("rand");
 		User user = TableAbstraction.getUser(name,con);
 		if(user != null){
-            request.getRequestDispatcher("AreadyExistsJSP.jsp").forward(request, response);
+            request.getRequestDispatcher("AlreadyExistsJSP.jsp").forward(request, response);
         } else{
         	String salt = Security.getSalt(rand);
         	String hashPassword = Security.getHashed(password, salt);
         	TableAbstraction.updateUser(name, new User(name, hashPassword, salt), con);
-        	request.getSession().setAttribute("user",TableAbstraction.getUser(name, con));
+        	request.getSession().setAttribute("user", TableAbstraction.getUser(name,con));
         	request.getRequestDispatcher("HomePage.jsp").forward(request, response);
         }
 	}
