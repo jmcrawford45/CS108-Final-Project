@@ -21,6 +21,9 @@ public class MatchingQuestionTest {
 		
 		System.out.println(question.returnHTMLQuestion(2));
 		
+		System.out.println();
+		System.out.println(MatchingQuestion.returnHTMLBlankTemplate(7));
+		
 		
 		
 		

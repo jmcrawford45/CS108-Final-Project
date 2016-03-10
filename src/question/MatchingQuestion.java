@@ -160,5 +160,17 @@ public class MatchingQuestion extends Question {
 
 		return result;
 	}
+	
+	public static String returnHTMLBlankTemplate(int numPairs) {
+		String result = "";
+		result += "<form action=\"addResponseQuestion\" method=\"post\"> \r";
+		for(int i = 0; i < numPairs; i++){
+			result += "Enter left column: <br> \r <input name=\"question" + i + "\" type=\"text\"/> <br><br>\r";
+			result += "Enter right column option: <br> \r <input name=\"answer" + i + "\" type=\"text\"/><br><br> \r";
+		}
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		return result;
+	}
 
 }
