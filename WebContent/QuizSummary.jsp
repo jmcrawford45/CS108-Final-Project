@@ -10,7 +10,6 @@
 <%
 	QuizManager qm = new QuizManager(DBConnection.connect());
 	Quiz q = qm.getQuizByID(1111);
-	
 	ArrayList<Performance> userscores = qm.getUserQuizPerformances(1111, 2222);
 	ArrayList<Performance> bestscores = qm.getQuizBestPerformances(1111);
 	ArrayList<Performance> bestrecentscores = qm.getQuizBestRecentPerformances(1111);
@@ -65,6 +64,13 @@ for(int i = 0; i < recentscores.size(); i++){
 <%	
 }
 %>
-</p>
+
+<form action = "TakeQuiz" method="post">
+<input type = "hidden" name="quizid" value = "<%=q.id%>">    
+<input type = "hidden" name="userid" value = "<%=2222%>"> 
+<input type = "submit" value = "Take Quiz" class="button"/>
+</form>
+
+
 </body>
 </html>

@@ -301,8 +301,8 @@ public class QuizManager {
 		}
 		
 		Collections.sort(performances);
-		
-		return (new ArrayList<Performance>(performances.subList(0, NUMSCORES)));
+		int n = Math.min(NUMSCORES, performances.size());
+		return (new ArrayList<Performance>(performances.subList(0, n)));
 	}
 	
 	
