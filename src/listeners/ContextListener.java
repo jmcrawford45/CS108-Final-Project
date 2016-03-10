@@ -8,6 +8,10 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import loginServlets.Security;
+import tableabstraction.TableAbstraction;
+import user.User;
+
 //import initializer.MyDBInfo;
 
 
@@ -44,8 +48,10 @@ public class Initialize implements ServletContextListener {
             MYSQL_DATABASE_SERVER, MYSQL_USERNAME , MYSQL_PASSWORD);
             Statement stmt = con.createStatement();
             stmt.executeQuery("USE " + MYSQL_DATABASE_NAME);
-            stmt.executeUpdate("DROP TABLE users;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS users;");
             stmt.executeUpdate("CREATE TABLE users(id varchar(255), user BLOB);");
+            stmt.executeUpdate("DROP TABLE IF EXISTS stats;");
+            stmt.executeUpdate("CREATE TABLE stats(stats BLOB);");
     		} catch (SQLException e) {
             e.printStackTrace();
             }
@@ -53,8 +59,14 @@ public class Initialize implements ServletContextListener {
             e.printStackTrace();
             }
         ServletContext context = arg0.getServletContext();
+        Random rand = new Random();
+        String salt = Security.getSalt(rand);
+    	String hashPassword = Security.getHashed("a", salt);
+    	User a = new User("a", hashPassword, salt);
+    	a.promoteToAdmin();
+    	TableAbstraction.updateUser("a", a, con);
         context.setAttribute("connection", con);
-        context.setAttribute("rand", new Random());
+        context.setAttribute("rand", rand);
     }
 
 	/**
