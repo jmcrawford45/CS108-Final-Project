@@ -48,9 +48,19 @@ public class MAResponseQuestion extends Question {
 	
 	public static String returnHTMLBlankTemplate() {
 		String result = "";
-		result += "<form action=\"addResponseQuestion\" method=\"post\"> \r";
+		result += "<form action=\"addMAResponseQuestion\" method=\"post\"> \r";
 		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\"/> <br><br>\r";
 		result += "Enter answers (each answer separated by '||', each acceptable variant by '|'): <br> \r <input name=\"answer\" type=\"text\"/><br><br> \r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		return result;
+	}
+	
+	public static String returnHTMLEditTemplate(String question, String answer) {
+		String result = "";
+		result += "<form action=\"editMAResponseQuestion\" method=\"post\"> \r";
+		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\" value=\"" + question + "\"/> <br><br>\r";
+		result += "Enter answers (each answer separated by '||', each acceptable variant by '|'): <br> \r <input name=\"answer\" type=\"text\"  value=\"" + answer + "\"/><br><br> \r";
 		result += "<input type=\"submit\" value=\"Submit\"/> \r";
 		result += "</form> \r";
 		return result;
