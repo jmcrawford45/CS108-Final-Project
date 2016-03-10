@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import listeners.MyDBInfo;
-
 public class DBConnection {
 
 	public static Connection connect() {
@@ -14,9 +12,11 @@ public class DBConnection {
 		try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + 
-            MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME , MyDBInfo.MYSQL_PASSWORD);
+            listeners.ContextListener.MYSQL_DATABASE_SERVER, 
+            listeners.ContextListener.MYSQL_USERNAME , 
+            listeners.ContextListener.MYSQL_PASSWORD);
             Statement stmt = con.createStatement();
-            stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+            stmt.executeQuery("USE " + listeners.ContextListener.MYSQL_DATABASE_NAME);
     		} catch (SQLException e) {
             e.printStackTrace();
             }
