@@ -17,11 +17,19 @@
 <form action= "CreateQuestions.jsp" action="post">
 <h2>Name</h2><input type="text" name="name" value=""style="width:100px; height:10px;"><br>
 <h2>Description</h2><input type="text" name="description" value=""style="width:500px; height:10px;"><br>
+<h2>Category (Choose One)</h2>
+<%
+	for (int i = 0; i < QuizManager.CATEGORIES.length; i ++){
+		String cat = "<input type='radio' name='category_id' value=" + i + ">"
+				+ QuizManager.CATEGORIES[i] + "<br>";
+		out.print(cat);
+	}
+%>
 <h2>Options</h2>
-Randomize question order<input type="checkbox" name="random" value="random"><br><br>
-Display questions on multiple pages<input type="checkbox" name="pages" value="multiple"><br>
-If questions are displayed on multiple pages, give answer feedback immediately <input type="checkbox" name="immediate" value="immediate"><br><br>
-Allow quiz to be taken in practice mode<input type="checkbox" name="practice" value="practice"><br><br>
+<input type="checkbox" name="random" value="random">Randomize question order<br><br>
+<input type="checkbox" name="pages" value="multiple">Display questions on multiple pages<br>
+<input type="checkbox" name="immediate" value="immediate">If questions are displayed on multiple pages, give answer feedback immediately <br><br>
+<input type="checkbox" name="practice" value="practice">Allow quiz to be taken in practice mode<br><br>
 <input type = "submit" value = "Create Questions" class="button"/>
 </form>
 </body>

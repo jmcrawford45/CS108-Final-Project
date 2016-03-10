@@ -13,9 +13,14 @@ import java.util.List;
 public class QuizManager {
 	public Connection con;
 	public static final int NUMSCORES = 5;
+	public static final String[] CATEGORIES = {"History", "Science", "Art", "Current Events"};
 	
 	public QuizManager(Connection con) {
 		this.con = con;
+	}
+	
+	public void addQuiz(Quiz q){
+		addQuiz(q.id, q.creator_id, q.category_id, q.description, q.random, q.one_page, q.immediate, q.name, q.practice);
 	}
 	
 	public void addQuiz(int quiz_id, int creator_id, int category_id, String description, boolean random, boolean one_page, boolean immediate, String name, boolean practice) {

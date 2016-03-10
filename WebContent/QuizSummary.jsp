@@ -18,10 +18,10 @@
 <title><%=q.name%> Summary</title>
 </head>
 <body>
-<h1> <%=q.name%> </h1>  
-<h1>Description</h1><p><%=q.description%> <br></p>
-<h1>Quiz Creator</h1><br><a href="<%=q.creator_id%>"></a> <br>
-<h1>Your Past Performances on this Quiz</h1>
+<h1> <%=q.name%> </h1>
+<h2>Quiz Creator</h2><a href="show-user.jsp?id=<%=q.creator_id%>\"><%=q.creator_id%></a><br>  
+<h2>Description</h2><p><%=q.description%> <br></p><br>
+<h2>Your Past Performances on this Quiz</h2>
 <p class = "userquizscores"> 
 <% 
 for(int i = 0; i < userscores.size(); i++){   
@@ -33,7 +33,7 @@ for(int i = 0; i < userscores.size(); i++){
 }
 %>
 </p>
-<h1>Highest Performers of All Time</h1>
+<h2>Highest Performers of All Time</h2>
 <p class = "bestscores">
 <% 
 for(int i = 0; i < bestscores.size(); i++){   
@@ -45,7 +45,7 @@ for(int i = 0; i < bestscores.size(); i++){
 }
 %>
 </p>
-<h1>Top Performers in the Last Day</h1>
+<h2>Top Performers in the Last Day</h2>
 <p class = "bestrecentscores">  
 <% 
 for(int i = 0; i < bestrecentscores.size(); i++){   
@@ -57,7 +57,7 @@ for(int i = 0; i < bestrecentscores.size(); i++){
 }
 %>
 </p>
-<h1>Recent Performances</h1>
+<h2>Recent Performances</h2>
 <p class = "recentquizscores"> 
 <% 
 for(int i = 0; i < recentscores.size(); i++){   
