@@ -26,6 +26,7 @@ public class MAResponseQuestionTest {
 		System.out.println();
 		System.out.println(unorderedQuestion.returnHTMLSingleQuestion());
 		System.out.println();
+		System.out.println(MAResponseQuestion.returnHTMLBlankTemplate());
 
 		
 		String questionOrdered = "Enter 'a', 'b', and 'c' only in that order.";

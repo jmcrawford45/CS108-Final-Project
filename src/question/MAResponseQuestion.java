@@ -46,5 +46,15 @@ public class MAResponseQuestion extends Question {
 		return result;
 	}
 	
+	public static String returnHTMLBlankTemplate() {
+		String result = "";
+		result += "<form action=\"addResponseQuestion\" method=\"post\"> \r";
+		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\"/> <br><br>\r";
+		result += "Enter answers (each answer separated by '||', each acceptable variant by '|'): <br> \r <input name=\"answer\" type=\"text\"/><br><br> \r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		return result;
+	}
+	
 
 }

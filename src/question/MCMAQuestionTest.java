@@ -22,6 +22,8 @@ public class MCMAQuestionTest {
 		System.out.println(singleAnswerQuestion.returnHTMLSingleQuestion());
 		System.out.println();
 		
+		System.out.println(MCMAQuestion.returnHTMLBlankTemplate());
+		
 		//Answer multiAnswer = new Answer();
 		//multiAnswer.addAnswer("c");
 		//multiAnswer.addAnswer("a");
