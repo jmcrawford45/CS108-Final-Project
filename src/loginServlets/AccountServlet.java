@@ -49,7 +49,7 @@ public class AccountServlet extends HttpServlet {
         	String salt = Security.getSalt(rand);
         	String hashPassword = Security.getHashed(password, salt);
         	TableAbstraction.updateUser(name, new User(name, hashPassword, salt), con);
-        	request.getSession().setAttribute("user", TableAbstraction.getUser(name,con));
+        	request.getSession().setAttribute("user", name);
         	request.getRequestDispatcher("HomePage.jsp").forward(request, response);
         }
 	}
