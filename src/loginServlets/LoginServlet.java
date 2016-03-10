@@ -37,14 +37,14 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = (String)request.getParameter("user");
+		String name = (String)request.getParameter("name");
 		String password = (String)request.getParameter("password");
 		Connection con = (Connection)request.getSession().getServletContext().getAttribute("connection");
 		User user = TableAbstraction.getUser(name,con);
 		if(user != null && user.getPassword().equals(Security.getHashed(password, user.getSalt()))){
 			request.getSession().setAttribute("user", user);
             request.getRequestDispatcher("HomePage.jsp").forward(request, response);
-        } else request.getRequestDispatcher("TryAgain.html").forward(request, response);
+        } else request.getRequestDispatcher("NoExist.html").forward(request, response);
 	}
 
 }
