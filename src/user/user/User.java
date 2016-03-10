@@ -15,7 +15,17 @@ public class User implements java.io.Serializable{
 	public static final int PRACTICE = 32;
 	public static final int[] ACHIEVEMENTS = 
 	{AMATEUR,PROLIFIC,PRODIGIOUS,MACHINE,GREATEST,PRACTICE};
-		
+	public static final String [] ACHIEVE_STRINGS = {
+		"Amateur Author—The user created a quiz.",
+		"Prolific Author—The user created five quizzes.",
+		"Prodigious Author—The user created ten quizzes.",
+		"Quiz Machine—The user took ten quizzes.",
+		"I am the Greatest—The user had the highest score on a quiz.",
+		"Practice Makes Perfect—The user took a quiz in practice mode."
+	};	
+	public String describeAchievement(int i){
+			return ACHIEVE_STRINGS[i];
+	}
 	private int achieved;
 
 		public boolean hasAchieved(int a){
