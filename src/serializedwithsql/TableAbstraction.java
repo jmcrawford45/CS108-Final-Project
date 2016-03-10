@@ -4,6 +4,8 @@ import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import user.User;
 public class TableAbstraction {
 	
@@ -61,7 +63,11 @@ public static void deleteStats(Connection con){
 		e.printStackTrace();
 	}
 }
-
+public static User getUser(HttpServletRequest request){
+	Connection con = (Connection)request.getSession().getServletContext().getAttribute("connection");
+	String name = (String)request.getSession().getAttribute("user");
+	return getUser(name, con);
+}
 public static User getUser(String id, Connection con){
 		System.out.println("Getting: " + id);
 		try{
