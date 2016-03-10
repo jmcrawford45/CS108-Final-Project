@@ -78,4 +78,13 @@ public class FiBQuestion extends Question {
 		return result;
 	}
 	
+	@Override
+	public String returnHTMLDisplayStatic() {
+		String result = "";
+		result += "Pretext: " + getPreText() + "<br> \r";
+		result += "Posttext: " + getPostText() + "<br> \r";
+		result += "Answer: " + getAnswer().getAnswerAt(0) + "<br> \r";
+		return result;
+	}
+	
 }

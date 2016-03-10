@@ -66,5 +66,13 @@ public class MAResponseQuestion extends Question {
 		return result;
 	}
 	
+	@Override
+	public String returnHTMLDisplayStatic() {
+		String result = "";
+		result += "Question: " + getQuestion() + "<br> \r";
+		result += "Answers: " + getAnswer().convertAnswerToString() + "<br> \r";
+		return result;
+	}
+	
 
 }

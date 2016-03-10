@@ -106,5 +106,14 @@ public class MCQuestion extends Question {
 		return result;
 	}
 	
+	@Override
+	public String returnHTMLDisplayStatic() {
+		String result = "";
+		result += "Question: " + getQuestion() + "<br> \r";
+		result += "Answer: " + getAnswer().getAnswerAt(0) + "<br> \r";
+		result += "Choices: " + this.choices + "<br> \r";
+		return result;
+	}
+	
 	
 }

@@ -110,4 +110,13 @@ public class MCMAQuestion extends Question {
 		return result;
 	}
 	
+	@Override
+	public String returnHTMLDisplayStatic() {
+		String result = "";
+		result += "Question: " + getQuestion() + "<br> \r";
+		result += "Answers: " + getAnswer().convertAnswerToString() + "<br> \r";
+		result += "Choices: " + this.choices + "<br> \r";
+		return result;
+	}
+	
 }

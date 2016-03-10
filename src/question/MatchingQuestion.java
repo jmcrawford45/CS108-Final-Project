@@ -163,13 +163,38 @@ public class MatchingQuestion extends Question {
 	
 	public static String returnHTMLBlankTemplate(int numPairs) {
 		String result = "";
-		result += "<form action=\"addResponseQuestion\" method=\"post\"> \r";
+		result += "<form action=\"addMatchingQuestion\" method=\"post\"> \r";
+		result += "Enter instructions for question: <br> \r <input name=\"instructions\" type=\"text\"/> <br> \r";
 		for(int i = 0; i < numPairs; i++){
 			result += "Enter left column: <br> \r <input name=\"question" + i + "\" type=\"text\"/> <br><br>\r";
 			result += "Enter right column option: <br> \r <input name=\"answer" + i + "\" type=\"text\"/><br><br> \r";
 		}
 		result += "<input type=\"submit\" value=\"Submit\"/> \r";
 		result += "</form> \r";
+		return result;
+	}
+	
+	public static String returnHTMLEditTemplate(MatchingQuestion quest) {
+		String result = "";
+		result += "<form action=\"editMatchingQuestion\" method=\"post\"> \r";
+		result += "Enter instructions for question: <br> \r <input name=\"instructions\" type=\"text\" value=\"" + quest.getInstructions() + "\"/> <br> \r";
+		for(int i = 0; i < quest.numPairs(); i++){
+			result += "Enter left column: <br> \r <input name=\"question" + i + "\" type=\"text\" value=\"" + quest.getPairAt(i).getQuestion() + "\"/> <br><br>\r";
+			result += "Enter right column option: <br> \r <input name=\"answer" + i + "\" type=\"text\"  value=\"" + quest.getPairAt(i).getAnswer().getAnswerAt(0) + "\"/><br><br> \r";
+		}
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		return result;
+	}
+	
+	@Override
+	public String returnHTMLDisplayStatic() {
+		String result = "";
+		for(int i = 0; i < numPairs(); i++){
+			ResponseQuestion curr = getPairAt(i);
+			result += "Question: " + curr.getQuestion() + "\t";
+			result += "Answer: " + curr.getAnswer().convertAnswerToString() + "<br> \r";
+		}
 		return result;
 	}
 

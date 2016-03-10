@@ -55,6 +55,14 @@ public class ResponseQuestion extends Question {
 		result += "</form> \r";
 		return result;
 	}
+
+	@Override
+	public String returnHTMLDisplayStatic() {
+		String result = "";
+		result += "Question: " + getQuestion() + "<br>";
+		result += "Answer: " + getAnswer().getAnswerAt(0) + "<br>";
+		return result;
+	}
 	
 	
 	

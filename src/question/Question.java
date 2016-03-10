@@ -90,5 +90,7 @@ public abstract class Question {
 	
 	public abstract String returnHTMLSingleQuestion();
 	
+	public abstract String returnHTMLDisplayStatic();
+	
 	
 }
