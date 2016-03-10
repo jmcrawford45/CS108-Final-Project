@@ -67,4 +67,15 @@ public class FiBQuestion extends Question {
 		return result;
 	}
 	
+	public static String returnHTMLEditTemplate(String pretext, String posttext, String answer) {
+		String result = "";
+		result += "<form action=\"editFiBQuestion\" method=\"post\"> \r";
+		result += "Enter pre-blank text: <br> \r <input name=\"pre\" type=\"text\" value=\"" + pretext + "\"/> <br><br>\r";
+		result += "Enter post-blank text: <br> \r <input name=\"post\" type=\"text\" value=\"" + posttext + "\"/> <br><br>\r";
+		result += "Enter answer (variants on same answer separated by '|'): <br> \r <input name=\"answer\" type=\"text\" value=\"" + answer + "\"/><br><br> \r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		return result;
+	}
+	
 }

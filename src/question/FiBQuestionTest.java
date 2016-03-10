@@ -17,6 +17,9 @@ public class FiBQuestionTest {
 		System.out.println(test.returnHTMLQuestion(1));
 		System.out.println();
 		System.out.println(FiBQuestion.returnHTMLBlankTemplate());
+		
+		System.out.println();
+		System.out.println(FiBQuestion.returnHTMLEditTemplate("This is pre", "this is post", "this is answer"));
 	}
 
 	@Test

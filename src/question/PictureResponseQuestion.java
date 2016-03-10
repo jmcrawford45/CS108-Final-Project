@@ -55,10 +55,21 @@ public class PictureResponseQuestion extends ResponseQuestion {
 	
 	public static String returnHTMLBlankTemplate() {
 		String result = "";
-		result += "<form action=\"addResponseQuestion\" method=\"post\"> \r";
+		result += "<form action=\"addPicResponseQuestion\" method=\"post\"> \r";
 		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\"/> <br><br>\r";
 		result += "Enter answer (variants on same answer separated by '|'): <br> \r <input name=\"answer\" type=\"text\"/><br><br> \r";
 		result += "Enter pic URL: <br> \r <input name=\"url\" type=\"text\"/><br><br> \r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		return result;
+	}
+	
+	public static String returnHTMLEditTemplate(String question, String answer, String url) {
+		String result = "";
+		result += "<form action=\"editPicResponseQuestion\" method=\"post\"> \r";
+		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\" value=\"" + question + "\" /> <br><br>\r";
+		result += "Enter answer (variants on same answer separated by '|'): <br> \r <input name=\"answer\" type=\"text\" value=\"" + answer + "\"/><br><br> \r";
+		result += "Enter pic URL: <br> \r <input name=\"url\" type=\"text\" value=\"" + url + "\"/><br><br> \r";
 		result += "<input type=\"submit\" value=\"Submit\"/> \r";
 		result += "</form> \r";
 		return result;

@@ -46,6 +46,16 @@ public class ResponseQuestion extends Question {
 		return result;
 	}
 	
+	public static String returnHTMLEditTemplate(String question, String answer) {
+		String result = "";
+		result += "<form action=\"editResponseQuestion\" method=\"post\"> \r";
+		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\" value=\"" + question + "\"/> <br><br>\r";
+		result += "Enter answer (variants on same answer separated by '|'): <br> \r <input name=\"answer\" type=\"text\" value=\"" + answer + "\"/><br><br> \r";
+		result += "<input type=\"submit\" value=\"Submit\"/> \r";
+		result += "</form> \r";
+		return result;
+	}
+	
 	
 	
 	

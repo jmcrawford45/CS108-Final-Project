@@ -21,6 +21,8 @@ public class ResponseQuestionTest {
 		System.out.println();
 		
 		System.out.println(ResponseQuestion.returnHTMLBlankTemplate());
+		
+		System.out.println(ResponseQuestion.returnHTMLEditTemplate("Current Question", "Current Answer"));
 	}
 
 	@Test
