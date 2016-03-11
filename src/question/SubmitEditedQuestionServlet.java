@@ -3,6 +3,7 @@ package question;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,8 +57,8 @@ public class SubmitEditedQuestionServlet extends HttpServlet {
 				FiBQuestion fib = new FiBQuestion(question, request.getParameter("answer"));
 				q.setQuestionAtIndex(index, fib);
 			} catch (InvalidFiBException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				RequestDispatcher dispatch = request.getRequestDispatcher("FailedQuestionIssue.jsp?problem=Fill in the blank question was formatted incorrectly.");
+				dispatch.forward(request, response);
 			}
 			
 		} else if (type.equals("mc-question")){
@@ -65,8 +66,8 @@ public class SubmitEditedQuestionServlet extends HttpServlet {
 				MCQuestion mcq = new MCQuestion(request.getParameter("question"), request.getParameter("answer"), request.getParameter("choices"));
 				q.setQuestionAtIndex(index, mcq);
 			} catch (InvalidMCException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				RequestDispatcher dispatch = request.getRequestDispatcher("FailedQuestionIssue.jsp?problem=The answer did not appear in choices.");
+				dispatch.forward(request, response);
 			}
 			
 		} else if (type.equals("mcma-question")){
@@ -74,8 +75,8 @@ public class SubmitEditedQuestionServlet extends HttpServlet {
 				MCMAQuestion mcma = new MCMAQuestion(request.getParameter("question"), request.getParameter("answer"), request.getParameter("choices"));
 				q.setQuestionAtIndex(index, mcma);
 			} catch (InvalidMCMAException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				RequestDispatcher dispatch = request.getRequestDispatcher("FailedQuestionIssue.jsp?problem=At least one answer did not appear in choices.");
+				dispatch.forward(request, response);
 			}
 			
 		} else if (type.equals("maresponse-question")){
@@ -106,10 +107,12 @@ public class SubmitEditedQuestionServlet extends HttpServlet {
 			q.setQuestionAtIndex(index, prq);
 			
 		} else {
-	
-			//TODO: define what happens (go back to quiz overview page?)
-			
+			RequestDispatcher dispatch = request.getRequestDispatcher("FailedQuestionIssue.jsp?problem=The question type was not recognized.");
+			dispatch.forward(request, response);
 		}
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher("CreateQuestions.jsp");
+		dispatch.forward(request, response);
 	}
 
 }
