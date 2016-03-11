@@ -41,6 +41,21 @@ if(defUser.getQuizzes().size() != 0){
 	%>  <h1> Quiz History</h1>  <%
 }
 %>
+<% 
+if(defUser.fCount() != 0){
+	%>  <p> Friend Request</p>  <%
+}
+%>
+<% 
+if(defUser.mCount() != 0){
+	%>  <p> Message</p>  <%
+}
+%>
+<% 
+if(defUser.cCount() != 0){
+	%>  <p> Challenge</p>  <%
+}
+%>
 <!-- <h1> Quiz History</h1> -->  
 <%
 ArrayList<String> quizHistory = defUser.getQuizzes();

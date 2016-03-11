@@ -30,7 +30,7 @@ if(defUser == null){
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 
 String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
-if(defUser.getMessageCount() != 0){
+if(defUser.messageCount() != 0){
 	RequestDispatcher dispatch = request.getRequestDispatcher("HomePageHasMessage.jsp");  
 	dispatch.forward(request, response); 
 }
