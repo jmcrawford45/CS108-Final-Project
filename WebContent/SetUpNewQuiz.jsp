@@ -6,15 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
-<%
-	Quiz q = (Quiz)request.getSession().getAttribute("newquiz");
-%>
 <title>Create a Quiz</title>
 </head>
 <body>
 <h1>Create a Quiz</h1>
 
-<form action= "CreateQuestions.jsp" action="post">
+<form action= "FormNewQuiz" method="post">
 <h2>Name</h2><input type="text" name="name" value=""style="width:100px; height:10px;"><br>
 <h2>Description</h2><input type="text" name="description" value=""style="width:500px; height:10px;"><br>
 <h2>Category (Choose One)</h2>
