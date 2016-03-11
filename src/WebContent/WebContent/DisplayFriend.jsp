@@ -34,7 +34,7 @@ String name = user.getDisplayName();
 String status = user.getStatus();
 String bio = user.getBio();
 String imageStr = user.getImage();
-ArrayList<String> quizzes = user.getQuizzes();
+ArrayList<user.FriendEntry> quizzes = user.getRecent();
 ArrayList<String> friends = user.getFriends(); 
 String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
 %>
@@ -71,16 +71,19 @@ for(int i = 0; i < User.ACHIEVEMENTS.length; i++){
 %>
 <p class = "status"> Status <br> <%=status %><br></p>
 <p class = "bio"> About me  <br> <%=bio %> <br></p>
-<p class = "quizH"> Top Quizzes <br>  
 <% 
-for(int i = 0; i < quizzes.size(); i++){   
-	String quiz = quizzes.get(i);
-	%>
-	<%= quiz %><br>  
-<%	
+if(quizzes.size() != 0){
+	%>  <p class = "quizH">Recent Activity<br></p>   <%
+	for(user.FriendEntry e: quizzes){
+		String u1 = e.getU1();
+		String quiz = e.getQuizName();
+		String id = "" + e.getQuizID();
+		%>
+		<%=u1 + e %><a href = "QuizSummary.jsp?quiz_id=<%=id%>"><%=quiz%></a><br> <%
+	}
 }
 %>
-</p>
+
 
 <p class = "friends"> Friends <br>
 <%
