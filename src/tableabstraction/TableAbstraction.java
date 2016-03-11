@@ -9,6 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import user.User;
 public class TableAbstraction {
 	
+public static int getID(Connection con){
+	Stats stats = getStats(con);
+	int id = stats.issueID();
+	updateStats(stats, con);
+	return id;
+}
+	
 public static Stats getStats(Connection con){
 	try{
 	Statement stmt = con.createStatement();
