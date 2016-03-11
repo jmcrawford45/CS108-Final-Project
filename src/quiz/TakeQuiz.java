@@ -44,15 +44,13 @@ public class TakeQuiz extends HttpServlet {
 		request.getSession().setAttribute("quiztaken", q);
 		RequestDispatcher dispatch = null;
 		if (q.one_page) {
-			dispatch = request.getRequestDispatcher("TakeQuizOnePage.jsp?quiz="+q.name);  
-			 
+			dispatch = request.getRequestDispatcher("TakeQuizOnePage.jsp?quiz="+q.name);  			 
 		} else {
-			
+			dispatch = request.getRequestDispatcher("TakeQuizMultiPage.jsp?quiz="+q.name);
 		}
 		long start = System.currentTimeMillis();
 		request.setAttribute("start", start);
 		request.setAttribute("userid", request.getParameter("userid"));
-		//request.setAttribute("quiz", q);
 		dispatch.forward(request, response);
 		
 	}
