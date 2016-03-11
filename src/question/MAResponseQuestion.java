@@ -8,6 +8,7 @@ public class MAResponseQuestion extends Question {
 		this.type = "maresponse-question";
 	}
 	
+	
 	public int numAnswers(){
 		return this.answers.numAnswers();
 	}
@@ -52,6 +53,8 @@ public class MAResponseQuestion extends Question {
 		result += "<input type=\"hidden\" name=\"type\" value=\"maresponse-question\"> \r"; 
 		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\"/> <br><br>\r";
 		result += "Enter answers (each answer separated by '||', each acceptable variant by '|'): <br> \r <input name=\"answer\" type=\"text\"/><br><br> \r";
+		result += "Should answers be given in the order listed?";
+		result += "<input type=\"checkbox\" name=\"ordered\" value=\"ordered\"><br>\r";
 		result += "<input type=\"submit\" value=\"Submit\"/> \r";
 		result += "</form> \r";
 		return result;
@@ -63,6 +66,8 @@ public class MAResponseQuestion extends Question {
 		result += "<input type=\"hidden\" name=\"type\" value=\"maresponse-question\"> \r"; 
 		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\" value=\"" + question + "\"/> <br><br>\r";
 		result += "Enter answers (each answer separated by '||', each acceptable variant by '|'): <br> \r <input name=\"answer\" type=\"text\"  value=\"" + answer + "\"/><br><br> \r";
+		result += "Should answers be given in the order listed?";
+		result += "<input type=\"checkbox\" name=\"ordered\" value=\"yes\"><br>\r";
 		result += "<input type=\"submit\" value=\"Submit\"/> \r";
 		result += "</form> \r";
 		return result;

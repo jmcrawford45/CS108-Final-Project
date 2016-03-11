@@ -23,7 +23,7 @@
 		out.println("<h1>New Multiple Choice Question</h1>");
 		out.println(MCQuestion.returnHTMLBlankTemplate());
 		
-	} else if (type.equals("mamc-question")){
+	} else if (type.equals("mcma-question")){
 		out.println("<h1>New Multiple Choice Multiple Answer Question</h1>");
 		out.println(MCMAQuestion.returnHTMLBlankTemplate());
 		
