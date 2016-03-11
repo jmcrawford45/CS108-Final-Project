@@ -96,7 +96,6 @@ public class LoginServlet extends HttpServlet {
 		Connection con = (Connection)request.getSession().getServletContext().getAttribute("connection");
 		User user = TableAbstraction.getUser(name,con);
 		if(user != null && user.getPassword().equals(Security.getHashed(password, user.getSalt()))){
-			//request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("user", name);
             request.getRequestDispatcher("HomePage.jsp").forward(request, response);
         } else request.getRequestDispatcher("NoExist.html").forward(request, response);
