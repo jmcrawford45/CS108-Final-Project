@@ -1,6 +1,6 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="tableabstraction.TableAbstraction"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"%>  
 <%@page import="user.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -9,25 +9,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Welcome To QuizWorld</title>
+<link href = "j.png" rel="icon" type="image/gif">
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
-
-</head>
+         
+</head>    
 <body>  
 <%
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 tableabstraction.Stats stats = TableAbstraction.getStats(con);
 %>
+
 <h1> Announcements</h1>      
 <%
 ArrayList<String> announcements = stats.getMsgs();
 for(int i = 0; i < announcements.size(); i++){
 	String msg = announcements.get(i);%>
-	<%=msg %><br> <%
-} 
+	<%=msg %><br><%
+}   
 %>
 <h1> Popular Quizzes</h1>
 <form action = "ViewQuizzes.jsp" method="post">
-		<input type = "submit" value = "View Quizzes" class="button"/>      
+		<input type = "submit" value = "Quizzes!" class="button"/>      
 </form>  
 <form action = "WelcomeScreen.jsp" method="post">
 		<input type = "submit" value = "Login" class="button"/>      

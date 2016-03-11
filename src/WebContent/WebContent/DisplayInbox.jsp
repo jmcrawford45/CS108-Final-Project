@@ -11,6 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Display Inbox</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+<link href = "j.png" rel="icon" type="image/gif">
        
 </head>
 <body>
@@ -25,11 +26,9 @@ My Inbox
 			dispatch.forward(request, response);
 			return;
 		}
-        //User defUser = (User)request.getSession().getAttribute("user");//correct//
 		java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 
-		//defUser = TableAbstraction.getUser(defUser.getDisplayName(),con );
-		//request.getSession().setAttribute("user", defUser);
+
 		java.util.ArrayList<messages.Message> inbox = defUser.getMessages();
 		for(int i = 0; i < inbox.size(); i++){
 			

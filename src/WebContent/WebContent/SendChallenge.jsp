@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href = "j.png" rel="icon" type="image/gif">
+
 <title>Send Challenge </title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 
@@ -14,7 +16,6 @@
 <%
 String to = request.getParameter("toChallenge");
 System.out.print("Challenge: " + to);
-//User defUser = (User)request.getSession().getAttribute("user");//correct//
 User defUser = TableAbstraction.getUser(request);
 if(defUser == null){
 	RequestDispatcher dispatch = 

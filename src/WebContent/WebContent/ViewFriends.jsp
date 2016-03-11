@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href = "j.png" rel="icon" type="image/gif">
 
 <title>View Friends</title>
 
@@ -17,7 +18,6 @@
 <body>
 
 <%  
-//User defUser = (User)request.getSession().getAttribute("user");//correct//
 User defUser = TableAbstraction.getUser(request);
 if(defUser == null){
 	RequestDispatcher dispatch = 

@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>DisplayFriendRequest</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+<link href = "j.png" rel="icon" type="image/gif">
 
 </head>
 <body>
@@ -31,6 +32,11 @@ String index = request.getParameter("index");
 <input type="hidden" name = "index" value = "<%=index %>">    
 <input type="submit" value = "Decline Request" />
 </form>
+
+<form action = "DisplayUser.jsp?user=<%=from %>" method="post">
+		<input type = "submit" value = "View Profile" class="button"/>    
+</form> 
+
 
 
 <br>

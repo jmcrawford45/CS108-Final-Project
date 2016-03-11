@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Welcome</title>  
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+<link href = "j.png" rel="icon" type="image/gif">
+
 </head>
 <body>
 
@@ -17,6 +19,12 @@
 <p>Password: <input type="password" name="password"/>
 <input type="submit" value = "Create Account" /></p>
 </form>
+
+
+<form action = "Welcome.jsp" method="post">
+		<input type = "submit" value = "Home" class="button"/>      
+</form>    
+
 
 </body>
 </html>

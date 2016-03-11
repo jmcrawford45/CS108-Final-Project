@@ -1,3 +1,4 @@
+<%@page import="user.FriendEntry"%>
 <%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.User"%>
@@ -10,6 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Display Self</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+<link href = "j.png" rel="icon" type="image/gif">
 
 </head>
 <body>
@@ -23,7 +25,7 @@ String name = user.getDisplayName();
 String status = user.getStatus();
 String bio = user.getBio();
 String imageStr = user.getImage();
-ArrayList<String> quizzes = user.getQuizzes();
+ArrayList<FriendEntry> quizzes = user.getQuizzes();//changed
 ArrayList<String> friends = user.getFriends(); 
 %>
 <img src= "<%=imageStr%>"/>
@@ -47,14 +49,14 @@ for(int i = 0; i < User.ACHIEVEMENTS.length; i++){
 <p class = "status"> Status <br> <%=status %><br></p>
 <p class = "bio"> About me  <br> <%=bio %> <br></p>
 <p class = "quizH"> Top Quizzes <br>  
-<% 
+<%-- <% 
 for(int i = 0; i < quizzes.size(); i++){   
-	String quiz = quizzes.get(i);  
+	//String quiz = quizzes.get(i);  
 	%>
 	<%= quiz %><br>  
 <%	
 }
-%>
+%> --%>
 </p>
 
 <p class = "friends"> Friends <br>

@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href = "j.png" rel="icon" type="image/gif">
+
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 <title>Search Quizzes</title>
 </head>

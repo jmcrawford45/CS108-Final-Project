@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Edit Profile</title>
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+<link href = "j.png" rel="icon" type="image/gif">
+
 
 </head>
 <body>
