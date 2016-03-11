@@ -24,7 +24,7 @@ public class MCMAQuestionTest {
 		
 		System.out.println(MCMAQuestion.returnHTMLBlankTemplate());
 		
-		System.out.println(MCMAQuestion.returnHTMLEditTemplate("This is a question", "a|c", "a|b|c|d"));
+		System.out.println(MCMAQuestion.returnHTMLEditTemplate("This is a question", "a|c", "a|b|c|d", 3));
 		
 		//Answer multiAnswer = new Answer();
 		//multiAnswer.addAnswer("c");

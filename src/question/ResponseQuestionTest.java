@@ -22,7 +22,7 @@ public class ResponseQuestionTest {
 		
 		System.out.println(ResponseQuestion.returnHTMLBlankTemplate());
 		
-		System.out.println(ResponseQuestion.returnHTMLEditTemplate("Current Question", "Current Answer"));
+		System.out.println(ResponseQuestion.returnHTMLEditTemplate("Current Question", "Current Answer", 4));
 	}
 
 	@Test

@@ -47,10 +47,11 @@ public class ResponseQuestion extends Question {
 		return result;
 	}
 	
-	public static String returnHTMLEditTemplate(String question, String answer) {
+	public static String returnHTMLEditTemplate(String question, String answer, int index) {
 		String result = "";
 		result += "<form action=\"SubmitEditedQuestionServlet\" method=\"post\"> \r";
-		result += "<input type=\"hidden\" name=\"type\" value=\"response-question\"> \r"; 
+		result += "<input type=\"hidden\" name=\"type\" value=\"response-question\"> \r";
+		result += "<input type=\"hidden\" name=\"index\" value=\"" + index + "\"> \r"; 
 		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\" value=\"" + question + "\"/> <br><br>\r";
 		result += "Enter answer (variants on same answer separated by '|'): <br> \r <input name=\"answer\" type=\"text\" value=\"" + answer + "\"/><br><br> \r";
 		result += "<input type=\"submit\" value=\"Submit\"/> \r";

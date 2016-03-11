@@ -182,10 +182,11 @@ public class MatchingQuestion extends Question {
 		return result;
 	}
 	
-	public static String returnHTMLEditTemplate(MatchingQuestion quest) {
+	public static String returnHTMLEditTemplate(MatchingQuestion quest, int index) {
 		String result = "";
 		result += "<form action=\"SubmitEditedQuestionServlet\" method=\"post\"> \r";
 		result += "<input type=\"hidden\" name=\"type\" value=\"matching-question\"> \r";
+		result += "<input type=\"hidden\" name=\"index\" value=\"" + index +"\"> \r"; 
 		result += "<input type=\"hidden\" name=\"numpairs\" value=\"" + quest.numPairs() + "\"> \r";
 		result += "Enter instructions for question: <br> \r <input name=\"instructions\" type=\"text\" value=\"" + quest.getInstructions() + "\"/> <br> \r";
 		for(int i = 0; i < quest.numPairs(); i++){
