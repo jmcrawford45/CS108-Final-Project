@@ -41,7 +41,7 @@ public class TakeQuiz extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
+		request.getSession().removeAttribute("quiztaken");
 		
 		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
 		int quiz_id = Integer.parseInt(request.getParameter("quizid"));
@@ -70,7 +70,7 @@ public class TakeQuiz extends HttpServlet {
 		request.getSession().setAttribute("quiztaken", q);
 		long start = System.currentTimeMillis();
 		request.setAttribute("start", start);
-		request.setAttribute("userid", request.getParameter("userid"));
+
 		dispatch.forward(request, response);
 		
 	}

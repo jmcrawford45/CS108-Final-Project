@@ -45,19 +45,22 @@ public class CheckPracticeSP extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Question> pqs = (ArrayList<Question>)request.getSession().getAttribute("pquestions");
 		HashMap<Question, Integer> pr = (HashMap<Question, Integer>)request.getSession().getAttribute("precord");
-		for (int i = 0; i < pqs.size(); i++) {
+		for (int i = pqs.size()- 1; i >=0; i--) {
 			Question q = pqs.get(i);
-			String inpt = request.getParameter("input"+i);
+
+			String inpt = request.getParameter("input"+ i);
 			Answer a = new Answer(inpt);
 			if(q.isCorrectAnswer(a)) {
+				System.out.println(i + " "+q.getQuestion());
 				int n = pr.get(q) + 1;
 				pr.put(q, n);
-				if (n >= 3) {
-					pqs.remove(q);
+				if(n >= 3) {
+					pqs.remove(i);
 				}
 			}
 		}
-
+	
+		
 		Quiz q = (Quiz)request.getSession().getAttribute("pquiz");
 		if (q.random){
 			long seed = System.nanoTime();
@@ -68,16 +71,19 @@ public class CheckPracticeSP extends HttpServlet {
 		request.getSession().removeAttribute("pquestions");
 		request.getSession().removeAttribute("precord");
 		if(pqs.isEmpty()) {
-			url = "PracticeOver.jsp"; 
+			url = "PracticeOver.jsp?quiz_id=" + q.id;
+			request.getSession().removeAttribute("pquiz");
 		} else {
 			url = "PracticeOnePage.jsp";	
 			request.getSession().setAttribute("pquestions", pqs);
 			request.getSession().setAttribute("precord", pr);
 		}
 		
+	
 		
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
+		
 	}
 
 }

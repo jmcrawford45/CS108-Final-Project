@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 <%
-	QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
+	QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
 	Quiz quiz = (Quiz)request.getSession().getAttribute("quiztaken");
 	int userid = Integer.parseInt(request.getParameter("userid"));
 	ArrayList<Question> qs = quiz.questions;

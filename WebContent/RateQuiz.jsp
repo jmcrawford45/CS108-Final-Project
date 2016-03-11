@@ -10,7 +10,7 @@
 <%
 	int userid = Integer.parseInt(request.getParameter("userid"));
 	Quiz q = (Quiz)request.getSession().getAttribute("quiztaken");
-	QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
+	QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
 	ArrayList<Feedback> reviews = qm.getQuizFeedback(q.id);
 %>
 <title>Rate Quiz</title>

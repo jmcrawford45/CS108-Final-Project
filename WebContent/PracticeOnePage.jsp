@@ -21,10 +21,11 @@
 <form action="CheckPracticeSP" method="post">
 <%
 	for (int i = 0; i < pqs.size(); i++) {
-		String display = "<b>" + (i+1) + ". </b>" + pqs.get(i).returnHTMLQuestion(i);
+		String display = "<b>" + (i+1) + ". </b>" + pqs.get(i).returnHTMLQuestion(i) + "<br>";
 		out.print(display);
 	}
 %>
+<br>
 <input type = "submit" value = "Submit" class="button"/>
 </form>
 </body>

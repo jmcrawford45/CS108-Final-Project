@@ -18,8 +18,8 @@ public class Quiz {
 	public boolean random = false;
 	public boolean one_page = false;
 	public boolean immediate = false;
-	public ArrayList<Question> questions;
-	public ArrayList<Performance> scoreboard;
+	public ArrayList<Question> questions=null;
+	public ArrayList<Performance> scoreboard=null;
 	public long time_created;
 	public boolean practice = false;
 	public String questionsIDS = "";
@@ -61,8 +61,8 @@ public class Quiz {
 	}
 	
 	public Question getQuestionbyIndex(int i) {
-		if (questions.size() <= i) return null;
-		return questions.get(i);
+		if (this.questions.size() <= i) return null;
+		return this.questions.get(i);
 	}
 	
 	public void setQuestionAtIndex(int index, Question q){

@@ -2,11 +2,14 @@ package quiz;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import tableabstraction.TableAbstraction;
 
 /**
  * Servlet implementation class FormNewQuiz
@@ -35,9 +38,13 @@ public class FormNewQuiz extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
+		
+		int quiz_id = TableAbstraction.getID(qm.con);
+		System.out.println(quiz_id);
+		int creator_id = Integer.parseInt(request.getServletContext().getInitParameter("userid"));
 		long time = System.currentTimeMillis();
-		int quiz_id = (int)time/2655;
-		int creator_id = 655;
 		int category_id = Integer.parseInt(request.getParameter("category_id"));
 		String name = request.getParameter("name");
 		String description = request.getParameter("description");
@@ -69,7 +76,8 @@ public class FormNewQuiz extends HttpServlet {
 		
 		Quiz q = new Quiz(quiz_id, creator_id, category_id, description, random, onepage, immediate, time, name, practice);
 		request.getSession().setAttribute("newquiz", q);
-		request.getRequestDispatcher("CreateQuestions.jsp").forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("CreateQuestions.jsp?quizid=" + quiz_id);
+		rd.forward(request, response);
 	}
 
 }

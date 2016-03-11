@@ -84,7 +84,7 @@ for(int i = 0; i < recentscores.size(); i++){
 <input type = "hidden" name="quizid" value = "<%=q.id%>">    
 <input type = "hidden" name="userid" value = "<%=user_id%>"> 
 <input type = "hidden" name="mode" value = "count"> 
-<input type = "submit" value = "Take Quiz" class="button"/>
+<input type = "submit" value = "Take Quiz in Recorded Mode" class="button"/>
 </form>
 <%
 	if(q.practice) {

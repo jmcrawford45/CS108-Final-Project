@@ -42,7 +42,7 @@ public class TakePracticeQuiz extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
+		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
 		
 		int quizid = Integer.parseInt(request.getParameter("quizid"));
 		Quiz quiz = qm.getQuizByID(quizid);
@@ -71,8 +71,7 @@ public class TakePracticeQuiz extends HttpServlet {
 		request.getSession().setAttribute("pquestions", pquestions);
 		request.getSession().setAttribute("precord", precord);
 		RequestDispatcher rd = request.getRequestDispatcher(url);
-		rd.forward(request, response);
-		
+		rd.forward(request, response);	
 		
 	}
 

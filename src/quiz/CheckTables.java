@@ -2,12 +2,9 @@ package quiz;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.junit.Test;
-
-import tableabstraction.TableAbstraction;
 
 public class CheckTables {
 
@@ -17,31 +14,38 @@ public class CheckTables {
 	
 		
 		try {
-			PreparedStatement ps = con.prepareStatement("INSERT into "
-					+ "questions(question_id, type, question, answer, additional) "
-					+ "values(?, ?, ?, ?, ?)");
-			int id = TableAbstraction.getID(con);
-			ps.setInt(1, id);
-			ps.setString(2, "response-question");
-			ps.setString(3, "Question 1");
-			ps.setString(4, "Answer 1");
-			ps.setString(5, "");
+			PreparedStatement ps = con.prepareStatement("DELETE FROM performances");
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM quizzes");
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		try {
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM "
-					+ "questions WHERE type = ?");
-			ps.setString(1, "response-question");
-			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
-				System.out.println(rs.getString("question"));
-			}
+			PreparedStatement ps = con.prepareStatement("DELETE FROM quiz_questions");
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM reviews");
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM questions");
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
 	}
 
 }

@@ -53,7 +53,7 @@ public class GradeQuiz extends HttpServlet {
 		Performance p = q.gradeQuiz(pid, userid, start, q.questions, input);
 		request.setAttribute("performance", p);
 		qm.addPerformance(p);
-		
+		request.getSession().removeAttribute("quiztaken");
 		RequestDispatcher dispatch = request.getRequestDispatcher("QuizResults.jsp?quiz_id="+q.id); 
 		dispatch.forward(request, response);
 	}

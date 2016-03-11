@@ -40,7 +40,8 @@ public class AddQuiz extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
-		Quiz q = (Quiz)request.getSession().getAttribute("newquiz");		
+		Quiz q = (Quiz)request.getSession().getAttribute("newquiz");
+		System.out.println(q.name);
 		qm.addQuiz(q);
 		QuestionManager qsm = new QuestionManager(qm.con);
 		String ids = "";
@@ -51,10 +52,10 @@ public class AddQuiz extends HttpServlet {
 		}
 		qm.setQuizQuestions(q.id, ids);
 		
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("QuizSummary.jsp?quiz_id="+q.id);
 		rd.forward(request, response);
-		request.getSession().removeAttribute("newquiz");
+		
 	}
 
 }
