@@ -41,7 +41,6 @@ public class RemoveFriend extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String toRemove = request.getParameter("toRemove"); 
 		
-		//User defUser = (User)request.getSession().getAttribute("user");//correct//
 		User defUser = TableAbstraction.getUser(request);
 		if(defUser == null){
 			RequestDispatcher dispatch = 

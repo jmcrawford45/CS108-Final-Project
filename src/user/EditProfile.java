@@ -40,7 +40,6 @@ public class EditProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("type");
-		//User defUser = (User)request.getSession().getAttribute("user");//correct//
 		User defUser = TableAbstraction.getUser(request);
 		if(defUser == null){
 			RequestDispatcher dispatch = 

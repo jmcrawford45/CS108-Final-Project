@@ -2,6 +2,7 @@ package user;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,7 +45,6 @@ public class AddFriend extends HttpServlet {
 		int index = Integer.parseInt(request.getParameter("index"));		
 		String toAdd = request.getParameter("toAdd"); 
 		
-		//User defUser = (User)request.getSession().getAttribute("user");//correct//
 		User defUser = TableAbstraction.getUser(request);
 		if(defUser == null){
 			RequestDispatcher dispatch = 
@@ -59,9 +59,14 @@ public class AddFriend extends HttpServlet {
 		Connection con = (Connection)request.getSession().getServletContext().getAttribute("connection");
 		User toAddUser = tableabstraction.TableAbstraction.getUser(toAdd, con);
 		defUser.addFriend(toAdd);
+		
+		
 		toAddUser.addFriend(defUser.getDisplayName());
 		TableAbstraction.updateUser(defUser.getDisplayName(),defUser,con);
 		TableAbstraction.updateUser(toAdd,toAddUser,con);
+		FriendEntry entry = new FriendEntry(defUser.getDisplayName(),toAdd);
+		defUser.updateLogs(entry, con, new ArrayList<String>());
+		toAddUser.updateLogs(entry, con, defUser.getFriends());
 
 		RequestDispatcher dispatch = request.getRequestDispatcher("DisplayUser.jsp?user="+toAddUser.getDisplayName());  
 		dispatch.forward(request, response);  

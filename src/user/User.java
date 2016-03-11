@@ -1,10 +1,16 @@
+
+
+
+
 package user;
 
 import java.util.ArrayList;
 
+import com.mysql.jdbc.Connection;
 import com.sun.xml.internal.bind.CycleRecoverable.Context;
 
 import messages.Message;
+import tableabstraction.TableAbstraction;
 
 public class User implements java.io.Serializable{
 	public static final int AMATEUR = 1;
@@ -23,20 +29,6 @@ public class User implements java.io.Serializable{
 		"I am the Greatest—The user had the highest score on a quiz.",
 		"Practice Makes Perfect—The user took a quiz in practice mode."
 	};
-	private ArrayList<FriendEntry> friendActivity;
-	public void updateLogs(FriendEntry s, Connection con){
-		for(String friend: getFriends()){
-			User f = TableAbstraction.getUser(friend, con);
-			if(f!=null){
-			f.friendLog(s);
-			TableAbstraction.updateUser(friend, f, con);
-			}
-		}
-	}
-	public void friendLog(FriendEntry s){
-		if(friendActivity.size() == 3) friendActivity.remove(2);
-		friendActivity.add(0, s);
-	}
 	private int achieved;
 		public String describeAchievement(int i){
 			return ACHIEVE_STRINGS[i];
@@ -46,6 +38,22 @@ public class User implements java.io.Serializable{
 		}
 		public void achieved(int a){
 			this.achieved |= a;
+		}
+		
+		private ArrayList<FriendEntry> friendActivity;
+		
+		public void updateLogs(FriendEntry s, java.sql.Connection con, ArrayList<String>exclude){
+			for(String friend: getFriends()){
+				User f = TableAbstraction.getUser(friend, con);
+				if(f!=null && !exclude.contains(friend)){
+				f.friendLog(s);
+				TableAbstraction.updateUser(friend, f, con);
+				}
+			}
+		}
+		public void friendLog(FriendEntry s){
+			if(friendActivity.size() == 3) friendActivity.remove(2);
+			friendActivity.add(0, s);
 		}
 		
 	private static final long serialVersionUID = 1L;    
@@ -61,8 +69,9 @@ public class User implements java.io.Serializable{
 	private String currentStatus;
 	private ArrayList<String> previousStatuses;
 	private ArrayList<String> friends;//display top five//
-	private ArrayList<String> quizHistory;//all quizzes
-	private ArrayList<String> authoredQuizzes;
+	private ArrayList<FriendEntry> quizHistory;//all quizzes
+	//private ArrayList<String> authoredQuizzes;
+	private ArrayList<FriendEntry> recentActivity;
 	//authored quizzes// 
    	private int careerScore;    
 	private int friendCount;
@@ -74,7 +83,7 @@ public class User implements java.io.Serializable{
 	private int requestCount, challengeCount, messageCount;
 	
 	private int quizzesTaken, quizzesAuthored;
-	private ArrayList<String> friendActivity, createLog;
+	private ArrayList<String> createLog;
 	public void takeQuiz(){
 		quizzesTaken++;
 		switch(quizzesTaken){
@@ -99,7 +108,7 @@ public class User implements java.io.Serializable{
 		return quizzesAuthored;
 	}
 
-	public ArrayList<String> getFriendLog(){
+	public ArrayList<FriendEntry> getFriendLog(){
 		return friendActivity;
 	}
 	public void createLog(String s){
@@ -112,24 +121,40 @@ public class User implements java.io.Serializable{
 	public User(String uniqueUserId,String hashPassword, String salt) {
 		this.quizzesTaken = 0;
 		this.quizzesAuthored = 0;
-		friendActivity = new ArrayList<String>();
+		friendActivity = new ArrayList<FriendEntry>();
 		createLog = new ArrayList<String>();
 		this.uniqueUserID = uniqueUserId;    
 		this.displayName = uniqueUserId;
 		this.friendCount = 0;
 		this.careerScore = 0;
-		this.requestCount = this.challengeCount = this.friendCount = 0;
+		this.requestCount = this.challengeCount = this.requestCount = 0;
 		friends = new ArrayList<String>();
 		previousStatuses = new ArrayList<String>();
-		quizHistory = new ArrayList<String>();
-		authoredQuizzes = new ArrayList<String>();
+		//quizHistory = new ArrayList<String>();
+		quizHistory = new ArrayList<FriendEntry>();
 		profileImageString = "defaultImg.png";
 		messages = new ArrayList<Message>();
 		activityLog = new ArrayList<String>();
+		recentActivity = new ArrayList<FriendEntry>();
 		this.hashPassword = hashPassword;
 		this.salt = salt;
 		this.achieved = 0;
+		
+		friendLog(new FriendEntry("Harry", "Harry Potter Trivia",  true, 21));
 
+		friendLog(new FriendEntry("Ron", "Harry Potter Trivia", false, 21));
+		friendLog(new FriendEntry("Ron", "Weasley Trivia",  true, 21));
+
+		friendLog(new FriendEntry("Harry", "Ron"));
+		addQuiz("hi", 21, true);
+		addQuiz("hi", 21, false);
+		addQuiz("hi", 21, true);
+		addQuiz("hi", 21, false);
+		addQuiz("hi", 21, true);
+		addQuiz("hi", 21, false);
+		addQuiz("hi", 21, true);
+		addQuiz("hi", 21, false);
+		
 	}
 	
 	public void setDisplayName(String newDisplayName){
@@ -208,31 +233,29 @@ public class User implements java.io.Serializable{
 	
 	
 	
-	public void addTakenQuiz(String quizname){
-		quizHistory.add(quizname);
-		activityLog.add(this.uniqueUserID + " Took Quiz: " + quizname);
+	public void addQuiz(String quizname, int id, boolean created){
+		FriendEntry entry = new FriendEntry("You", quizname,created,id);
+		addRecent(entry);
+		quizHistory.add(0,entry);
+		//activityLog.add(this.uniqueUserID + " Took Quiz: " + quizname);
 
 	}
+	public ArrayList<FriendEntry> getRecent(){
+		return recentActivity;
+	}
+	public void addRecent(FriendEntry e){
+		if(recentActivity.size() == 3) recentActivity.remove(2);
+		recentActivity.add(0, e);
+	}
 	
-	public ArrayList<String> getQuizzes(){
+	public ArrayList<FriendEntry> getQuizzes(){
 		return quizHistory;
 	}
 	
 	public ArrayList<String> getActivityLog(){
 		return activityLog;
 	}
-	public void addAuthoredQuiz(String quizname){
-		if(!authoredQuizzes.contains(quizname)){
-			authoredQuizzes.add(quizname);
-			activityLog.add(this.uniqueUserID + "Created Quiz: " + quizname);
-		}
-	}
 	
-	public ArrayList<String> getAuthoredQuizzes(){
-		return authoredQuizzes;
-	}
-	
-
 	public void setScore(int newScore){
 		this.careerScore = newScore;
 	}
@@ -271,14 +294,14 @@ public class User implements java.io.Serializable{
 		messages.add(msg);
 		String type = msg.getType();
 		if(type.equals("TextMessage")) messageCount++;
-		else if(type.equals("FriendRequest")) friendCount++;
+		else if(type.equals("FriendRequest")) requestCount++;
 		else challengeCount++;
 	}
 	public int messageCount(){
-		return messageCount + friendCount + challengeCount;
+		return messageCount + requestCount + challengeCount;
 	}
 	public int fCount(){
-		return friendCount;
+		return requestCount;
 	}
 	public int mCount(){
 		return messageCount;
@@ -299,7 +322,7 @@ public class User implements java.io.Serializable{
 			m.markAsRead();
 			String type = m.getType();
 			if(type.equals("TextMessage")) messageCount--;
-			else if(type.equals("FriendRequest")) friendCount--;
+			else if(type.equals("FriendRequest")) requestCount--;
 			else challengeCount--;
 		}
 	}
