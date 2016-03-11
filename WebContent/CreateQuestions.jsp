@@ -21,9 +21,9 @@
 		Question curr = q.getQuestionbyIndex(i);
 		out.println(curr.returnHTMLDisplayStatic());
 		out.println("<br>\r");
-		out.println("<form action=\"editServlet\" method=\"post\">");
-		out.println("<input name=\"questionNum\" type=\"hidden\" value=\"" + i + "\"/>");
-		out.println("<input name=\"quiz\" type=\"hidden\" value=\"" + q + "\"/>");
+		out.println("<form action=\"editQuestion\" method=\"post\">");
+		out.println("<input name=\"questionIndex\" type=\"hidden\" value=\"" + i + "\"/>");
+		out.println("<input name=\"type\" type=\"hidden\" value=\"" + curr.getType() + "\"/>");
 		out.println("<input type=\"submit\" value=\"Add to Cart\"/>");
 		out.println("</form>");
 	}
@@ -41,6 +41,7 @@
 <input type="radio" value="matching-question" name="type" />Matching Question
 (Number of questions: <input type="text" name="numberquestions" />) <br>
 <input type="radio" value="picresponse-question" name="type" />Picture-Response Question<br><br>
+
 <input type="submit" value="Submit"/>
 </form>
 
