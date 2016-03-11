@@ -87,4 +87,39 @@ public class QuestionManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void editQuestion(Question q){
+		try {
+			PreparedStatement ps = con.prepareStatement("UPDATE questions SET question='?' answer='?' additional='?' WHERE id=?");
+			ps.setString(1, q.getQuestion());
+			ps.setString(2, q.getAnswer().convertAnswerToString());
+			ps.setString(3, q.getAdditional());
+			ps.setInt(4, q.getID());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	public void deleteQuestion(Question q){
+		try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM questions WHERE id=?");
+			ps.setInt(1, q.getID());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteQuestion(int id){
+		try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM questions WHERE id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

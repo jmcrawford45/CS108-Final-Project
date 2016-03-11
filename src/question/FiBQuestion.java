@@ -58,7 +58,8 @@ public class FiBQuestion extends Question {
 	
 	public static String returnHTMLBlankTemplate() {
 		String result = "";
-		result += "<form action=\"addFiBQuestion\" method=\"post\"> \r";
+		result += "<form action=\"SubmitNewQuestionServlet\" method=\"post\"> \r";
+		result += "<input type=\"hidden\" name=\"type\" value=\"fib-question\"> \r"; 
 		result += "Enter pre-blank text: <br> \r <input name=\"question\" type=\"text\"/> <br><br>\r";
 		result += "Enter post-blank text: <br> \r <input name=\"question\" type=\"text\"/> <br><br>\r";
 		result += "Enter answer (variants on same answer separated by '|'): <br> \r <input name=\"answer\" type=\"text\"/><br><br> \r";
@@ -69,7 +70,8 @@ public class FiBQuestion extends Question {
 	
 	public static String returnHTMLEditTemplate(String pretext, String posttext, String answer) {
 		String result = "";
-		result += "<form action=\"editFiBQuestion\" method=\"post\"> \r";
+		result += "<form action=\"SubmitEditedQuestionServlet\" method=\"post\"> \r";
+		result += "<input type=\"hidden\" name=\"type\" value=\"fib-question\"> \r"; 
 		result += "Enter pre-blank text: <br> \r <input name=\"pre\" type=\"text\" value=\"" + pretext + "\"/> <br><br>\r";
 		result += "Enter post-blank text: <br> \r <input name=\"post\" type=\"text\" value=\"" + posttext + "\"/> <br><br>\r";
 		result += "Enter answer (variants on same answer separated by '|'): <br> \r <input name=\"answer\" type=\"text\" value=\"" + answer + "\"/><br><br> \r";

@@ -35,7 +35,7 @@
 		out.println("<h1>New Matching Question</h1>");
 		out.println(MatchingQuestion.returnHTMLBlankTemplate(Integer.parseInt(request.getParameter("numberquestions"))));
 		
-	} else if (type.equals("picresponse-question")){
+	} else if (type.equals("pic-response-question")){
 		out.println("<h1>New Picture Response Question</h1>");
 		out.println(PictureResponseQuestion.returnHTMLBlankTemplate());
 		

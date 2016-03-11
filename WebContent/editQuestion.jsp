@@ -44,7 +44,7 @@
 		out.println("<h1>Edit Matching Question</h1>");
 		out.println(MatchingQuestion.returnHTMLEditTemplate(mq));
 		
-	} else if (type.equals("picresponse-question")){
+	} else if (type.equals("pic-response-question")){
 		PictureResponseQuestion prq = (PictureResponseQuestion) curr;
 		out.println("<h1>Edit Picture Response Question</h1>");
 		out.println(PictureResponseQuestion.returnHTMLEditTemplate(prq.getQuestion(), prq.getAnswer().convertAnswerToString(), prq.getPicURL()));;

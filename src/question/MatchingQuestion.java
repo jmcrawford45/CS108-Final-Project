@@ -163,7 +163,8 @@ public class MatchingQuestion extends Question {
 	
 	public static String returnHTMLBlankTemplate(int numPairs) {
 		String result = "";
-		result += "<form action=\"addMatchingQuestion\" method=\"post\"> \r";
+		result += "<form action=\"SubmitNewQuestionServlet\" method=\"post\"> \r";
+		result += "<input type=\"hidden\" name=\"type\" value=\"matching-question\"> \r"; 
 		result += "Enter instructions for question: <br> \r <input name=\"instructions\" type=\"text\"/> <br> \r";
 		for(int i = 0; i < numPairs; i++){
 			result += "Enter left column: <br> \r <input name=\"question" + i + "\" type=\"text\"/> <br><br>\r";
@@ -176,7 +177,8 @@ public class MatchingQuestion extends Question {
 	
 	public static String returnHTMLEditTemplate(MatchingQuestion quest) {
 		String result = "";
-		result += "<form action=\"editMatchingQuestion\" method=\"post\"> \r";
+		result += "<form action=\"SubmitEditedQuestionServlet\" method=\"post\"> \r";
+		result += "<input type=\"hidden\" name=\"type\" value=\"matching-question\"> \r"; 
 		result += "Enter instructions for question: <br> \r <input name=\"instructions\" type=\"text\" value=\"" + quest.getInstructions() + "\"/> <br> \r";
 		for(int i = 0; i < quest.numPairs(); i++){
 			result += "Enter left column: <br> \r <input name=\"question" + i + "\" type=\"text\" value=\"" + quest.getPairAt(i).getQuestion() + "\"/> <br><br>\r";
