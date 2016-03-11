@@ -69,6 +69,10 @@ public class Quiz {
 		this.questions.set(index, q);
 	}
 	
+	public void deleteQuestionAtIndex(int index){
+		this.questions.remove(index);
+	}
+	
 	public int getNumQuestions(){
 		return questions.size();
 	}
