@@ -15,10 +15,18 @@
 
 
 <%
-User defUser = (User)request.getSession().getAttribute("user");//correct//
+//User defUser = (User)request.getSession().getAttribute("user");//correct//
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 
-defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
+//defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
+
+User defUser = TableAbstraction.getUser(request);
+if(defUser == null){
+	RequestDispatcher dispatch = 
+			request.getRequestDispatcher("Register.html");
+	dispatch.forward(request, response);
+	return;
+}
 String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
 
 
@@ -27,7 +35,13 @@ String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
 <h1> Announcements</h1>  
 <h1> Popular Quizzes</h1>
 <h1> Recent Quizzes</h1>
-<h1> Quiz History</h1>  
+
+<% 
+if(defUser.getQuizzes().size() != 0){
+	%>  <h1> Quiz History</h1>  <%
+}
+%>
+<!-- <h1> Quiz History</h1> -->  
 <%
 ArrayList<String> quizHistory = defUser.getQuizzes();
 for(int i = 0; i < quizHistory.size(); i++){
@@ -36,9 +50,21 @@ for(int i = 0; i < quizHistory.size(); i++){
 } 
 
 %>
-<h1> Authored Quizzes</h1>    
 
-<h1> Friend Activity</h1>
+<% 
+if(defUser.getAuthoredQuizzes().size() != 0){
+	%>  <h1> Authored Quizzes</h1>   <%
+}
+%>
+<!-- <h1> Authored Quizzes</h1>  -->   
+
+
+<% 
+if(defUser.getActivityLog().size() != 0){
+	%>  <h1> Friend Activity</h1>   <%
+}
+%>
+<!-- <h1> Friend Activity</h1> -->
 
 <%-- <% 
 for(int i = 0; i < defUser.getFriends().size(); i++){
@@ -73,10 +99,14 @@ for(int i = 0; i < defUser.getFriends().size(); i++){
 <form action = "ViewQuizzes.jsp" method="post">
 		<input type = "submit" value = "Quizzes!" class="button"/>      
 </form>  
-
 <form action = "AdminPage.jsp" method="post">
 		<input type = "submit" <%= admin%> value = "Admin" class="button"/>      
 </form> 
+<form action = "Logout" method="post">
+		<input type = "submit" value = "Logout" class="button"/>      
+</form> 
+
+
 
 </body>
 </html>

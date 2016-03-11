@@ -28,6 +28,12 @@
 <input type="submit" value = "Set Bio" /></p>  
 </form>
 
+<form action="EditProfile" method="post">  
+<input type="hidden" value = "privacy" name = "type"/>
+<input type="submit" value = "Change Privacy" />
+</form>
+
+
 
 <br>
 <form action = "HomePage.jsp" method="post">

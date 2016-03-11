@@ -1,4 +1,9 @@
-<%@page import="tableabstraction.TableAbstraction"%>
+
+ 
+ 
+ 
+ 
+ <%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -14,14 +19,18 @@
 <body>
 
 <%  
-
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 User user = (User)TableAbstraction.getUser(request.getParameter("user"), con);
-
-User defUser = (User)request.getSession().getAttribute("user");//correct//
-
+User defUser = TableAbstraction.getUser(request);
+if(defUser == null){
+	RequestDispatcher dispatch = 
+			request.getRequestDispatcher("Register.html");
+	dispatch.forward(request, response);
+	return;
+}
 
 String name = user.getDisplayName();  
+String status = user.getStatus();
 String bio = user.getBio();
 String imageStr = user.getImage();
 ArrayList<String> quizzes = user.getQuizzes();
@@ -45,6 +54,21 @@ String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
 		<input type = "submit" value = "Send Message" class="Button"/>  
 </form>  
 
+
+<p class = "achievements"> Achievements <br>
+<%
+for(int i = 0; i < User.ACHIEVEMENTS.length; i++){
+	if(defUser.hasAchieved(User.ACHIEVEMENTS[i])){
+		%>
+		<%=User.ACHIEVE_STRINGS[i] %><br>
+		<% 
+		
+	}
+}
+  
+
+%>
+<p class = "status"> Status <br> <%=status %><br></p>
 <p class = "bio"> About me  <br> <%=bio %> <br></p>
 <p class = "quizH"> Top Quizzes <br>  
 <% 
@@ -84,5 +108,4 @@ for(int i = 0; i < friends.size(); i++){
 
 </body>
 </html>
-
 

@@ -18,11 +18,18 @@
 My Inbox     
 
 <% 
-        User defUser = (User)request.getSession().getAttribute("user");//correct//
+		User defUser = TableAbstraction.getUser(request);
+		if(defUser == null){
+			RequestDispatcher dispatch = 
+				request.getRequestDispatcher("Register.html");
+			dispatch.forward(request, response);
+			return;
+		}
+        //User defUser = (User)request.getSession().getAttribute("user");//correct//
 		java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 
-		defUser = TableAbstraction.getUser(defUser.getDisplayName(),con );
-		request.getSession().setAttribute("user", defUser);
+		//defUser = TableAbstraction.getUser(defUser.getDisplayName(),con );
+		//request.getSession().setAttribute("user", defUser);
 		java.util.ArrayList<messages.Message> inbox = defUser.getMessages();
 		for(int i = 0; i < inbox.size(); i++){
 			

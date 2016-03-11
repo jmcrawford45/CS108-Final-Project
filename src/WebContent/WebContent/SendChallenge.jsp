@@ -1,3 +1,4 @@
+<%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="user.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,7 +14,15 @@
 <%
 String to = request.getParameter("toChallenge");
 System.out.print("Challenge: " + to);
-User defUser = (User)request.getSession().getAttribute("user");//correct//
+//User defUser = (User)request.getSession().getAttribute("user");//correct//
+User defUser = TableAbstraction.getUser(request);
+if(defUser == null){
+	RequestDispatcher dispatch = 
+			request.getRequestDispatcher("Register.html");
+	dispatch.forward(request, response);
+	return;
+}
+
 
 String from = defUser.getDisplayName();
 %>

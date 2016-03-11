@@ -1,3 +1,4 @@
+
 <%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.User"%>
@@ -14,33 +15,50 @@
 <body>
 
 <%  
-
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 User user = (User)TableAbstraction.getUser(request.getParameter("user"), con);
 
-User defUser = (User)request.getSession().getAttribute("user");//correct//
-defUser = (User)TableAbstraction.getUser(defUser.getDisplayName(), con);
 
+
+if(user == null){
+	RequestDispatcher dispatch = 
+			request.getRequestDispatcher(""
+			+ "Error.jsp?title=Doesn't Exist&message=This User Does not Exist!");
+	dispatch.forward(request, response);
+	return;
+}
+
+
+User defUser = TableAbstraction.getUser(request);
+if(defUser == null){
+	RequestDispatcher dispatch = 
+			request.getRequestDispatcher("Register.html");
+	dispatch.forward(request, response);
+	return;
+}
 
 if(user.getDisplayName().equals(defUser.getDisplayName())){
 	RequestDispatcher dispatch = request.getRequestDispatcher("DisplaySelf.jsp?user="+user.getDisplayName());  
 	dispatch.forward(request, response); 
 	return;
 }
-
 if(defUser.containsFriend(user.getDisplayName())){
 	RequestDispatcher dispatch = request.getRequestDispatcher("DisplayFriend.jsp?user="+user.getDisplayName());
 	dispatch.forward(request,response);
+	return;  
+}
+if(user.isPrivate()){
+	RequestDispatcher dispatch = request.getRequestDispatcher("DisplayPrivate.jsp?user="+user.getDisplayName());
+	dispatch.forward(request,response);
 	return;
 }
-
 String name = user.getDisplayName();  
+String status = user.getStatus();
 String bio = user.getBio();
 String imageStr = user.getImage();
 ArrayList<String> quizzes = user.getQuizzes();
 ArrayList<String> friends = user.getFriends(); 
 String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
-
 %>
 <img src= "<%=imageStr%>"/>
 <p class = "name"> <%=name %> <br></p>
@@ -58,7 +76,20 @@ String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
 		<input type = "hidden" name="to" value = "<%=name %>">  
 		<input type = "submit" value = "Send Message" class="Button"/>  
 </form>  
+<p class = "achievements"> Achievements <br>
+<%
+for(int i = 0; i < User.ACHIEVEMENTS.length; i++){
+	if(user.hasAchieved(User.ACHIEVEMENTS[i])){
+		%>
+		<%=User.ACHIEVE_STRINGS[i] %><br>
+		<% 
+		
+	}
+}
 
+
+%>
+<p class = "status"> Status <br> <%=status %><br></p>
 <p class = "bio"> About me  <br> <%=bio %> <br></p>
 <p class = "quizH"> Top Quizzes <br>  
 <% 
@@ -69,11 +100,11 @@ for(int i = 0; i < quizzes.size(); i++){
 <%	
 }
 %>
-</p>
+</p>  
 
 <p class = "friends"> Friends <br>
 <%
-for(int i = 0; i < friends.size(); i++){
+for(int i = 0; i < friends.size(); i++){  
 	String friend = friends.get(i);
 	%>
 	<a href="DisplayUser.jsp?user=<%=friend%>" class = "friends"> <%= friend%></a><br> 
@@ -99,8 +130,6 @@ for(int i = 0; i < friends.size(); i++){
 
 </body>
 </html>
-
-
 
 
 

@@ -17,9 +17,16 @@
 <body>
 
 <%  
-User defUser = (User)request.getSession().getAttribute("user");//correct//
+//User defUser = (User)request.getSession().getAttribute("user");//correct//
+User defUser = TableAbstraction.getUser(request);
+if(defUser == null){
+	RequestDispatcher dispatch = 
+			request.getRequestDispatcher("Register.html");
+	dispatch.forward(request, response);
+	return;
+}
+
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
-defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
 System.out.print(defUser.getDisplayName());
 ArrayList<String> friends = defUser.getFriends(); 
 %>

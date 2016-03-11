@@ -1,3 +1,4 @@
+<%@page import="java.sql.Connection"%>
 <%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.User"%>
@@ -13,9 +14,10 @@
 </head>
 <body>  
 <%
+java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 tableabstraction.Stats stats = TableAbstraction.getStats(con);
 %>
-<h1> Announcements</h1>  
+<h1> Announcements</h1>      
 <%
 ArrayList<String> announcements = stats.getMsgs();
 for(int i = 0; i < announcements.size(); i++){
@@ -27,12 +29,12 @@ for(int i = 0; i < announcements.size(); i++){
 <form action = "ViewQuizzes.jsp" method="post">
 		<input type = "submit" value = "View Quizzes" class="button"/>      
 </form>  
-<form action = "WelcomeScreeen.html" method="post">
+<form action = "WelcomeScreen.jsp" method="post">
 		<input type = "submit" value = "Login" class="button"/>      
 </form>  
-<form action = "CreateAccount.html" method="post">
+<form action = "CreateAccount.jsp" method="post">
 		<input type = "submit" value = "Create Account" class="button"/>      
-</form>  
+</form>    
 
 </body>
 </html>

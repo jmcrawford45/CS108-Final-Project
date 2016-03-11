@@ -4,20 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Welcome</title>  
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
-<title>Search Profiles</title>
 </head>
 <body>
 
+<p><b> Create New Account</b></p>
+<p> Please enter proposed name and password </p>
+<form action="AccountServlet" method="post">  
+<p>Name: <input type="text" name="name" /></p>    
 
-<form action="DisplayUser.jsp" method="post">  
-<p>Search: <input type="text" name="user"/></p>    
-<input type="submit" value = "Find User" />
-</form>
-
-
-<form action = "HomePage.jsp" method="post">
-<input type = "submit" value = "Home" class="button"/>
+<p>Password: <input type="password" name="password"/>
+<input type="submit" value = "Create Account" /></p>
 </form>
 
 </body>

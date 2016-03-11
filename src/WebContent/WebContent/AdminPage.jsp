@@ -1,3 +1,4 @@
+
 <%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.User"%>
@@ -8,20 +9,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Admin Home</title>
-<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
+<link REL="StyleSheet" TYPE="text/css" HREF="Style.css">  
 
 </head>
 <body>  
 
 
 <%
-User defUser = (User)request.getSession().getAttribute("user");//correct//
+//User defUser = (User)request.getSession().getAttribute("user");//correct//
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
-defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
+//defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
+User defUser = TableAbstraction.getUser(request);
+
 if(!defUser.getAdminStatus()){
-	request.setAttribute("title", "Permission Error");
-	request.setAttribute("message", "Only admins can view this page!!!");
-    request.getRequestDispatcher("Error.jsp").forward(request, response);
+	RequestDispatcher dispatch = 
+			request.getRequestDispatcher(""
+			+ "Error.jsp?title=Permission Error&message=Only Admins Can View This Page!");
+	dispatch.forward(request, response);
+	return;
+
 }
 tableabstraction.Stats stats = TableAbstraction.getStats(con);
 int quizzes = stats.getQuizzes();

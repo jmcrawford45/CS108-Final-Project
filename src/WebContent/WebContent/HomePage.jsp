@@ -1,3 +1,8 @@
+
+
+
+
+
 <%@page import="tableabstraction.TableAbstraction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.User"%>
@@ -15,10 +20,16 @@
 
 
 <%
-User defUser = (User)request.getSession().getAttribute("user");//correct//
+User defUser = TableAbstraction.getUser(request);
+if(defUser == null){
+	RequestDispatcher dispatch = 
+			request.getRequestDispatcher("Register.html");
+	dispatch.forward(request, response);
+	return;
+}
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
+
 String admin = (defUser.getAdminStatus()) ?  "" : "hidden = \"hidden\"";
-defUser = TableAbstraction.getUser(defUser.getDisplayName(), con);
 if(defUser.getMessageCount() != 0){
 	RequestDispatcher dispatch = request.getRequestDispatcher("HomePageHasMessage.jsp");  
 	dispatch.forward(request, response); 
@@ -35,8 +46,15 @@ for(int i = 0; i < announcements.size(); i++){
 } 
 %>
 <h1> Popular Quizzes</h1>
+
 <h1> Recent Quizzes</h1>
-<h1> Quiz History</h1>  
+
+<% 
+if(defUser.getQuizzes().size() != 0){
+	%>  <h1> Quiz History</h1>  <%
+}
+%>
+<!-- <h1> Quiz History</h1>   -->
 <%
 ArrayList<String> quizHistory = defUser.getQuizzes();
 for(int i = 0; i < quizHistory.size(); i++){
@@ -44,16 +62,23 @@ for(int i = 0; i < quizHistory.size(); i++){
 	<%=quiz %><br> <%
 } 
 %>
-<h1> Authored Quizzes</h1>    
 
-<h1> Friend Activity</h1>
+<% 
+if(defUser.getAuthoredQuizzes().size() != 0){
+	%>  <h1> Authored Quizzes</h1>   <%
+}
+%>
+<!-- <h1> Authored Quizzes</h1>  -->   
 
-<%-- <% 
-for(int i = 0; i < defUser.getFriends().size(); i++){
-	User friend = manager.getAccount(defUser.getFriends().get(i));%>
-	<%=friend.getActivityLog().get(0) %>
-<% 	 
-} --%>
+
+<% 
+if(defUser.getActivityLog().size() != 0){
+	%>  <h1> Friend Activity</h1>   <%
+}
+%>
+<!-- <h1> Friend Activity</h1> -->
+
+
 
 
 

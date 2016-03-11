@@ -19,8 +19,7 @@
 java.sql.Connection con = (java.sql.Connection)request.getSession().getServletContext().getAttribute("connection");
 User user = (User)TableAbstraction.getUser(request.getParameter("user"), con);
 
-String name = user.getDisplayName();
-String status = user.getStatus();
+String name = user.getDisplayName();  
 String bio = user.getBio();
 String imageStr = user.getImage();
 ArrayList<String> quizzes = user.getQuizzes();
@@ -29,44 +28,14 @@ ArrayList<String> friends = user.getFriends();
 <img src= "<%=imageStr%>"/>
 <p class = "name"> <%=name %> <br></p>
 
-
-<p class = "achievements"> Achievements <br>
-<%
-for(int i = 0; i < User.ACHIEVEMENTS.length; i++){
-	if(user.hasAchieved(User.ACHIEVEMENTS[i])){
-		%>
-		<%=User.ACHIEVE_STRINGS[i] %><br>
-		<% 
-		
-	}
-}
+<form action = "SendFriendRequest" method="post">
+		<input type = "hidden" name="toAdd" value = "<%=name %>">  
+		<input type = "submit" value = "Add Friend" class="Button"/>  
+</form>  
+To View More Information, Add This User As A Friend!
 
 
-%>
 
-<p class = "status"> Status <br> <%=status %><br></p>
-<p class = "bio"> About me  <br> <%=bio %> <br></p>
-<p class = "quizH"> Top Quizzes <br>  
-<% 
-for(int i = 0; i < quizzes.size(); i++){   
-	String quiz = quizzes.get(i);  
-	%>
-	<%= quiz %><br>  
-<%	
-}
-%>
-</p>
-
-<p class = "friends"> Friends <br>
-<%
-for(int i = 0; i < friends.size(); i++){
-	String friend = friends.get(i);
-	%>
-	<a href="DisplayUser.jsp?user=<%=friend%>" class = "friends"> <%= friend%></a><br> 
-<%
-}
-%>
-</p>
 <br>
 <form action = "HomePage.jsp" method="post">
 <input type = "submit" value = "Home" class="button"/>
