@@ -69,13 +69,10 @@ public class Quiz {
 		this.questions.set(index, q);
 	}
 	
-<<<<<<< HEAD
-=======
 	public void deleteQuestionAtIndex(int index){
 		this.questions.remove(index);
 	}
-	
->>>>>>> origin/master
+
 	public int getNumQuestions(){
 		return questions.size();
 	}
