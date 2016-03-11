@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import question.FiBQuestion.InvalidFiBException;
 import question.MCMAQuestion.InvalidMCMAException;
 import question.MCQuestion.InvalidMCException;
+import quiz.Quiz;
 
 /**
  * Servlet implementation class SubmitNewQuestionServlet
@@ -38,15 +39,17 @@ public class SubmitNewQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Quiz q = (Quiz) request.getSession().getAttribute("newquiz");
 		String type = request.getParameter("type");
 		if(type.equals("response-question")){
 			ResponseQuestion rq = new ResponseQuestion(request.getParameter("question"), request.getParameter("answer"));
-			
+			q.addQuestion(rq);
 		} else if (type.equals("fib-question")){
 			String question = "";
 			question += request.getParameter("pre") + "|" + request.getParameter("post");
 			try {
 				FiBQuestion fib = new FiBQuestion(question, request.getParameter("answer"));
+				q.addQuestion(fib);
 			} catch (InvalidFiBException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -55,6 +58,7 @@ public class SubmitNewQuestionServlet extends HttpServlet {
 		} else if (type.equals("mc-question")){
 			try {
 				MCQuestion mcq = new MCQuestion(request.getParameter("question"), request.getParameter("answer"), request.getParameter("choices"));
+				q.addQuestion(mcq);
 			} catch (InvalidMCException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -63,6 +67,7 @@ public class SubmitNewQuestionServlet extends HttpServlet {
 		} else if (type.equals("mcma-question")){
 			try {
 				MCMAQuestion mcma = new MCMAQuestion(request.getParameter("question"), request.getParameter("answer"), request.getParameter("choices"));
+				q.addQuestion(mcma);
 			} catch (InvalidMCMAException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -72,9 +77,12 @@ public class SubmitNewQuestionServlet extends HttpServlet {
 			Answer answers = Answer.convertStringToAnswer(request.getParameter("answer"));
 			MAResponseQuestion marq = new MAResponseQuestion(request.getParameter("question"), answers);
 			String orderedString = request.getParameter("ordered");
-			if(orderedString.equals("yes")){
-				marq.getAnswer().setIfOrdered(true);
-			} else marq.getAnswer().setIfOrdered(false);
+			if(orderedString == null){
+				marq.getAnswer().setIfOrdered(false);
+			} else marq.getAnswer().setIfOrdered(true);
+			q.addQuestion(marq);
+			
+			
 			
 			
 		} else if (type.equals("matching-question")){
@@ -84,13 +92,13 @@ public class SubmitNewQuestionServlet extends HttpServlet {
 				String questionIdentifier = "question" + i;
 				String answerIdentifier = "answer" + i;
 				ResponseQuestion currRQ = new ResponseQuestion(request.getParameter(questionIdentifier), request.getParameter(answerIdentifier));
-				//add RQ to DB
+				q.addQuestion(currRQ);
 			}
-			//add MQ to DB
+			q.addQuestion(mq);
 			
 		} else if (type.equals("pic-response-question")){
 			PictureResponseQuestion prq = new PictureResponseQuestion(request.getParameter("question"), request.getParameter("answer"), request.getParameter("url"));
-		
+			q.addQuestion(prq);
 			
 		} else {
 	

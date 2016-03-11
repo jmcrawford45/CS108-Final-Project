@@ -11,6 +11,7 @@ import question.FiBQuestion.InvalidFiBException;
 import question.MCMAQuestion.InvalidMCMAException;
 import question.MCQuestion.InvalidMCException;
 import quiz.Quiz;
+import tableabstraction.TableAbstraction;
 
 public class QuestionManager {
 
@@ -30,7 +31,7 @@ public class QuestionManager {
 			String answerString;
 			String additional;
 			int quizid;
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM questions WHERE question_id = ?");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM questions WHERE question_id =?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -38,7 +39,7 @@ public class QuestionManager {
 				question = rs.getString(3);
 				answerString = rs.getString(4);
 				additional = rs.getString(5);
-				quizid = rs.getInt(6);
+				//quizid = rs.getInt(6);
 				
 				Answer answer = Answer.convertStringToAnswer(answerString);
 				
@@ -49,9 +50,30 @@ public class QuestionManager {
 				} else if (type.equals("maresponse-question")){
 					result = new MAResponseQuestion(question, answer);
 					result.getAnswer().setIfOrdered(Boolean.parseBoolean(additional));
-				} /*else if (type.equals("matching-question")){
-					result = new MatchingQuestion
-				} */
+					
+					
+				} else if (type.equals("matching-question")){
+					MatchingQuestion mqresult = new MatchingQuestion(question);
+					String[] stringidArray = additional.split("\\|");
+					int[] idArray = new int[stringidArray.length];
+					for(int i = 0; i < stringidArray.length; i++){
+						idArray[i] = Integer.parseInt(stringidArray[i]);
+					}
+					for(int i = 0; i < idArray.length; i ++){
+						PreparedStatement ps2 = con.prepareStatement("SELECT * FROM questions WHERE question_id=?");
+						ps2.setInt(1, idArray[i]);
+						ResultSet rs2 = ps2.executeQuery();
+						if(rs.next()){
+							String question2 = rs2.getString(3);
+							String answerString2 = rs2.getString(4);
+							ResponseQuestion currResponse = new ResponseQuestion(question2, answerString2);
+							mqresult.addPair(currResponse);
+						}
+					}
+					return mqresult;
+				} 
+				
+				
 				else if (type.equals("mcma-question")){
 					result = new MCMAQuestion(question, answer, additional);
 				} else if(type.equals("mc-question")){
@@ -61,7 +83,7 @@ public class QuestionManager {
 				} else {
 					System.out.println("UNACCOUNTED FOR QUESTION");
 				}
-				result.setQuizID(quizid);
+				//result.setQuizID(quizid);
 			}
 			
 			
@@ -72,20 +94,61 @@ public class QuestionManager {
 		return result;
 	}
 	
-	public void addQuestion(Question q) {
-		try {
-			PreparedStatement ps = con.prepareStatement("INSERT into questions(?, ?, ?, ?, ?, ?)");
-			ps.setInt(1, q.getID());
-			ps.setString(2, q.getType());
-			ps.setString(3, q.getQuestion());
-			ps.setString(4, q.getAnswer().convertAnswerToString());
-			ps.setString(5, q.getAdditional());
-			ps.setInt(6, q.getQuizID());
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public int addQuestion(Question q) {
+		int questionid = -1;
+		if(q.getType().equals("matching-question")){
+			MatchingQuestion mq = (MatchingQuestion) q;
+			int[] ids = new int[mq.numPairs()];
+			for(int i = 0; i < mq.numPairs(); i++){
+				ResponseQuestion currRQ = new ResponseQuestion(mq.getPairAt(i).getQuestion(), mq.getPairAt(i).getAnswer());
+				try {
+					PreparedStatement ps = con.prepareStatement("INSERT into questions(?, ?, ?, ?, ?)");
+					int id = TableAbstraction.getID(con);
+					ids[i] = id;
+					ps.setInt(1, id);
+					ps.setString(2, currRQ.getType());
+					ps.setString(3, currRQ.getQuestion());
+					ps.setString(4, currRQ.getAnswer().convertAnswerToString());
+					ps.setString(5, currRQ.getAdditional());
+					//ps.setInt(6, currRQ.getQuizID());
+					ps.executeUpdate();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				PreparedStatement ps = con.prepareStatement("INSERT into questions(?, ?, ?, ?, ?)");
+				questionid = TableAbstraction.getID(con);
+				ps.setInt(1, questionid);
+				ps.setString(2, mq.getType());
+				ps.setString(3, mq.getQuestion());
+				ps.setString(4, mq.getAnswer().convertAnswerToString());
+				ps.setString(5, mq.getAdditional());
+				//ps.setInt(6, currRQ.getQuizID());
+				ps.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		else {
+			try {
+				PreparedStatement ps = con.prepareStatement("INSERT into questions(?, ?, ?, ?, ?)");
+				questionid = TableAbstraction.getID(con);
+				ps.setInt(1, questionid);
+				ps.setString(2, q.getType());
+				ps.setString(3, q.getQuestion());
+				ps.setString(4, q.getAnswer().convertAnswerToString());
+				ps.setString(5, q.getAdditional());
+				//ps.setInt(6, q.getQuizID());
+				ps.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return questionid;
 	}
 	
 	public void editQuestion(Question q){
