@@ -9,9 +9,10 @@
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 <%
 	int userid = Integer.parseInt(request.getParameter("userid"));
-	Quiz q = (Quiz)request.getSession().getAttribute("quiztaken");
+	int quizid = Integer.parseInt(request.getParameter("quiz_id"));
+	//Quiz q = (Quiz)request.getSession().getAttribute("quiztaken");
 	QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
-	ArrayList<Feedback> reviews = qm.getQuizFeedback(q.id);
+	ArrayList<Feedback> reviews = qm.getQuizFeedback(quizid);
 %>
 <title>Rate Quiz</title>
 </head>
@@ -34,6 +35,7 @@
  <h2>Review </h2>
  <textarea name="review" rows="10" cols="50"></textarea><br>
  <input type = "hidden" name="userid" value = "<%=userid%>"> 
+ <input type = "hidden" name="quizid" value = "<%=quizid%>"> 
  <input type = "submit" value = "Send Feedback and Explore Quizzes" class="button"/>
  </form>
  </div>

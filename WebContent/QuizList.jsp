@@ -25,5 +25,8 @@ for(int i = 0; i < quizzes.size(); i++){
 <%	
 }
 %>
+<form action="SetUpNewQuiz.jsp" method="post">
+<input type = "submit" value = "Create a new Quiz" class="button"/>
+</form>
 </body>
 </html>

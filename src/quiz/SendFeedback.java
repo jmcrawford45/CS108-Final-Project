@@ -38,14 +38,15 @@ public class SendFeedback extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
-		Quiz q = (Quiz)request.getSession().getAttribute("quiztaken");
+		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
+		int qid = Integer.parseInt(request.getParameter("quizid"));
+		Quiz q = qm.getQuizByID(qid);
 		int user_id = Integer.parseInt(request.getParameter("userid"));
-		int rating = -1;
+		int rating = 0;
 		if (request.getParameter("rating") != null) {
 			rating = Integer.parseInt(request.getParameter("rating"));
 		}
-		System.out.println(rating);
+		
 		String review = request.getParameter("review");
 		long time = System.currentTimeMillis();
 		int id = TableAbstraction.getID(qm.con);

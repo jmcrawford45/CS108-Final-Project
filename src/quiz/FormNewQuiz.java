@@ -40,9 +40,9 @@ public class FormNewQuiz extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
-		
+		request.getSession().removeAttribute("newquiz");
 		int quiz_id = TableAbstraction.getID(qm.con);
-		System.out.println(quiz_id);
+		
 		int creator_id = Integer.parseInt(request.getServletContext().getInitParameter("userid"));
 		long time = System.currentTimeMillis();
 		int category_id = Integer.parseInt(request.getParameter("category_id"));
@@ -76,7 +76,8 @@ public class FormNewQuiz extends HttpServlet {
 		
 		Quiz q = new Quiz(quiz_id, creator_id, category_id, description, random, onepage, immediate, time, name, practice);
 		request.getSession().setAttribute("newquiz", q);
-		RequestDispatcher rd = request.getRequestDispatcher("CreateQuestions.jsp?quizid=" + quiz_id);
+		String url = "CreateQuestions.jsp?quizid=" + quiz_id;
+		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
 	}
 

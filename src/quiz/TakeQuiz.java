@@ -65,7 +65,7 @@ public class TakeQuiz extends HttpServlet {
 			}
 			
 			dispatch = request.getRequestDispatcher("TakeQuizMultiPage.jsp?quiz="
-			+q.name+"&index=" + 0+"&correct=" +correct);
+			+q.name+"&index=" + 0);
 		}
 		request.getSession().setAttribute("quiztaken", q);
 		long start = System.currentTimeMillis();

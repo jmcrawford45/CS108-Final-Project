@@ -51,7 +51,7 @@ public class CheckPracticeSP extends HttpServlet {
 			String inpt = request.getParameter("input"+ i);
 			Answer a = new Answer(inpt);
 			if(q.isCorrectAnswer(a)) {
-				System.out.println(i + " "+q.getQuestion());
+				
 				int n = pr.get(q) + 1;
 				pr.put(q, n);
 				if(n >= 3) {

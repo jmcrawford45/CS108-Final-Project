@@ -98,6 +98,22 @@ for(int i = 0; i < recentscores.size(); i++){
 <%
 	}
 %>
+<% 
+	if(q.creator_id == user_id)  {
+%>
+<form action = "EditQuiz.jsp" method="post">
+<input type = "hidden" name="quizid" value = "<%=q.id%>">    
+<input type = "hidden" name="userid" value = "<%=user_id%>"> 
+<input type = "submit" value = "Edit Quiz" class="button"/>
+</form>
+<%
+	}
+%>
+<form action="MarkInappropriate" method="post">
+<input type = "hidden" name="quizid" value = "<%=q.id%>">    
+<input type = "hidden" name="userid" value = "<%=user_id%>"> 
+<input type = "submit" value = "Mark as Innappropriate" class="button"/>
+</form>
 
 </body>
 </html>

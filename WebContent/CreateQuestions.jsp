@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 <%
-	int quizid = Integer.parseInt(request.getParameter("quizid"));
+	
 	Quiz q = (Quiz)request.getSession().getAttribute("newquiz");
 %>
 <title>CurrentQuestions</title>
@@ -51,7 +51,7 @@
 <input type="submit" value="Submit"/>
 </form>
 <form action="AddQuiz" method="post">
-<input type = "hidden" name= "quizid" value=<%=quizid%>>
+
 <input type="submit" value="Add Quiz" class="button"/>
 </form>
 
