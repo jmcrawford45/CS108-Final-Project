@@ -23,7 +23,8 @@ public class User implements java.io.Serializable{
 		"I am the Greatest—The user had the highest score on a quiz.",
 		"Practice Makes Perfect—The user took a quiz in practice mode."
 	};
-	public void updateLogs(String s, Connection con){
+	private ArrayList<FriendEntry> friendActivity;
+	public void updateLogs(FriendEntry s, Connection con){
 		for(String friend: getFriends()){
 			User f = TableAbstraction.getUser(friend, con);
 			if(f!=null){
@@ -31,6 +32,10 @@ public class User implements java.io.Serializable{
 			TableAbstraction.updateUser(friend, f, con);
 			}
 		}
+	}
+	public void friendLog(FriendEntry s){
+		if(friendActivity.size() == 3) friendActivity.remove(2);
+		friendActivity.add(0, s);
 	}
 	private int achieved;
 		public String describeAchievement(int i){
@@ -93,10 +98,7 @@ public class User implements java.io.Serializable{
 	public int getAuthored(){
 		return quizzesAuthored;
 	}
-	public void friendLog(String s){
-		if(friendActivity.size() == 3) friendActivity.remove(2);
-		friendActivity.add(0, s);
-	}
+
 	public ArrayList<String> getFriendLog(){
 		return friendActivity;
 	}
