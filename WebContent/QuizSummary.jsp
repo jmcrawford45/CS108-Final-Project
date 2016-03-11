@@ -8,19 +8,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 <%
-	QuizManager qm = new QuizManager(DBConnection.connect());
-	Quiz q = qm.getQuizByID(1111);
-	ArrayList<Performance> userscores = qm.getUserQuizPerformances(1111, 2222);
-	ArrayList<Performance> bestscores = qm.getQuizBestPerformances(1111);
-	ArrayList<Performance> bestrecentscores = qm.getQuizBestRecentPerformances(1111);
-	ArrayList<Performance> recentscores = qm.getQuizRecentPerformances(1111);
+	QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
+	int user_id = 2222;
+	Quiz q = null;
+	if (request.getParameter("quiz_id") == null) {
+		q = new Quiz(123, 223, 2, "test quiz 123", false, false, true, 0, "quiz123", true);
+	} else {
+		int id = Integer.parseInt(request.getParameter("quiz_id"));
+		q = qm.getQuizByID(id);
+	}
+	
+	ArrayList<Performance> userscores = qm.getUserQuizPerformances(q.id, user_id);
+	ArrayList<Performance> bestscores = qm.getQuizBestPerformances(q.id);
+	ArrayList<Performance> bestrecentscores = qm.getQuizBestRecentPerformances(q.id);
+	ArrayList<Performance> recentscores = qm.getQuizRecentPerformances(q.id);
 %>
 <title><%=q.name%> Summary</title>
 </head>
 <body>
 <h1> <%=q.name%> </h1>
-<h2>Quiz Creator</h2><a href="show-user.jsp?id=<%=q.creator_id%>\"><%=q.creator_id%></a><br>  
-<h2>Description</h2><p><%=q.description%> <br></p><br>
+<h2>Quiz Creator</h2>
+<a href="show-user.jsp?id=<%=q.creator_id%>\"><%=q.creator_id%></a><br>
+<h2>Category </h2><p><%=QuizManager.CATEGORIES[1]%></p>  
+<h2>Description</h2><p><%=q.description%></p><br>
 <h2>Your Past Performances on this Quiz</h2>
 <p class = "userquizscores"> 
 <% 
@@ -71,7 +81,7 @@ for(int i = 0; i < recentscores.size(); i++){
 
 <form action = "TakeQuiz" method="post">
 <input type = "hidden" name="quizid" value = "<%=q.id%>">    
-<input type = "hidden" name="userid" value = "<%=2222%>"> 
+<input type = "hidden" name="userid" value = "<%=user_id%>"> 
 <input type = "hidden" name="mode" value = "count"> 
 <input type = "submit" value = "Take Quiz" class="button"/>
 </form>
@@ -80,7 +90,7 @@ for(int i = 0; i < recentscores.size(); i++){
 %>
 <form action = "TakePracticeQuiz" method="post">
 <input type = "hidden" name="quizid" value = "<%=q.id%>">    
-<input type = "hidden" name="userid" value = "<%=2222%>">
+<input type = "hidden" name="userid" value = "<%=user_id%>">
 <input type = "hidden" name="mode" value = "practice">  
 <input type = "submit" value = "Take Quiz in Practice Mode" class="button"/>
 </form>

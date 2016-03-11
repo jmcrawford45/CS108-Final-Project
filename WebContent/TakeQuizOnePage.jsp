@@ -10,8 +10,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 <%
-	QuizManager qm = new QuizManager(DBConnection.connect());
-	Quiz quiz = (Quiz)request.getAttribute("quiz");
+	QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
+	Quiz quiz = (Quiz)request.getSession().getAttribute("quiztaken");
+	int userid = Integer.parseInt(request.getParameter("userid"));
 	ArrayList<Question> qs = Test.questions;
 	String s = request.getAttribute("start").toString();
 %>
@@ -33,7 +34,7 @@
         <br><br>
 <input type = "hidden" name="quizid" value = "<%=quiz.id%>"> 
 <input type = "hidden" name="start" value = "<%=s%>">   
-<input type = "hidden" name="userid" value = "<%=2222%>"> 
+<input type = "hidden" name="userid" value = "<%=userid%>"> 
 <input type = "hidden" name="mode" value = "np">
 <input type = "submit" value = "Grade Quiz" class="button"/>
 </form>

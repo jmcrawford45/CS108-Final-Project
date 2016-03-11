@@ -1,8 +1,6 @@
 package quiz;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,19 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import question.Answer;
-
 /**
- * Servlet implementation class GradeQuiz
+ * Servlet implementation class Feedback
  */
-@WebServlet("/GradeQuiz")
-public class GradeQuiz extends HttpServlet {
+@WebServlet("/SendFeedback")
+public class SendFeedback extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GradeQuiz() {
+    public SendFeedback() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,24 +36,20 @@ public class GradeQuiz extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection con  = DBConnection.connect();
-		QuizManager qm = new QuizManager(con);
+		QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
 		Quiz q = (Quiz)request.getSession().getAttribute("quiztaken");
-		ArrayList<Answer> input = new ArrayList<Answer>();
-		for (int i = 0; i < Test.questions.size(); i++) {
-			Answer a = new Answer(request.getParameter("answer"+i));
-			input.add(a);
+		int user_id = Integer.parseInt(request.getParameter("userid"));
+		int rating = -1;
+		if (request.getParameter("rating") != null) {
+			rating = Integer.parseInt(request.getParameter("rating"));
 		}
-		long start = Long.parseLong(request.getParameter("start"));
-		int pid = (int) (start/10);
-		Performance p = q.gradeQuiz(pid, 1212, start, Test.questions, input);
-		request.setAttribute("performance", p);
-		if (request.getParameter("mode").equals("np")) {
-			qm.addPerformance(p);
-		}
-		
-		RequestDispatcher dispatch = request.getRequestDispatcher("QuizResults.jsp?quiz_id="+q.id); 
-		dispatch.forward(request, response);
+		System.out.println(rating);
+		String review = request.getParameter("review");
+		long time = System.currentTimeMillis();
+		int id = (int)time/300;
+		qm.addFeedback(id, q.id, user_id, rating, review, time);
+		RequestDispatcher rd = request.getRequestDispatcher("QuizList.jsp");
+		rd.forward(request, response);
 	}
 
 }

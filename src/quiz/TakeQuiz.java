@@ -41,7 +41,7 @@ public class TakeQuiz extends HttpServlet {
 		QuizManager qm = new QuizManager(DBConnection.connect());
 		int quiz_id = Integer.parseInt(request.getParameter("quizid"));
 		Quiz q = qm.getQuizByID(quiz_id);
-		request.getSession().setAttribute(Integer.toString(quiz_id), q);
+		request.getSession().setAttribute("quiztaken", q);
 		RequestDispatcher dispatch = null;
 		if (q.one_page) {
 			dispatch = request.getRequestDispatcher("TakeQuizOnePage.jsp?quiz="+q.name);  
@@ -52,7 +52,7 @@ public class TakeQuiz extends HttpServlet {
 		long start = System.currentTimeMillis();
 		request.setAttribute("start", start);
 		request.setAttribute("userid", request.getParameter("userid"));
-		request.setAttribute("quiz", q);
+		//request.setAttribute("quiz", q);
 		dispatch.forward(request, response);
 		
 	}

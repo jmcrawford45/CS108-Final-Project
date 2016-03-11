@@ -9,10 +9,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class QuizManager {
 	public Connection con;
 	public static final int NUMSCORES = 5;
+	public static final int NUMREVIEWS = 5;
 	public static final String[] CATEGORIES = {"History", "Science", "Art", "Current Events"};
 	
 	public QuizManager(Connection con) {
@@ -138,6 +140,34 @@ public class QuizManager {
 		
 		return p;
 	}
+	
+	public ArrayList<Quiz> getAllQuizzes() {
+		ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+		try {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM quizzes");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int quiz_id = rs.getInt(1);
+				int creator_id = rs.getInt(2);
+				int category_id = rs.getInt(3);
+				String description = rs.getString(4);
+				boolean random = rs.getBoolean(5);
+				boolean one_page = rs.getBoolean(6);
+				boolean immediate = rs.getBoolean(7);
+				long time_created = rs.getLong(8);
+				String name = rs.getString(9);
+				boolean practice = rs.getBoolean(10);
+				quizzes.add(new Quiz(quiz_id, creator_id, category_id, description, random, one_page, immediate, time_created, name, practice));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return quizzes;
+	}
+	
+	
 	
 	
 	public ArrayList<Quiz> getQuizzesByCreator(int creator_id) {
@@ -373,5 +403,65 @@ public class QuizManager {
 		
 		return performances;
 	}
+	
+	public void addFeedback(Feedback fb) {
+		addFeedback(fb.rev_id, fb.quiz_id, fb.user_id, fb.rating, fb.review, fb.time);
+	}
+	
+	public void addFeedback(int rev_id, int quiz_id, int user_id, int rating, String review, long time) {
+		try {
+			PreparedStatement ps = con.prepareStatement("INSERT into "
+					+ "reviews(rev_id, quiz_id, user_id, rating, review, time) "
+					+ "values(?, ?, ?, ?, ?, ?)");
+			ps.setInt(1, rev_id);
+			ps.setInt(2, quiz_id);
+			ps.setInt(3, user_id);
+			ps.setInt(4, rating);
+			ps.setString(5, review);
+			ps.setLong(6, time);
+			ps.executeUpdate();
+		} catch (SQLException e){
+			e.printStackTrace();
+		}	
+		
+	}
+	
+	public Feedback getFeedbackbyID(int id) {
+		Feedback fb = null;
+		try {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM reviews WHERE rev_id = ?");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				fb = new Feedback(id, rs.getInt("quiz_id"), rs.getInt("user_id"),
+						rs.getInt("rating"), rs.getString("review"), rs.getLong("time"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fb;
+	}
+	
+	public ArrayList<Feedback> getQuizFeedback(int quiz_id) {
+		ArrayList<Feedback> reviews = new ArrayList<Feedback>();
+		try {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM reviews WHERE quiz_id = ?");
+			ps.setInt(1, quiz_id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				reviews.add(new Feedback(rs.getInt("rev_id"), rs.getInt("quiz_id"), rs.getInt("user_id"),
+						rs.getInt("rating"), rs.getString("review"), rs.getLong("time")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		long seed = System.nanoTime();
+		Collections.shuffle(reviews, new Random(seed));
+		int n = Math.min(NUMREVIEWS, reviews.size());
+		return (new ArrayList<Feedback>(reviews.subList(0, n)));
+	}
+	
 	
 }
