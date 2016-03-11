@@ -65,6 +65,10 @@ public class Quiz {
 		return questions.get(i);
 	}
 	
+	public void setQuestionAtIndex(int index, Question q){
+		this.questions.set(index, q);
+	}
+	
 	public int getNumQuestions(){
 		return questions.size();
 	}
