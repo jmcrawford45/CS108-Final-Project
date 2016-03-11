@@ -1,5 +1,6 @@
 <%@page import="quiz.*"%>
 <%@page import="java.util.*"%>
+<%@page import="tableabstraction.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link REL="StyleSheet" TYPE="text/css" HREF="Style.css">
 <%
-	QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
-	int user_id = 2222;
+	QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
+	int user_id = TableAbstraction.getID(qm.con);
 	Quiz q = null;
 	if (request.getParameter("quiz_id") == null) {
 		q = new Quiz(123, 223, 2, "test quiz 123", false, false, true, 0, "quiz123", true);

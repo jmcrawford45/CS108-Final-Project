@@ -8,14 +8,8 @@ import java.sql.SQLException;
 import question.FiBQuestion.InvalidFiBException;
 import question.MCMAQuestion.InvalidMCMAException;
 import question.MCQuestion.InvalidMCException;
-<<<<<<< HEAD
-=======
-import quiz.Quiz;
 import tableabstraction.TableAbstraction;
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
+
 
 public class QuestionManager {
 
@@ -34,7 +28,7 @@ public class QuestionManager {
 			String question;
 			String answerString;
 			String additional;
-			int quizid;
+
 			PreparedStatement ps = con.prepareStatement("SELECT * FROM questions WHERE question_id =?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
@@ -43,8 +37,7 @@ public class QuestionManager {
 				question = rs.getString(3);
 				answerString = rs.getString(4);
 				additional = rs.getString(5);
-				//quizid = rs.getInt(6);
-				
+
 				Answer answer = Answer.convertStringToAnswer(answerString);
 				
 				if(type.equals("response-question")){
@@ -106,7 +99,9 @@ public class QuestionManager {
 			for(int i = 0; i < mq.numPairs(); i++){
 				ResponseQuestion currRQ = new ResponseQuestion(mq.getPairAt(i).getQuestion(), mq.getPairAt(i).getAnswer());
 				try {
-					PreparedStatement ps = con.prepareStatement("INSERT into questions(?, ?, ?, ?, ?)");
+					PreparedStatement ps = con.prepareStatement("INSERT into "
+							+ "questions(question_id, type, question, answer, additional) "
+							+ "values(?, ?, ?, ?, ?)");
 					int id = TableAbstraction.getID(con);
 					ids[i] = id;
 					ps.setInt(1, id);
@@ -114,7 +109,7 @@ public class QuestionManager {
 					ps.setString(3, currRQ.getQuestion());
 					ps.setString(4, currRQ.getAnswer().convertAnswerToString());
 					ps.setString(5, currRQ.getAdditional());
-					//ps.setInt(6, currRQ.getQuizID());
+
 					ps.executeUpdate();
 					
 				} catch (SQLException e) {
@@ -122,14 +117,16 @@ public class QuestionManager {
 				}
 			}
 			try {
-				PreparedStatement ps = con.prepareStatement("INSERT into questions(?, ?, ?, ?, ?)");
+				PreparedStatement ps = con.prepareStatement("INSERT into "
+						+ "questions(question_id, type, question, answer, additional) "
+						+ "values(?, ?, ?, ?, ?)");
 				questionid = TableAbstraction.getID(con);
 				ps.setInt(1, questionid);
 				ps.setString(2, mq.getType());
 				ps.setString(3, mq.getQuestion());
 				ps.setString(4, mq.getAnswer().convertAnswerToString());
 				ps.setString(5, mq.getAdditional());
-				//ps.setInt(6, currRQ.getQuizID());
+
 				ps.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -138,14 +135,16 @@ public class QuestionManager {
 		}
 		else {
 			try {
-				PreparedStatement ps = con.prepareStatement("INSERT into questions(?, ?, ?, ?, ?)");
+				PreparedStatement ps = con.prepareStatement("INSERT into "
+						+ "questions(question_id, type, question, answer, additional) "
+						+ "values(?, ?, ?, ?, ?)");
 				questionid = TableAbstraction.getID(con);
 				ps.setInt(1, questionid);
 				ps.setString(2, q.getType());
 				ps.setString(3, q.getQuestion());
 				ps.setString(4, q.getAnswer().convertAnswerToString());
 				ps.setString(5, q.getAdditional());
-				//ps.setInt(6, q.getQuizID());
+
 				ps.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -157,7 +156,8 @@ public class QuestionManager {
 	
 	public void editQuestion(Question q){
 		try {
-			PreparedStatement ps = con.prepareStatement("UPDATE questions SET question='?' answer='?' additional='?' WHERE id=?");
+			PreparedStatement ps = con.prepareStatement("UPDATE questions SET question='?' answer='?' additional='?' "
+					+ "WHERE question_id=?");
 			ps.setString(1, q.getQuestion());
 			ps.setString(2, q.getAnswer().convertAnswerToString());
 			ps.setString(3, q.getAdditional());

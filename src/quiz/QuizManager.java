@@ -466,6 +466,23 @@ public class QuizManager {
 		return (new ArrayList<Feedback>(reviews.subList(0, n)));
 	}
 	
+	
+	public void setQuizQuestions(int quizid, String qids) {
+		
+		try {
+			PreparedStatement ps = con.prepareStatement("INSERT INTO "
+					+ "quiz_questions(quiz_id, question_ids) "
+					+ "values(?,?)");
+			ps.setInt(1, quizid);
+			ps.setString(2, qids);
+		
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public ArrayList<Question> getQuizQuestions(int quizid) {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		try {

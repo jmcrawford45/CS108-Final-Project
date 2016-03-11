@@ -49,7 +49,9 @@
 
 <input type="submit" value="Submit"/>
 </form>
-
+<form action="AddQuiz" method="post">
+<input type="submit" value="Add Quiz" class="button"/>
+</form>
 
 </body>
 </html>

@@ -1,7 +1,6 @@
 package quiz;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import question.Answer;
-import tableabstraction.TableAbstraction;
+import question.Question;
+import question.QuestionManager;
 
 /**
- * Servlet implementation class GradeQuiz
+ * Servlet implementation class AddQuiz
  */
-@WebServlet("/GradeQuiz")
-public class GradeQuiz extends HttpServlet {
+@WebServlet("/AddQuiz")
+public class AddQuiz extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GradeQuiz() {
+    public AddQuiz() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,21 +40,21 @@ public class GradeQuiz extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
-		Quiz q = (Quiz)request.getSession().getAttribute("quiztaken");
-		ArrayList<Answer> input = new ArrayList<Answer>();
-		for (int i = 0; i < Test.questions.size(); i++) {
-			Answer a = new Answer(request.getParameter("input"+i));
-			input.add(a);
+		Quiz q = (Quiz)request.getSession().getAttribute("newquiz");		
+		qm.addQuiz(q);
+		QuestionManager qsm = new QuestionManager(qm.con);
+		String ids = "";
+		for(int i = 0; i <q.getNumQuestions(); i++) {
+			Question qs = q.getQuestionbyIndex(i);
+			int id = qsm.addQuestion(qs);
+			ids += id + "|";
 		}
-		long start = Long.parseLong(request.getParameter("start"));
-		int pid = TableAbstraction.getID(qm.con);
-		int userid = Integer.parseInt(request.getParameter("userid"));
-		Performance p = q.gradeQuiz(pid, userid, start, q.questions, input);
-		request.setAttribute("performance", p);
-		qm.addPerformance(p);
+		qm.setQuizQuestions(q.id, ids);
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("QuizResults.jsp?quiz_id="+q.id); 
-		dispatch.forward(request, response);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("QuizSummary.jsp?quiz_id="+q.id);
+		rd.forward(request, response);
+		request.getSession().removeAttribute("newquiz");
 	}
 
 }

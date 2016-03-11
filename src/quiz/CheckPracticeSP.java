@@ -47,7 +47,7 @@ public class CheckPracticeSP extends HttpServlet {
 		HashMap<Question, Integer> pr = (HashMap<Question, Integer>)request.getSession().getAttribute("precord");
 		for (int i = 0; i < pqs.size(); i++) {
 			Question q = pqs.get(i);
-			String inpt = request.getParameter(String.valueOf(i));
+			String inpt = request.getParameter("input"+i);
 			Answer a = new Answer(inpt);
 			if(q.isCorrectAnswer(a)) {
 				int n = pr.get(q) + 1;
