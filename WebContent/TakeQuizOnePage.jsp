@@ -13,7 +13,7 @@
 	QuizManager qm = (QuizManager)request.getSession().getAttribute("quizmanager");
 	Quiz quiz = (Quiz)request.getSession().getAttribute("quiztaken");
 	int userid = Integer.parseInt(request.getParameter("userid"));
-	ArrayList<Question> qs = Test.questions;
+	ArrayList<Question> qs = quiz.questions;
 	String s = request.getAttribute("start").toString();
 %>
 <title><%=quiz.name%></title>
@@ -24,11 +24,8 @@
 
     <%  	
             for (int i = 0; i < qs.size(); i ++) {
-            	Question q = qs.get(i);
-            	String answer = "";
-                String item = "<h3>"+(i+1) + ".</h3>" +q.getQuestion() + "<input type ='text' value='" + answer 
-                		+ "' name='answer" + i + "'> <br>";
-                out.print(item);
+            	String display = qs.get(i).returnHTMLQuestion(i);
+            	out.print(display);
             }
         %>
         <br><br>

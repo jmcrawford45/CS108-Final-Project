@@ -100,10 +100,11 @@ public class MCMAQuestion extends Question {
 		return result;
 	}
 	
-	public static String returnHTMLEditTemplate(String question, String answer, String choices) {
+	public static String returnHTMLEditTemplate(String question, String answer, String choices, int index) {
 		String result = "";
 		result += "<form action=\"SubmitEditedQuestionServlet\" method=\"post\"> \r";
 		result += "<input type=\"hidden\" name=\"type\" value=\"mcma-question\"> \r"; 
+		result += "<input type=\"hidden\" name=\"index\" value=\"" + index +"\"> \r"; 
 		result += "Enter question text: <br> \r <input name=\"question\" type=\"text\" value=\"" + question + "\"/> <br><br>\r";
 		result += "Enter answers (each answer separated by '||': <br> \r <input name=\"answer\" type=\"text\" value=\"" + answer + "\"/><br><br> \r";
 		result += "Enter choices, including answer (each choice separated by '|'): <br> \r <input name=\"choices\" type=\"text\" value=\"" + choices + "\"/><br><br> \r";

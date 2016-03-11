@@ -27,7 +27,7 @@ public class MCQuestionTest {
 		System.out.println(MCQuestion.returnHTMLBlankTemplate());
 		
 		System.out.println();
-		System.out.println(MCQuestion.returnHTMLEditTemplate("Which choice?", "a", "a|b|c|d"));
+		System.out.println(MCQuestion.returnHTMLEditTemplate("Which choice?", "a", "a|b|c|d", 4));
 		
 		
 		

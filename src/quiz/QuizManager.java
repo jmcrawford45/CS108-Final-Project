@@ -11,6 +11,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import question.Question;
+import question.QuestionManager;
+
 public class QuizManager {
 	public Connection con;
 	public static final int NUMSCORES = 5;
@@ -462,6 +465,31 @@ public class QuizManager {
 		int n = Math.min(NUMREVIEWS, reviews.size());
 		return (new ArrayList<Feedback>(reviews.subList(0, n)));
 	}
+	
+	public ArrayList<Question> getQuizQuestions(int quizid) {
+		ArrayList<Question> questions = new ArrayList<Question>();
+		try {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM quiz_questions WHERE quiz_id = ?");
+			ps.setInt(1, quizid);
+			ResultSet rs = ps.executeQuery();
+			String s = "";
+			if(rs.next()){
+				s = rs.getString("question_ids");
+			}
+			String[] ss = s.split("\\|");
+			QuestionManager qsm = new QuestionManager(this.con);
+			for (int i = 0; i < ss.length; i++) {
+				Question q = qsm.getQuestion(Integer.parseInt(ss[i]));
+				questions.add(q);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return questions;
+	}
+	
 	
 	
 }

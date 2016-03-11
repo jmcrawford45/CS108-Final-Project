@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import tableabstraction.TableAbstraction;
+
 /**
  * Servlet implementation class Feedback
  */
@@ -46,7 +48,7 @@ public class SendFeedback extends HttpServlet {
 		System.out.println(rating);
 		String review = request.getParameter("review");
 		long time = System.currentTimeMillis();
-		int id = (int)time/300;
+		int id = TableAbstraction.getID(qm.con);
 		qm.addFeedback(id, q.id, user_id, rating, review, time);
 		RequestDispatcher rd = request.getRequestDispatcher("QuizList.jsp");
 		rd.forward(request, response);

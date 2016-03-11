@@ -10,6 +10,7 @@ public class MatchingQuestion extends Question {
 	
 	ArrayList<ResponseQuestion> pairs;
 	ArrayList<Answer> answerArray;
+	int[] idArray;
 
 
 	public MatchingQuestion(String instructions) {
@@ -39,6 +40,10 @@ public class MatchingQuestion extends Question {
 	
 	public String getAnswerAt(int index){
 		return this.answerArray.get(index).firstAnswer();
+	}
+	
+	public void setIdArray(int[] arr){
+		this.idArray = arr;
 	}
 	
 	private ArrayList<Answer> getRandomizedAnswerArray(){
@@ -101,10 +106,11 @@ public class MatchingQuestion extends Question {
 	
 	@Override
 	public String getAdditional(){
+		if(idArray == null) return "";
 		String result = "";
-		for(int i = 0; i < pairs.size(); i++){
-			result += getPairAt(i).getID();
-			result += "|";
+		for(int i = 0; i < idArray.length; i++){
+			if(i != 0) result += "|";
+			result += idArray[i];
 		}
 		return result;
 	}
@@ -176,10 +182,11 @@ public class MatchingQuestion extends Question {
 		return result;
 	}
 	
-	public static String returnHTMLEditTemplate(MatchingQuestion quest) {
+	public static String returnHTMLEditTemplate(MatchingQuestion quest, int index) {
 		String result = "";
 		result += "<form action=\"SubmitEditedQuestionServlet\" method=\"post\"> \r";
 		result += "<input type=\"hidden\" name=\"type\" value=\"matching-question\"> \r";
+		result += "<input type=\"hidden\" name=\"index\" value=\"" + index +"\"> \r"; 
 		result += "<input type=\"hidden\" name=\"numpairs\" value=\"" + quest.numPairs() + "\"> \r";
 		result += "Enter instructions for question: <br> \r <input name=\"instructions\" type=\"text\" value=\"" + quest.getInstructions() + "\"/> <br> \r";
 		for(int i = 0; i < quest.numPairs(); i++){

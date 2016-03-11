@@ -1,6 +1,9 @@
 package quiz;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import question.Question;
 
 /**
  * Servlet implementation class TakeQuiz
@@ -38,16 +43,31 @@ public class TakeQuiz extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
 		
-		QuizManager qm = new QuizManager(DBConnection.connect());
+		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
 		int quiz_id = Integer.parseInt(request.getParameter("quizid"));
 		Quiz q = qm.getQuizByID(quiz_id);
-		request.getSession().setAttribute("quiztaken", q);
+		
+		ArrayList<Question> qs = qm.getQuizQuestions(quiz_id);
+		if (q.random) {
+			long seed = System.nanoTime();
+			Collections.shuffle(qs, new Random(seed));
+		}
+		q.setQuestions(qs);
 		RequestDispatcher dispatch = null;
 		if (q.one_page) {
 			dispatch = request.getRequestDispatcher("TakeQuizOnePage.jsp?quiz="+q.name);  			 
 		} else {
-			dispatch = request.getRequestDispatcher("TakeQuizMultiPage.jsp?quiz="+q.name);
+			String correct;
+			if (q.immediate) {
+				correct = "immediate";
+			} else {
+				correct ="end";
+			}
+			
+			dispatch = request.getRequestDispatcher("TakeQuizMultiPage.jsp?quiz="
+			+q.name+"&index=" + 0+"&correct=" +correct);
 		}
+		request.getSession().setAttribute("quiztaken", q);
 		long start = System.currentTimeMillis();
 		request.setAttribute("start", start);
 		request.setAttribute("userid", request.getParameter("userid"));

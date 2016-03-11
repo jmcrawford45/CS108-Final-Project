@@ -1,0 +1,43 @@
+package user;
+
+
+import java.io.Serializable;
+
+public class FriendEntry implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String body, u1, u2, quiz;
+	int quizID;
+	public FriendEntry(String u1, String u2){
+		this.u1 = u1;
+		this.u2 = u2;
+		this.body = " became friends with ";
+	}
+	public String getU1() {
+		return u1;
+	}
+	public String getU2() {
+		return u2;
+	}
+	public FriendEntry(String u1, String name, boolean created, int id){
+		this.u1 = u1;
+		quiz = name;
+		body += (created) ? " created " : " took ";
+		body += "quiz: ";
+	}
+	public String getQuizName(){
+		return quiz;
+	}
+	public int getQuizID(){
+		return quizID;
+	}
+	public boolean quizMessage(){
+		return quiz != null;
+	}
+	@Override
+	public String toString(){
+		return body;
+	}
+}

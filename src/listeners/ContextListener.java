@@ -1,6 +1,9 @@
 package listeners;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Random;
 
 import javax.servlet.ServletContext;
@@ -9,6 +12,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import loginServlets.Security;
+import quiz.QuizManager;
 import tableabstraction.TableAbstraction;
 import user.User;
 
@@ -22,7 +26,7 @@ import user.User;
  *
  */
 @WebListener
-public class Initialize implements ServletContextListener {
+public class ContextListener implements ServletContextListener {
 	
 
 	public static final String MYSQL_USERNAME = "ccs108jared13";
@@ -33,7 +37,7 @@ public class Initialize implements ServletContextListener {
     /**
      * Default constructor. 
      */
-    public Initialize() {
+    public ContextListener() {
     }
 
 	/**
@@ -67,6 +71,8 @@ public class Initialize implements ServletContextListener {
     	TableAbstraction.updateUser("a", a, con);
         context.setAttribute("connection", con);
         context.setAttribute("rand", rand);
+        QuizManager qm = new QuizManager(con);
+        context.setAttribute("quizmanager", qm);
     }
 
 	/**
