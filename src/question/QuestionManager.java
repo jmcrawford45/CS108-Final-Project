@@ -12,6 +12,9 @@ import question.MCQuestion.InvalidMCException;
 =======
 import quiz.Quiz;
 import tableabstraction.TableAbstraction;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 
 public class QuestionManager {

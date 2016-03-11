@@ -17,42 +17,41 @@
 	
 	if(type.equals("response-question")){
 		out.println("<h1>Edit Response Question</h1>");
-		out.println(ResponseQuestion.returnHTMLEditTemplate(curr.getQuestion(), curr.getAnswer().getAnswerAt(0)));
+		out.println(ResponseQuestion.returnHTMLEditTemplate(curr.getQuestion(), curr.getAnswer().getAnswerAt(0), index));
 		
 	} else if (type.equals("fib-question")){
 		out.println("<h1>Edit Fill-in-the-Blank Question</h1>");
 		FiBQuestion fib = (FiBQuestion) curr;
-		out.println(FiBQuestion.returnHTMLEditTemplate(fib.getPreText(), fib.getPostText(), fib.getAnswer().getAnswerAt(0)));
+		out.println(FiBQuestion.returnHTMLEditTemplate(fib.getPreText(), fib.getPostText(), fib.getAnswer().getAnswerAt(0), index));
 		
 	} else if (type.equals("mc-question")){
 		MCQuestion mc = (MCQuestion) curr;
 		out.println("<h1>Edit Multiple Choice Question</h1>");
-		out.println(MCQuestion.returnHTMLEditTemplate(mc.getQuestion(), mc.getAnswer().convertAnswerToString(), mc.getAdditional()));
+		out.println(MCQuestion.returnHTMLEditTemplate(mc.getQuestion(), mc.getAnswer().convertAnswerToString(), mc.getAdditional(), index));
 		
 	} else if (type.equals("mcma-question")){
 		MCMAQuestion mcma = (MCMAQuestion) curr;
 		out.println("<h1>Edit Multiple Choice Multiple Answer Question</h1>");
-		out.println(MCMAQuestion.returnHTMLEditTemplate(mcma.getQuestion(), mcma.getAnswer().convertAnswerToString(), mcma.getAdditional()));
+		out.println(MCMAQuestion.returnHTMLEditTemplate(mcma.getQuestion(), mcma.getAnswer().convertAnswerToString(), mcma.getAdditional(), index));
 		
 	} else if (type.equals("maresponse-question")){
 		MAResponseQuestion marq = (MAResponseQuestion) curr;
 		out.println("<h1>Edit Multiple Response Question</h1>");
-		out.println(MAResponseQuestion.returnHTMLEditTemplate(marq.getQuestion(), marq.getAnswer().convertAnswerToString()));
+		out.println(MAResponseQuestion.returnHTMLEditTemplate(marq.getQuestion(), marq.getAnswer().convertAnswerToString(), index));
 		
 	} else if (type.equals("matching-question")){
 		MatchingQuestion mq = (MatchingQuestion) curr;
 		out.println("<h1>Edit Matching Question</h1>");
-		out.println(MatchingQuestion.returnHTMLEditTemplate(mq));
+		out.println(MatchingQuestion.returnHTMLEditTemplate(mq, index));
 		
 	} else if (type.equals("pic-response-question")){
 		PictureResponseQuestion prq = (PictureResponseQuestion) curr;
 		out.println("<h1>Edit Picture Response Question</h1>");
-		out.println(PictureResponseQuestion.returnHTMLEditTemplate(prq.getQuestion(), prq.getAnswer().convertAnswerToString(), prq.getPicURL()));;
+		out.println(PictureResponseQuestion.returnHTMLEditTemplate(prq.getQuestion(), prq.getAnswer().convertAnswerToString(), prq.getPicURL(), index));
 		
 	} else {
-		out.println("<h1>Question type undefined.</h1>");
-		//TODO: define what happens (go back to quiz overview page?)
-		
+		RequestDispatcher dispatch = request.getRequestDispatcher("FailedQuestionIssue.jsp?problem=The question type was not recognized.");
+		dispatch.forward(request, response);
 	}
 
 %>

@@ -21,10 +21,15 @@
 		Question curr = q.getQuestionbyIndex(i);
 		out.println(curr.returnHTMLDisplayStatic());
 		out.println("<br>\r");
-		out.println("<form action=\"editQuestion\" method=\"post\">");
+		out.println("<form action=\"editQuestion.jsp\" method=\"post\">");
 		out.println("<input name=\"questionIndex\" type=\"hidden\" value=\"" + i + "\"/>");
 		out.println("<input name=\"type\" type=\"hidden\" value=\"" + curr.getType() + "\"/>");
-		out.println("<input type=\"submit\" value=\"Add to Cart\"/>");
+		out.println("<input type=\"submit\" value=\"Edit\"/>");
+		out.println("</form>");
+		out.println("<form action=\"deleteQuestionServlet\" method=\"post\">");
+		out.println("<input name=\"questionIndex\" type=\"hidden\" value=\"" + i + "\"/>");
+		out.println("<input name=\"type\" type=\"hidden\" value=\"" + curr.getType() + "\"/>");
+		out.println("<input type=\"submit\" value=\"Delete\"/>");
 		out.println("</form>");
 	}
 
