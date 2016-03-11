@@ -16,13 +16,22 @@ public class User implements java.io.Serializable{
 	public static final int[] ACHIEVEMENTS = 
 	{AMATEUR,PROLIFIC,PRODIGIOUS,MACHINE,GREATEST,PRACTICE};
 	public static String [] ACHIEVE_STRINGS = {
-		"Amateur Author—The user created a quiz.",
-		"Prolific Author—The user created five quizzes.",
-		"Prodigious Author—The user created ten quizzes.",
-		"Quiz Machine—The user took ten quizzes.",
-		"I am the Greatest—The user had the highest score on a quiz.",
-		"Practice Makes Perfect—The user took a quiz in practice mode."
+		"Amateur Authorâ€”The user created a quiz.",
+		"Prolific Authorâ€”The user created five quizzes.",
+		"Prodigious Authorâ€”The user created ten quizzes.",
+		"Quiz Machineâ€”The user took ten quizzes.",
+		"I am the Greatestâ€”The user had the highest score on a quiz.",
+		"Practice Makes Perfectâ€”The user took a quiz in practice mode."
 	};
+	public void updateLogs(String s, Connection con){
+		for(String friend: getFriends()){
+			User f = TableAbstraction.getUser(friend, con);
+			if(f!=null){
+			f.friendLog(s);
+			TableAbstraction.updateUser(friend, f, con);
+			}
+		}
+	}
 	private int achieved;
 		public String describeAchievement(int i){
 			return ACHIEVE_STRINGS[i];
