@@ -10,6 +10,7 @@ public class MatchingQuestion extends Question {
 	
 	ArrayList<ResponseQuestion> pairs;
 	ArrayList<Answer> answerArray;
+	int[] idArray;
 
 
 	public MatchingQuestion(String instructions) {
@@ -39,6 +40,10 @@ public class MatchingQuestion extends Question {
 	
 	public String getAnswerAt(int index){
 		return this.answerArray.get(index).firstAnswer();
+	}
+	
+	public void setIdArray(int[] arr){
+		this.idArray = arr;
 	}
 	
 	private ArrayList<Answer> getRandomizedAnswerArray(){
@@ -101,10 +106,11 @@ public class MatchingQuestion extends Question {
 	
 	@Override
 	public String getAdditional(){
+		if(idArray == null) return "";
 		String result = "";
-		for(int i = 0; i < pairs.size(); i++){
-			result += getPairAt(i).getID();
-			result += "|";
+		for(int i = 0; i < idArray.length; i++){
+			if(i != 0) result += "|";
+			result += idArray[i];
 		}
 		return result;
 	}

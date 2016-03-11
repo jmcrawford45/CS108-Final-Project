@@ -92,7 +92,7 @@ public class SubmitNewQuestionServlet extends HttpServlet {
 				String questionIdentifier = "question" + i;
 				String answerIdentifier = "answer" + i;
 				ResponseQuestion currRQ = new ResponseQuestion(request.getParameter(questionIdentifier), request.getParameter(answerIdentifier));
-				q.addQuestion(currRQ);
+				mq.addPair(currRQ);
 			}
 			q.addQuestion(mq);
 			
