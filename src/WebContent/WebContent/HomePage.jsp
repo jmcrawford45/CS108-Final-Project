@@ -104,7 +104,7 @@ if(defUser.getActivityLog().size() != 0){
 <form action = "SearchProfiles.jsp" method="post">
 		<input type = "submit" value = "Search" class="button"/>      
 </form>  
-<form action = "ViewQuizzes.jsp" method="post">
+<form action = "QuizList.jsp" method="post">
 		<input type = "submit" value = "Quizzes!" class="button"/>      
 </form>  
 <form action = "AdminPage.jsp" method="post">
