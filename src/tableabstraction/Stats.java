@@ -28,7 +28,7 @@ public class Stats implements Serializable{
 			this.msgs = msgs;
 			this.prevID = 0;
 		}
-		public void issueID(){
+		public int issueID(){
 			prevID++;
 			return prevID;
 		}
