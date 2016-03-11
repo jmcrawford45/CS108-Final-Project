@@ -1,6 +1,7 @@
 package messages;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import tableabstraction.TableAbstraction;
+import user.User;
 
 /**
  * Servlet implementation class DistinguishMessages
@@ -37,6 +41,14 @@ public class DistinguishMessages extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String index = request.getParameter("index");
+		
+		User defUser = TableAbstraction.getUser(request);
+
+		defUser.readMessage(Integer.parseInt(index));
+		Connection con = (Connection)request.getSession().getServletContext().getAttribute("connection");
+
+		TableAbstraction.updateUser(defUser.getDisplayName(), defUser,con);
+		
 		String type = request.getParameter("type");
 		String from = request.getParameter("from");
 		String string = request.getParameter("string");

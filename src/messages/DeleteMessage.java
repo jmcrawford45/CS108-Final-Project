@@ -41,7 +41,6 @@ public class DeleteMessage extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int index = Integer.parseInt(request.getParameter("index"));
-		//User defUser = (User)request.getSession().getAttribute("user");//correct//
 		User defUser = TableAbstraction.getUser(request);
 		if(defUser == null){
 			RequestDispatcher dispatch = 
