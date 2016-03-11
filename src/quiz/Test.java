@@ -1,5 +1,9 @@
 package quiz;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import question.Question;
@@ -25,5 +29,50 @@ public class Test {
 		return qs;
 	}
 	
+	public static void createQidsTable(){
+		Connection con = DBConnection.connect();
+		try {
+			PreparedStatement ps = con.prepareStatement("CREATE TABLE quiz_questions"
+					+ " (quiz_id INT, question_ids VARCHAR(5000))");
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void insertIDS(){
+		Connection con = DBConnection.connect();
+		try {
+			PreparedStatement ps = con.prepareStatement("INSERT INTO quiz_questions"
+					+ "(quiz_id, question_ids)"
+					+ " values(?, ?)");
+			ps.setInt(1, 9090);
+			ps.setString(2, "23|56|89");
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void getCheck() {
+		Connection con = DBConnection.connect();
+		int id = -1;
+		String s = "";
+		try {
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM quiz_questions WHERE quiz_id = ?");
+			ps.setInt(1, 9090);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				id = rs.getInt(1);
+				s = rs.getString(2);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(id);
+		System.out.println(s);
+	}
+
 	
 }

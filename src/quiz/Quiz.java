@@ -22,6 +22,7 @@ public class Quiz {
 	public ArrayList<Performance> scoreboard;
 	public long time_created;
 	public boolean practice = false;
+	public String questionsIDS = "";
 
 	
 	public Quiz(int id, int creator_id, int category_id, String description, boolean random, boolean one_page, boolean immediate, long time_created, String name, boolean practice) {
@@ -49,6 +50,7 @@ public class Quiz {
 		this.questions = qs;
 	}
 
+	
 	
 	public void setScores(ArrayList<Performance> ps) {
 		this.scoreboard = ps;
