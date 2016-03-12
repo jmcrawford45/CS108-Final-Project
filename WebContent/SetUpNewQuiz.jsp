@@ -23,10 +23,18 @@
 	}
 %>
 <h2>Options</h2>
-<input type="checkbox" name="random" value="random">Randomize question order<br><br>
-<input type="checkbox" name="pages" value="multiple">Display questions on multiple pages<br>
-<input type="checkbox" name="immediate" value="immediate">If questions are displayed on multiple pages, give answer feedback immediately <br><br>
-<input type="checkbox" name="practice" value="practice">Allow quiz to be taken in practice mode<br><br>
+<h4>Question Ordering</h4>
+<input type="radio" name="random" value="ordered">Keep Questions in order<br>
+<input type="radio" name="random" value="random">Randomize Order<br>
+<h4>Number of Pages</h4>
+<input type="radio" name="pages" value="multiple">Display questions on multiple pages<br>
+<input type="radio" name="pages" value="single">Display questions on single page<br>
+<h4>Feedback Response Period</h4>
+<input type="radio" name="immediate" value="immediate">For multiple page quizzes, check answers immediately<br>
+<input type="radio" name="immediate" value="end">Or, only give feedback when quiz is completed<br>
+<h4>Available Test Modes</h4>
+<input type="radio" name="practice" value="practice">Quiz can be taken in practice mode<br>
+<input type="radio" name="practice" value="nopractice">Quiz cannot be taken in practice mode<br><br>
 <input type = "submit" value = "Create Questions" class="button"/>
 </form>
 </body>

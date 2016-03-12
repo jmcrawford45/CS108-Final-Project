@@ -42,19 +42,28 @@ public class GradeQuiz extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
 		Quiz q = (Quiz)request.getSession().getAttribute("quiztaken");
-		ArrayList<Answer> input = new ArrayList<Answer>();
-		for (int i = 0; i < Test.questions.size(); i++) {
-			Answer a = new Answer(request.getParameter("input"+i));
-			input.add(a);
+
+		
+		ArrayList<Answer> input; 
+		if (q.one_page) {
+			input = new ArrayList<Answer>();
+			for (int i = 0; i < q.getNumQuestions(); i++) {
+				Answer a = new Answer(request.getParameter("input"+i));
+				input.add(a);
+			}
+		} else {
+			input = (ArrayList<Answer>)request.getSession().getAttribute("answers");
 		}
-		long start = Long.parseLong(request.getParameter("start"));
+		long start = Long.parseLong(request.getSession().getAttribute("start").toString());
 		int pid = TableAbstraction.getID(qm.con);
-		int userid = Integer.parseInt(request.getParameter("userid"));
+		int userid = Integer.parseInt(request.getServletContext().getInitParameter("userid"));
 		Performance p = q.gradeQuiz(pid, userid, start, q.questions, input);
 		request.setAttribute("performance", p);
 		qm.addPerformance(p);
 		request.getSession().removeAttribute("quiztaken");
-		RequestDispatcher dispatch = request.getRequestDispatcher("QuizResults.jsp?quiz_id="+q.id); 
+		request.getSession().removeAttribute("start");
+		request.getSession().removeAttribute("answers");
+		RequestDispatcher dispatch = request.getRequestDispatcher("QuizResults.jsp?userid="+userid); 
 		dispatch.forward(request, response);
 	}
 

@@ -48,32 +48,32 @@ public class FormNewQuiz extends HttpServlet {
 		int category_id = Integer.parseInt(request.getParameter("category_id"));
 		String name = request.getParameter("name");
 		String description = request.getParameter("description");
-		boolean random;
-		if(request.getParameter("random") != null) {
-			random = true;
-		} else {
-			random = false;
-		}
-		boolean onepage;
-		boolean immediate;
-		if(request.getParameter("multiple") != null) {
-			onepage = false;
-			if(request.getParameter("immediate") != null) {
-				immediate= true;
-			} else {
-				immediate = false;
-			}
-		} else {
-			onepage = true;
-			immediate = false;
-		}
-		boolean practice;
-		if(request.getParameter("practice") != null) {
-			practice = true;
-		} else {
-			practice = false;
-		}
 		
+		boolean random, onepage, immediate, practice;
+		String order = request.getParameter("random");
+		if(order != null) {
+			if (order.equals("random")) {
+				random= true;
+			} else random = false;
+		} else random = false;
+		String pages = request.getParameter("pages");
+		if(pages != null) {
+			if (pages.equals("multiple")) {
+				onepage= false;
+			} else onepage = true;
+		} else onepage =true;
+		String feedback = request.getParameter("immediate");
+		if(feedback != null) {
+			if (feedback.equals("immediate")) {
+				immediate=true;
+			} else immediate = false;
+		} else immediate=false;
+		String mode = request.getParameter("practice");
+		if(mode != null) {
+			if (mode.equals("practice")) {
+				practice= true;
+			} else practice = false;
+		} else practice = false;
 		Quiz q = new Quiz(quiz_id, creator_id, category_id, description, random, onepage, immediate, time, name, practice);
 		request.getSession().setAttribute("newquiz", q);
 		String url = "CreateQuestions.jsp?quizid=" + quiz_id;

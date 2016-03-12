@@ -10,17 +10,24 @@
 <%
 	Quiz quiz = (Quiz)request.getSession().getAttribute("quiztaken");
 	int i = Integer.parseInt(request.getParameter("index"));
-	//String correct = request.getParameter("correct");
-
 	Question q = quiz.getQuestionbyIndex(i);
+	
+	
 
 %>
 <title>Question <%=i+1%></title>
 </head>
 <body>
-<%
-	String s = q.returnHTMLSingleQuestion();
+
+<form action="MultiPageServlet" method="post">
+<% 
+	String s = q.returnHTMLQuestion(i);
 	out.print(s);
 %>
+
+<input type= "hidden" name="index" value="<%=i%>">
+<input type="submit" value="Submit answer" class="button"/>
+</form> 
+ 
 </body>
 </html>

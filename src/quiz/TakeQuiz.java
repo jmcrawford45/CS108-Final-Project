@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import question.Answer;
 import question.Question;
 
 /**
@@ -46,8 +47,11 @@ public class TakeQuiz extends HttpServlet {
 		QuizManager qm = (QuizManager)request.getServletContext().getAttribute("quizmanager");
 		int quiz_id = Integer.parseInt(request.getParameter("quizid"));
 		Quiz q = qm.getQuizByID(quiz_id);
+		long start = System.currentTimeMillis();
+		request.getSession().setAttribute("start", start);
 		
 		ArrayList<Question> qs = qm.getQuizQuestions(quiz_id);
+	
 		if (q.random) {
 			long seed = System.nanoTime();
 			Collections.shuffle(qs, new Random(seed));
@@ -57,19 +61,12 @@ public class TakeQuiz extends HttpServlet {
 		if (q.one_page) {
 			dispatch = request.getRequestDispatcher("TakeQuizOnePage.jsp?quiz="+q.name);  			 
 		} else {
-			String correct;
-			if (q.immediate) {
-				correct = "immediate";
-			} else {
-				correct ="end";
-			}
-			
-			dispatch = request.getRequestDispatcher("TakeQuizMultiPage.jsp?quiz="
-			+q.name+"&index=" + 0);
+			ArrayList<Answer> uinput = new ArrayList<Answer>();
+			request.getSession().setAttribute("answers", uinput);
+			dispatch = request.getRequestDispatcher("TakeQuizMultiPage.jsp?index=0");
+			request.setAttribute("question" + 0, qs.get(0));
 		}
 		request.getSession().setAttribute("quiztaken", q);
-		long start = System.currentTimeMillis();
-		request.setAttribute("start", start);
 
 		dispatch.forward(request, response);
 		
