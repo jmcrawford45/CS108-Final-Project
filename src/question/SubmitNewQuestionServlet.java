@@ -67,8 +67,9 @@ public class SubmitNewQuestionServlet extends HttpServlet {
 			}
 			
 		} else if (type.equals("mcma-question")){
+			Answer answers = Answer.convertStringToAnswer(request.getParameter("answer"));
 			try {
-				MCMAQuestion mcma = new MCMAQuestion(request.getParameter("question"), request.getParameter("answer"), request.getParameter("choices"));
+				MCMAQuestion mcma = new MCMAQuestion(request.getParameter("question"), answers, request.getParameter("choices"));
 				q.addQuestion(mcma);
 			} catch (InvalidMCMAException e) {
 				RequestDispatcher dispatch = request.getRequestDispatcher("FailedQuestionIssue.jsp?problem=At least one answer did not appear in choices.");
